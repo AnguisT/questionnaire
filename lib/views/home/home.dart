@@ -12,12 +12,13 @@ class _HomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Welcom page'),
+        title: new Text('Home page'),
         backgroundColor: Colors.blue,
+        automaticallyImplyLeading: false,
       ),
       body: new Container(
         child: new Center(
-          child: new Text('Welcom my app'),
+          child: new Text('Home page in my app'),
         ),
       )
     );
