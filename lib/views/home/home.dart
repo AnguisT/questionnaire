@@ -12,14 +12,43 @@ class _HomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Home page'),
+        title: new Text('Home page', style: new TextStyle(color: Colors.white)),
         backgroundColor: Colors.blue,
         automaticallyImplyLeading: false,
       ),
       body: new Container(
         child: new Center(
-          child: new Text('Home page in my app'),
-        ),
+          child: new Column(
+            children: <Widget>[
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                height: 100.0,
+                padding: const EdgeInsets.all(10.0),
+                child: new RaisedButton(
+                  textColor: Colors.white,
+                  color: Colors.blue,
+                  child: new Text('Start test'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/test');
+                  },
+                )
+              ),
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                height: 100.0,
+                padding: const EdgeInsets.all(10.0),
+                child: new RaisedButton(
+                  textColor: Colors.white,
+                  color: Colors.blue,
+                  child: new Text('Look statistics'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/statistics');
+                  },
+                )
+              )
+            ],
+          )
+        )
       )
     );
   }

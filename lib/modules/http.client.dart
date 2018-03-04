@@ -17,6 +17,28 @@ class HttpClient {
     return JSON.decode(response.body);
   }
 
+  Future getTest() async {
+    var body = {
+      "id_test": 1,
+    };
+    String lData = JSON.encode(body);
+    Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
+    var url = "https://salty-mesa-77909.herokuapp.com/tests/id";
+    var response = await http.post(url, body: lData, headers: lHeaders);
+    return JSON.decode(response.body);
+  }
+
+  Future getAllQuestion() async {
+    var body = {
+      "id_test": 1,
+    };
+    String lData = JSON.encode(body);
+    Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
+    var url = "https://salty-mesa-77909.herokuapp.com/questions/id";
+    var response = await http.post(url, body: lData, headers: lHeaders);
+    return JSON.decode(response.body);
+  }
+
   Future logIn(String mail, String password) async {
     var body = {
       "mail": mail,

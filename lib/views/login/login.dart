@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../modules/http.client.dart';
-import '../../models/models.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -80,7 +79,6 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
       backgroundColor: Colors.blue,
       body: new SingleChildScrollView(
