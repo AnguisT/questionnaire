@@ -7,14 +7,16 @@ class HttpClient {
 
   Future getAllSexs() async {
     var url = "https://salty-mesa-77909.herokuapp.com/users/sexs";
-    var response = await http.post(url);
-    return JSON.decode(response.body);
+    return await http.post(url).then((response) {
+      return JSON.decode(response.body);
+    });
   }
 
   Future getAllUsers() async {
     var url = "https://salty-mesa-77909.herokuapp.com/users/";
-    var response = await http.post(url);
-    return JSON.decode(response.body);
+    return await http.post(url).then((response) {
+      return JSON.decode(response.body);
+    });
   }
 
   Future getTest() async {
@@ -24,8 +26,9 @@ class HttpClient {
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = "https://salty-mesa-77909.herokuapp.com/tests/id";
-    var response = await http.post(url, body: lData, headers: lHeaders);
-    return JSON.decode(response.body);
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
   }
 
   Future getAllQuestion() async {
@@ -35,8 +38,9 @@ class HttpClient {
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = "https://salty-mesa-77909.herokuapp.com/questions/id";
-    var response = await http.post(url, body: lData, headers: lHeaders);
-    return JSON.decode(response.body);
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
   }
 
   Future logIn(String mail, String password) async {
@@ -47,8 +51,9 @@ class HttpClient {
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = "https://salty-mesa-77909.herokuapp.com/users/id";
-    var response = await http.post(url, body: lData, headers: lHeaders);
-    return JSON.decode(response.body);
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
   }
 
   Future signUp(User user) async {
@@ -64,7 +69,8 @@ class HttpClient {
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = "https://salty-mesa-77909.herokuapp.com/users/logup";
-    var response = await http.post(url, body: lData, headers: lHeaders);
-    return JSON.decode(response.body);
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
   }
 }

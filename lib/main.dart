@@ -24,7 +24,7 @@ void main() {
         '/signup': (BuildContext context) => new SignupPage(),
         '/test': (BuildContext context) => new TestPage(),
         '/question': (BuildContext context) => new QuestionPage(),
-        '/statistic': (BuildContext context) => new StatisticPage(),
+        '/statistics': (BuildContext context) => new StatisticPage(),
         '/result': (BuildContext context) => new ResultPage(),
         '/total': (BuildContext context) => new TotalOptionPage()
       },

@@ -29,6 +29,10 @@ class _SignupPage extends State<SignupPage> {
     if (!val.contains('@')) {
       return 'Not a valid email.';
     }
+    final RegExp cityExp = new RegExp(r'^[a-zA-Z]');
+    if (!cityExp.hasMatch(val)) {
+      print('English letters only');
+    }
     return null;
   }
 
@@ -43,6 +47,10 @@ class _SignupPage extends State<SignupPage> {
     if (val.length < 1) {
       return 'You did not enter your first name.';
     }
+    final RegExp firstNameExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
+    if (!firstNameExp.hasMatch(val)) {
+      print('Letters only');
+    }
     return null;
   }
 
@@ -50,12 +58,20 @@ class _SignupPage extends State<SignupPage> {
     if (val.length < 1) {
       return 'You did not enter your last name.';
     }
+    final RegExp lastNameExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
+    if (!lastNameExp.hasMatch(val)) {
+      print('Letters only');
+    }
     return null;
   }
 
   String _validationCity(val) {
     if (val.length < 1) {
       return 'You did not enter your city.';
+    }
+    final RegExp cityExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
+    if (!cityExp.hasMatch(val)) {
+      print('Letters only');
     }
     return null;
   }

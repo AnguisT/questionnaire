@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +22,12 @@ class _LoginPage extends State<LoginPage> {
     super.initState();
   }
 
-  logIn() {
+  _saveMail(mail) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('auth_token', mail);
+  }
+
+  logIn() async {
     final FormState form = _formKey.currentState;
     _autovalidate = true;
     if (form.validate()) {
@@ -29,7 +35,7 @@ class _LoginPage extends State<LoginPage> {
         isDisabled = true;
       });
       form.save();
-      httpClient.logIn(_mailController.text, _passwordController.text).then((res) {
+      await httpClient.logIn(_mailController.text, _passwordController.text).then((res) async {
         if (res['users'].length == 0) {
           showDialog(
             context: context,
@@ -50,8 +56,28 @@ class _LoginPage extends State<LoginPage> {
             )
           );
         } else {
+          await _saveMail(res['users'][0]['mail']);
           Navigator.of(context).pushReplacementNamed('/home');
         }
+      }).catchError((error) {
+        showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('OK'),
+                onPressed: () {
+                  setState(() {
+                    isDisabled = false;
+                  });
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          )
+        );
       });
     }
   }
@@ -63,6 +89,10 @@ class _LoginPage extends State<LoginPage> {
   String _validationEmail(val) {
     if (!val.contains('@')) {
       return 'Not a valid email.';
+    }
+    final RegExp cityExp = new RegExp(r'^[a-zA-Z]');
+    if (!cityExp.hasMatch(val)) {
+      print('English letters only');
     }
     return null;
   }
@@ -88,7 +118,7 @@ class _LoginPage extends State<LoginPage> {
               height: MediaQuery.of(context).size.height / 4,
               child: new Center(
                 child: new Text(
-                  'Welcom',
+                  'Welcome to application Test Reisas',
                   style: new TextStyle(
                     fontSize: 30.0,
                     color: Colors.white
