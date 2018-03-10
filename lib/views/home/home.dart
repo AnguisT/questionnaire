@@ -59,6 +59,19 @@ class _HomePage extends State<HomePage> {
                     child: new RaisedButton(
                       textColor: Colors.white,
                       color: Colors.blue,
+                      child: new Text('Total options'),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/totaloptions');
+                      },
+                    )
+                  ),
+                  new Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 100.0,
+                    padding: const EdgeInsets.all(10.0),
+                    child: new RaisedButton(
+                      textColor: Colors.white,
+                      color: Colors.blue,
                       child: new Text('Profile'),
                       onPressed: null,
                     )

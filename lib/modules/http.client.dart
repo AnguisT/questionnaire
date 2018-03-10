@@ -11,7 +11,7 @@ import "../models/models.dart";
 class CustomHttpClient {
 
   String urlServer = "https://salty-mesa-77909.herokuapp.com/";
-  String urlLocal = "https://gentle-journey-37004.herokuapp.com";
+  String urlLocal = "https://gentle-journey-37004.herokuapp.com/";
 
   Future getAllSexs() async {
     var url = urlLocal + "users/sexs";
@@ -51,18 +51,27 @@ class CustomHttpClient {
     });
   }
 
+  Future getAllTotalOptions() async {
+    var body = {
+      "id_tests": 1,
+    };
+    String lData = JSON.encode(body);
+    Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
+    var url = urlLocal + "totaloptions/";
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
+  }
+
   Future logIn(String mail, String password) async {
     var body = {
       "mail": mail,
       "password": password,
     };
     String lData = JSON.encode(body);
-    print(lData);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlLocal + "users/id";
-    print(url);
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      print(response.body);
       return JSON.decode(response.body);
     });
   }
@@ -101,7 +110,6 @@ class CustomHttpClient {
       array.add(arrayResult[i].toMap());
     }
     body["results"] = array;
-    print(body);
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlLocal + "results/add";

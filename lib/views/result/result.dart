@@ -18,7 +18,6 @@ class _ResultPage extends State<ResultPage> {
   @override
   void initState() {
     super.initState();
-    print(response);
   }
 
   @override
@@ -38,28 +37,28 @@ class _ResultPage extends State<ResultPage> {
           padding: const EdgeInsets.all(10.0),
           child: new Column(
             children: <Widget>[
-              new SingleChildScrollView(
-                child: new Expanded(
+              new Expanded(
+                child: new SingleChildScrollView(
                   child: new Column(
                     children: <Widget>[
                       new Container(
                         width: MediaQuery.of(context).size.width,
                         child: new Text(
-                          'Ваши набранные очки: 20',
+                          'You have recruited ' + response.numberPoint.toString() + ' points',
                           style: new TextStyle(fontSize: 20.0),
                         ),
                       ),
                       new Container(
                         width: MediaQuery.of(context).size.width,
                         child: new Text(
-                          'Уверен в себе',
+                          response.totalOptions[0].title,
                           style: new TextStyle(fontSize: 20.0),
                         ),
                       ),
                       new Container(
                         width: MediaQuery.of(context).size.width,
                         child: new Text(
-                          'Уверенный в себе - боец, закаленный, решительный, упорный, героический, работоспособный, сильный, волевой, твердый, бесстрашный, отважный, самостоятельный.',
+                          response.totalOptions[0].description
                         ),
                       )
                     ],
@@ -74,7 +73,7 @@ class _ResultPage extends State<ResultPage> {
                   textColor: Colors.white,
                   child: new Text('Return on home page'),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/home');
+                    Navigator.of(context).pushReplacementNamed('/home');
                   },
                 ),
               ),
@@ -86,7 +85,7 @@ class _ResultPage extends State<ResultPage> {
                   textColor: Colors.white,
                   child: new Text('Look total options'),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/total');
+                    Navigator.of(context).pushReplacementNamed('/total');
                   },
                 ),
               )

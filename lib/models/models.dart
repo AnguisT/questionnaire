@@ -93,11 +93,13 @@ class TotalOptions {
     this.description,
     this.fromValues,
     this.toValues,
-  }) : assert(description != null && fromValues != null && toValues != null);
+    this.title,
+  }) : assert(description != null && fromValues != null && toValues != null && title != null);
 
   int fromValues;
   int toValues;
   String description;
+  String title;
 }
 
 class TotalOptionsResponse {

@@ -175,6 +175,13 @@ class _QuestionPage extends State<QuestionPage> {
 
   _calculateResultAndSave() async {
     timer.cancel();
+    Navigator.of(context).pop();
+
+    setState(() {
+      title = 'Wait, goes is a counting points';
+      isLoaded = false;
+    });
+
     resultEnd = 0;
     for (int i = 0; i < questionArray.length; i++) {
       questionArray[i].answers.forEach((answer) {
@@ -183,6 +190,7 @@ class _QuestionPage extends State<QuestionPage> {
         }
       });
     }
+
     await _saveResult();
     await _getMial();
 
@@ -191,15 +199,18 @@ class _QuestionPage extends State<QuestionPage> {
     String date = formatter.format(now);
 
     Duration countTime = new Duration(minutes: minutes, seconds: seconds);
-    // print('mail: ' + mail);
-    // print('date: ' + date);
-    // print('result: ' + resultEnd.toString());
-    // print('count time: ' + countTime.inSeconds.toString());
     httpClient.saveResult(resultArray, mail, 1, date, resultEnd, countTime.inSeconds).then((res) {
       TotalOptionsResponse totalOptionsResponse = new TotalOptionsResponse(
-        numberPoint: res['total_options'],
-        totalOptions: res['number_point']
+        numberPoint: res['number_point'],
+        totalOptions: []
       );
+      TotalOptions totalOptions = new TotalOptions(
+        fromValues: res['total_options'][0]['from_values'],
+        toValues: res['total_options'][0]['to_values'],
+        description: res['total_options'][0]['description'],
+        title: res['total_options'][0]['title']
+      );
+      totalOptionsResponse.totalOptions.add(totalOptions);
       response = totalOptionsResponse;
       Navigator.of(context).pushReplacementNamed('/result');
     }).catchError((error) {

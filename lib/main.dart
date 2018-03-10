@@ -9,7 +9,7 @@ import './views/test/test.dart';
 import './views/question/question.dart';
 import './views/statistic/statistic.dart';
 import './views/result/result.dart';
-import './views/total.option/total.option.dart';
+import './views/total.options/total.options.dart';
 
 void main() {
   runApp(
@@ -27,7 +27,7 @@ void main() {
         '/question': (BuildContext context) => new QuestionPage(),
         '/statistics': (BuildContext context) => new StatisticPage(),
         '/result': (BuildContext context) => new ResultPage(),
-        '/total': (BuildContext context) => new TotalOptionPage()
+        '/totaloptions': (BuildContext context) => new TotalOptionsPage()
       },
     )
   );

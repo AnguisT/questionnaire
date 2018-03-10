@@ -10,7 +10,7 @@
 //   _CustomButton({
 //     this.inAndroid = false,
 //     this.color = Colors.white,
-//     this.text,
+//     @required this.text,
 //     this.textColor = Colors.white,
 //     @required this.onPressed,
 //   }) : assert(text != null && text != '');
