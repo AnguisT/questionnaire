@@ -1,4 +1,7 @@
+// package
 import 'package:flutter/material.dart';
+
+// class
 import './views/login/login.dart';
 import './views/home/home.dart';
 import './views/sigup/signup.dart';
@@ -14,8 +17,6 @@ void main() {
       title: 'Questionnaire',
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-        // brightness: Brightness.dark,
-        // primarySwatch: Colors.white,
         primaryColor: Colors.white,
       ),
       routes: <String, WidgetBuilder> {

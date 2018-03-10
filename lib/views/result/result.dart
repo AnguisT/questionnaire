@@ -1,4 +1,7 @@
+// package
 import 'package:flutter/material.dart';
+
+// class
 import '../../modules/http.client.dart';
 import '../../models/models.dart';
 
@@ -10,7 +13,7 @@ class ResultPage extends StatefulWidget {
 
 class _ResultPage extends State<ResultPage> {
 
-  HttpClient httpClient = new HttpClient();
+  CustomHttpClient httpClient = new CustomHttpClient();
 
   @override
   void initState() {

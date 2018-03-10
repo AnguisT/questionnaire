@@ -1,12 +1,17 @@
+// dart
 import "dart:async";
 import "dart:convert";
+
+// package
 import "package:http/http.dart" as http;
+
+// class
 import "../models/models.dart";
 
-class HttpClient {
+class CustomHttpClient {
 
   String urlServer = "https://salty-mesa-77909.herokuapp.com/";
-  String urlLocal = "http://192.168.90.133:5000/";
+  String urlLocal = "https://gentle-journey-37004.herokuapp.com";
 
   Future getAllSexs() async {
     var url = urlLocal + "users/sexs";

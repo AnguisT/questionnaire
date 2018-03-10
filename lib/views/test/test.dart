@@ -1,4 +1,7 @@
+// package
 import 'package:flutter/material.dart';
+
+// class
 import '../../modules/http.client.dart';
 
 class TestPage extends StatefulWidget {
@@ -11,7 +14,7 @@ class _TestPage extends State<TestPage> {
 
   String title = '';
   String description = '';
-  HttpClient httpClient = new HttpClient();
+  CustomHttpClient httpClient = new CustomHttpClient();
   bool isLoaded = false;
 
   @override

@@ -1,9 +1,13 @@
+// dart
 import 'dart:io';
-import 'package:flutter/foundation.dart';
+
+// package
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// class
 import '../../modules/http.client.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +19,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPage extends State<LoginPage> {
 
   bool _autovalidate = false;
-  HttpClient httpClient = new HttpClient();
+  CustomHttpClient httpClient = new CustomHttpClient();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   bool isDisabled = false;
 
@@ -327,13 +331,6 @@ class _LoginPage extends State<LoginPage> {
                         textColor: Colors.blue,
                         onPressed: !isDisabled ? signUp : null,
                       )
-                      // child: new _CustomButton(
-                      //   text: "I'm the best",
-                      //   textColor: Colors.blue,
-                      //   onPressed: () {
-                      //     Navigator.of(context).pushNamed('/signup');
-                      //   },
-                      // ),
                     ),
                   ],
                 )
@@ -344,37 +341,6 @@ class _LoginPage extends State<LoginPage> {
       )
     );
 
-    return scaffoldAndroid;
+    return Platform.isIOS ? scaffoldIOS : scaffoldAndroid;
   }
-}
-
-class _CustomButton extends StatelessWidget {
-  _CustomButton({
-    this.inAndroid = false,
-    this.color = Colors.white,
-    this.text = '',
-    this.textColor = Colors.white,
-    @required this.onPressed,
-  });
-
-  bool inAndroid = true;
-  String text;
-  Color textColor;
-  Color color;
-  VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget buttonAndroid = new RaisedButton(
-      color: color,
-      textColor: textColor,
-      child: new Text(text),
-      onPressed: onPressed,
-    );
-
-    Widget buttonIOS = new CupertinoButton(child: null, onPressed: () {},);
-
-    return buttonAndroid;
-  }
-
 }

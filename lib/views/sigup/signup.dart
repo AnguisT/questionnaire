@@ -1,6 +1,9 @@
+// package
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// class
 import '../../modules/http.client.dart';
 import '../../models/models.dart';
 
@@ -12,7 +15,7 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPage extends State<SignupPage> {
 
-  HttpClient httpClient = new HttpClient();
+  CustomHttpClient httpClient = new CustomHttpClient();
   User user = new User();
   GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   bool _autovalidate = false;

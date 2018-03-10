@@ -1,4 +1,7 @@
+// package
 import 'package:flutter/material.dart';
+
+// class
 import '../../modules/http.client.dart';
 
 class TotalOptionPage extends StatefulWidget {
@@ -9,7 +12,7 @@ class TotalOptionPage extends StatefulWidget {
 
 class _TotalOptionPage extends State<TotalOptionPage> {
 
-  HttpClient httpClient = new HttpClient();
+  CustomHttpClient httpClient = new CustomHttpClient();
   bool isLoaded = false;
 
   @override

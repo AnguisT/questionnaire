@@ -1,9 +1,14 @@
+// dart
 import 'dart:async';
-import 'package:intl/intl.dart';
-import '../../models/models.dart';
-import 'package:flutter/material.dart';
-import '../../modules/http.client.dart';
+
+// package
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+// class
+import '../../modules/http.client.dart';
+import '../../models/models.dart';
 
 class QuestionPage extends StatefulWidget {
 
@@ -25,7 +30,7 @@ class _QuestionPage extends State<QuestionPage> {
   List<Question> questionArray = [];
   List<Answer> answerArray = [];
   List<ArrayResult> resultArray = [];
-  HttpClient httpClient = new HttpClient();
+  CustomHttpClient httpClient = new CustomHttpClient();
   Timer timer;
 
   @override
