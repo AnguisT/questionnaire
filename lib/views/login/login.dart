@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +26,7 @@ class _LoginPage extends State<LoginPage> {
 
   _saveMail(mail) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('auth_token', mail);
+    prefs.setString('mail', mail);
   }
 
   logIn() async {
@@ -60,6 +62,7 @@ class _LoginPage extends State<LoginPage> {
           Navigator.of(context).pushReplacementNamed('/home');
         }
       }).catchError((error) {
+        print(error);
         showDialog(
           context: context,
           child: new AlertDialog(
@@ -92,7 +95,7 @@ class _LoginPage extends State<LoginPage> {
     }
     final RegExp cityExp = new RegExp(r'^[a-zA-Z]');
     if (!cityExp.hasMatch(val)) {
-      print('English letters only');
+      return 'English letters only';
     }
     return null;
   }
@@ -109,108 +112,269 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      backgroundColor: Colors.blue,
-      body: new SingleChildScrollView(
-        child: new Column(
-          children: <Widget>[
-            new Container(
-              height: MediaQuery.of(context).size.height / 4,
-              child: new Center(
-                child: new Text(
-                  'Welcome to application Test Reisas',
-                  style: new TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.white
+    Widget scaffoldIOS = new CupertinoPageScaffold(
+      child: new SafeArea(
+        top: false,
+        bottom: false,
+        left: false,
+        right: false,
+        child: new SingleChildScrollView(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 3,
+                child: new Center(
+                  child: new Text(
+                    'Welcome to application Test Reisas',
+                    style: new TextStyle(
+                      fontSize: 30.0,
+                      color: Colors.white,
+                      decoration: TextDecoration.none
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ),
+              new Container(
+                padding: const EdgeInsets.all(10.0),
+                child: new Form(
+                  key: _formKey,
+                  autovalidate: _autovalidate,
+                  child: new Column(
+                    children: <Widget>[
+                      new Container(
+                        child: new TextFormField(
+                          controller: _mailController,
+                          keyboardType: TextInputType.emailAddress,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.email),
+                            labelText: 'E-mail',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter you e-mail',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          validator: _validationEmail,
+                          // onSaved: (val) => _mailController.text = val,
+                        ),
+                      ),
+                      new Container(
+                        child: new TextFormField(
+                          controller: _passwordController,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.security),
+                            labelText: 'Password',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter you password',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            )
+                          ),
+                          obscureText: true,
+                          validator: _validationPassword,
+                          // onSaved: (val) => _passwordController.text = val,
+                        ),
+                      )
+                    ]
                   ),
                 ),
-              )
-            ),
-            new Container(
-              padding: const EdgeInsets.all(10.0),
-              child: new Form(
-                key: _formKey,
-                autovalidate: _autovalidate,
+              ),
+              new Container(
+                height: 150.0,
                 child: new Column(
                   children: <Widget>[
                     new Container(
-                      child: new TextFormField(
-                        controller: _mailController,
-                        keyboardType: TextInputType.emailAddress,
-                        style: new TextStyle(
-                          color: Colors.white
-                        ),
-                        decoration: new InputDecoration(
-                          icon: const Icon(Icons.email),
-                          labelText: 'E-mail',
-                          labelStyle: new TextStyle(
-                            color: Colors.white
-                          ),
-                          hintText: 'Enter you e-mail',
-                          hintStyle: new TextStyle(
-                            color: Colors.white
-                          ),
-                        ),
-                        validator: _validationEmail,
-                        // onSaved: (val) => _mailController.text = val,
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 10.0, right: 10.0),
+                      width: MediaQuery.of(context).size.width,
+                      child: new CupertinoButton(
+                        child: new Text('Log In', style: new TextStyle(color: Colors.blue),),
+                        color: Colors.white,
+                        onPressed: !isDisabled ? logIn : null,
                       ),
                     ),
                     new Container(
-                      child: new TextFormField(
-                        controller: _passwordController,
-                        style: new TextStyle(
-                          color: Colors.white
-                        ),
-                        decoration: new InputDecoration(
-                          icon: const Icon(Icons.security),
-                          labelText: 'Password',
-                          labelStyle: new TextStyle(
+                      padding: const EdgeInsets.only(top: 5.0, bottom: 10.0, left: 10.0, right: 10.0),
+                      width: MediaQuery.of(context).size.width,
+                      child: new CupertinoButton(
+                        child: new Text('Sign Up', style: new TextStyle(color: Colors.blue),),
+                        color: Colors.white,
+                        onPressed: !isDisabled ? signUp : null,
+                      )
+                    ),
+                  ],
+                )
+              ),
+            ],
+          )
+        )
+      ),
+      backgroundColor: Colors.blue,
+    );
+
+    Widget scaffoldAndroid = new Scaffold(
+      backgroundColor: Colors.blue,
+      body: new SafeArea(
+        top: false,
+        bottom: false,
+        left: false,
+        right: false,
+        child: new SingleChildScrollView(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 3,
+                child: new Center(
+                  child: new Text(
+                    'Welcome to application Test Reisas',
+                    style: new TextStyle(
+                      fontSize: 30.0,
+                      color: Colors.white
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ),
+              new Container(
+                padding: const EdgeInsets.all(10.0),
+                child: new Form(
+                  key: _formKey,
+                  autovalidate: _autovalidate,
+                  child: new Column(
+                    children: <Widget>[
+                      new Container(
+                        child: new TextFormField(
+                          controller: _mailController,
+                          keyboardType: TextInputType.emailAddress,
+                          style: new TextStyle(
                             color: Colors.white
                           ),
-                          hintText: 'Enter you password',
-                          hintStyle: new TextStyle(
-                            color: Colors.white
-                          )
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.email),
+                            labelText: 'E-mail',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter you e-mail',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          validator: _validationEmail,
+                          // onSaved: (val) => _mailController.text = val,
                         ),
-                        obscureText: true,
-                        validator: _validationPassword,
-                        // onSaved: (val) => _passwordController.text = val,
                       ),
-                    )
-                  ]
+                      new Container(
+                        child: new TextFormField(
+                          controller: _passwordController,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.security),
+                            labelText: 'Password',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter you password',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            )
+                          ),
+                          obscureText: true,
+                          validator: _validationPassword,
+                          // onSaved: (val) => _passwordController.text = val,
+                        ),
+                      )
+                    ]
+                  ),
                 ),
               ),
-            ),
-            new Container(
-              height: 120.0,
-              child: new Column(
-                children: <Widget>[
-                  new Container(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 10.0, right: 10.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: new RaisedButton(
-                      child: new Text('Log In'),
-                      color: Colors.white,
-                      textColor: Colors.blue,
-                      onPressed: !isDisabled ? logIn : null,
+              new Container(
+                height: 120.0,
+                child: new Column(
+                  children: <Widget>[
+                    new Container(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 10.0, right: 10.0),
+                      width: MediaQuery.of(context).size.width,
+                      child: new RaisedButton(
+                        child: new Text('Log In'),
+                        color: Colors.white,
+                        textColor: Colors.blue,
+                        onPressed: !isDisabled ? logIn : null,
+                      ),
                     ),
-                  ),
-                  new Container(
-                    padding: const EdgeInsets.only(top: 5.0, bottom: 10.0, left: 10.0, right: 10.0),
-                    width: MediaQuery.of(context).size.width,
-                    child: new RaisedButton(
-                      child: new Text('Sign Up'),
-                      color: Colors.white,
-                      textColor: Colors.blue,
-                      onPressed: !isDisabled ? signUp : null,
-                    )
-                  ),
-                ],
-              )
-            ),
-          ],
+                    new Container(
+                      padding: const EdgeInsets.only(top: 5.0, bottom: 10.0, left: 10.0, right: 10.0),
+                      width: MediaQuery.of(context).size.width,
+                      child: new RaisedButton(
+                        child: new Text('Sign Up'),
+                        color: Colors.white,
+                        textColor: Colors.blue,
+                        onPressed: !isDisabled ? signUp : null,
+                      )
+                      // child: new _CustomButton(
+                      //   text: "I'm the best",
+                      //   textColor: Colors.blue,
+                      //   onPressed: () {
+                      //     Navigator.of(context).pushNamed('/signup');
+                      //   },
+                      // ),
+                    ),
+                  ],
+                )
+              ),
+            ],
+          )
         )
       )
     );
+
+    return scaffoldAndroid;
   }
+}
+
+class _CustomButton extends StatelessWidget {
+  _CustomButton({
+    this.inAndroid = false,
+    this.color = Colors.white,
+    this.text = '',
+    this.textColor = Colors.white,
+    @required this.onPressed,
+  });
+
+  bool inAndroid = true;
+  String text;
+  Color textColor;
+  Color color;
+  VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget buttonAndroid = new RaisedButton(
+      color: color,
+      textColor: textColor,
+      child: new Text(text),
+      onPressed: onPressed,
+    );
+
+    Widget buttonIOS = new CupertinoButton(child: null, onPressed: () {},);
+
+    return buttonAndroid;
+  }
+
 }

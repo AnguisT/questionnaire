@@ -31,7 +31,7 @@ class _SignupPage extends State<SignupPage> {
     }
     final RegExp cityExp = new RegExp(r'^[a-zA-Z]');
     if (!cityExp.hasMatch(val)) {
-      print('English letters only');
+      return 'Letters only';
     }
     return null;
   }
@@ -49,7 +49,7 @@ class _SignupPage extends State<SignupPage> {
     }
     final RegExp firstNameExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
     if (!firstNameExp.hasMatch(val)) {
-      print('Letters only');
+      return 'Letters only';
     }
     return null;
   }
@@ -60,7 +60,7 @@ class _SignupPage extends State<SignupPage> {
     }
     final RegExp lastNameExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
     if (!lastNameExp.hasMatch(val)) {
-      print('Letters only');
+      return 'Letters only';
     }
     return null;
   }
@@ -71,7 +71,7 @@ class _SignupPage extends State<SignupPage> {
     }
     final RegExp cityExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
     if (!cityExp.hasMatch(val)) {
-      print('Letters only');
+      return 'Letters only';
     }
     return null;
   }
@@ -145,192 +145,201 @@ class _SignupPage extends State<SignupPage> {
         title: new Text('Sign up', style: new TextStyle(color: Colors.white),),
         iconTheme: new IconThemeData(color: Colors.white),
       ),
-      body: new SingleChildScrollView(
+      body: new SafeArea(
+        top: false,
+        bottom: false,
+        left: false,
+        right: false,
         child: new Column(
           children: <Widget>[
-            new Container(
-              padding: const EdgeInsets.all(10.0),
-              child: new Form(
-                key: _formKey,
-                autovalidate: _autovalidate,
-                child: new Column(
-                  children: <Widget>[
-                    new TextFormField(
-                      controller: _mailController,
-                      keyboardType: TextInputType.emailAddress,
-                      style: new TextStyle(
-                        color: Colors.white
-                      ),
-                      decoration: new InputDecoration(
-                        icon: const Icon(Icons.email),
-                        labelText: 'E-mail',
-                        labelStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                        hintText: 'Enter your e-mail',
-                        hintStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                      validator: _validationEmail,
-                      onSaved: (val) => user.mail = val,
-                    ),
-                    new TextFormField(
-                      controller: _passwordController,
-                      style: new TextStyle(
-                        color: Colors.white
-                      ),
-                      decoration: new InputDecoration(
-                        icon: const Icon(Icons.security),
-                        labelText: 'Password',
-                        labelStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                        hintText: 'Enter your password',
-                        hintStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                      validator: _validationPassword,
-                      onSaved: (val) => user.password = val,
-                      obscureText: true,
-                    ),
-                    new TextFormField(
-                      controller: _firstNameController,
-                      keyboardType: TextInputType.text,
-                      style: new TextStyle(
-                        color: Colors.white
-                      ),
-                      decoration: new InputDecoration(
-                        icon: const Icon(Icons.people),
-                        labelText: 'First name',
-                        labelStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                        hintText: 'Enter your first name',
-                        hintStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                      validator: _validationFirstName,
-                      onSaved: (val) => user.firstName = val,
-                    ),
-                    new TextFormField(
-                      controller: _lastNameController,
-                      keyboardType: TextInputType.text,
-                      style: new TextStyle(
-                        color: Colors.white
-                      ),
-                      decoration: new InputDecoration(
-                        icon: const Icon(Icons.people_outline),
-                        labelText: 'Last name',
-                        labelStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                        hintText: 'Enter your last name',
-                        hintStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                      validator: _validationLastName,
-                      onSaved: (val) => user.lastName = val,
-                    ),
-                    new TextFormField(
-                      controller: _birthdayController,
-                      keyboardType: TextInputType.number,
-                      style: new TextStyle(
-                        color: Colors.white
-                      ),
-                      decoration: new InputDecoration(
-                        icon: const Icon(Icons.date_range),
-                        labelText: 'Birthday',
-                        labelStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                        hintText: 'Enter your birthday',
-                        hintStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                        helperText: 'Format date: yyyy-mm-dd',
-                        helperStyle: new TextStyle(
-                          color: Colors.white
-                        )
-                      ),
-                      validator: _validationBirthday,
-                      // onSaved: (val) => user. = val,
-                    ),
-                    new TextFormField(
-                      controller: _cityController,
-                      keyboardType: TextInputType.text,
-                      style: new TextStyle(
-                        color: Colors.white
-                      ),
-                      decoration: new InputDecoration(
-                        icon: const Icon(Icons.location_city),
-                        labelText: 'City',
-                        labelStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                        hintText: 'Enter your city',
-                        hintStyle: new TextStyle(
-                          color: Colors.white
-                        ),
-                      ),
-                      validator: _validationCity,
-                      onSaved: (val) => user.city = val,
-                    )
-                  ],
-                )
-              )
-            ),
-            new Container(
-              child: new Row(
-                children: <Widget>[
-                  new Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: new Row(
+            new Expanded(
+              child: new SingleChildScrollView(
+                child: new Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: new Form(
+                    key: _formKey,
+                    autovalidate: _autovalidate,
+                    child: new Column(
                       children: <Widget>[
-                        new Radio<int>(
-                          groupValue: radioValue,
-                          value: 1,
-                          activeColor: Colors.white,
-                          onChanged: (int value) {
-                            user.idSexs = value;
-                            setState(() {
-                              radioValue = value;
-                            });
-                          },
+                        new TextFormField(
+                          controller: _mailController,
+                          keyboardType: TextInputType.emailAddress,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.email),
+                            labelText: 'E-mail',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter your e-mail',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          validator: _validationEmail,
+                          onSaved: (val) => user.mail = val,
                         ),
-                        new Text(
-                          'Мужской',
-                          style: new TextStyle(color: Colors.white)
-                        )
+                        new TextFormField(
+                          controller: _passwordController,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.security),
+                            labelText: 'Password',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter your password',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          validator: _validationPassword,
+                          onSaved: (val) => user.password = val,
+                          obscureText: true,
+                        ),
+                        new TextFormField(
+                          controller: _firstNameController,
+                          keyboardType: TextInputType.text,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.people),
+                            labelText: 'First name',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter your first name',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          validator: _validationFirstName,
+                          onSaved: (val) => user.firstName = val,
+                        ),
+                        new TextFormField(
+                          controller: _lastNameController,
+                          keyboardType: TextInputType.text,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.people_outline),
+                            labelText: 'Last name',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter your last name',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          validator: _validationLastName,
+                          onSaved: (val) => user.lastName = val,
+                        ),
+                        new TextFormField(
+                          controller: _birthdayController,
+                          keyboardType: TextInputType.number,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.date_range),
+                            labelText: 'Birthday',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter your birthday',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            helperText: 'Format date: yyyy-mm-dd',
+                            helperStyle: new TextStyle(
+                              color: Colors.white
+                            )
+                          ),
+                          validator: _validationBirthday,
+                          // onSaved: (val) => user. = val,
+                        ),
+                        new TextFormField(
+                          controller: _cityController,
+                          keyboardType: TextInputType.text,
+                          style: new TextStyle(
+                            color: Colors.white
+                          ),
+                          decoration: new InputDecoration(
+                            icon: const Icon(Icons.location_city),
+                            labelText: 'City',
+                            labelStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                            hintText: 'Enter your city',
+                            hintStyle: new TextStyle(
+                              color: Colors.white
+                            ),
+                          ),
+                          validator: _validationCity,
+                          onSaved: (val) => user.city = val,
+                        ),
+                        new Container(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: new Row(
+                            children: <Widget>[
+                              new Container(
+                                width: MediaQuery.of(context).size.width / 2 - 10.0,
+                                child: new Row(
+                                  children: <Widget>[
+                                    new Radio<int>(
+                                      groupValue: radioValue,
+                                      value: 1,
+                                      activeColor: Colors.white,
+                                      onChanged: (int value) {
+                                        user.idSexs = value;
+                                        setState(() {
+                                          radioValue = value;
+                                        });
+                                      },
+                                    ),
+                                    new Text(
+                                      'Мужской',
+                                      style: new TextStyle(color: Colors.white)
+                                    )
+                                  ],
+                                )
+                              ),
+                              new Container(
+                                width: MediaQuery.of(context).size.width / 2 - 10.0,
+                                child: new Row(
+                                  children: <Widget>[
+                                    new Radio<int>(
+                                      groupValue: radioValue,
+                                      value: 2,
+                                      activeColor: Colors.white,
+                                      onChanged: (int value) {
+                                        user.idSexs = value;
+                                        setState(() {
+                                          radioValue = value;
+                                        });
+                                      },
+                                    ),
+                                    new Text(
+                                      'Женский',
+                                      style: new TextStyle(color: Colors.white)
+                                    )
+                                  ],
+                                )
+                              ),
+                            ]
+                          )
+                        ),
                       ],
                     )
-                  ),
-                  new Container(
-                    width: MediaQuery.of(context).size.width / 2,
-                    child: new Row(
-                      children: <Widget>[
-                        new Radio<int>(
-                          groupValue: radioValue,
-                          value: 2,
-                          activeColor: Colors.white,
-                          onChanged: (int value) {
-                            user.idSexs = value;
-                            setState(() {
-                              radioValue = value;
-                            });
-                          },
-                        ),
-                        new Text(
-                          'Женский',
-                          style: new TextStyle(color: Colors.white)
-                        )
-                      ],
-                    )
-                  ),
-                ]
+                  )
+                ),
               )
             ),
             new Container(
@@ -345,7 +354,7 @@ class _SignupPage extends State<SignupPage> {
             ),
           ],
         ),
-      ),
+      )
     );
 
     return body;

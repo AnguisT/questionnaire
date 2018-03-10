@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:intl/intl.dart';
 import '../../models/models.dart';
+import 'package:flutter/material.dart';
 import '../../modules/http.client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuestionPage extends StatefulWidget {
 
@@ -12,13 +15,18 @@ class _QuestionPage extends State<QuestionPage> {
 
   String title = 'Question';
   String description = 'Description';
-  HttpClient httpClient = new HttpClient();
+  String mail = '';
   int groupValue = 0;
+  int index = 0;
+  int resultEnd = 0;
+  int seconds = 0;
+  int minutes = 0;
   bool isLoaded = false;
   List<Question> questionArray = [];
   List<Answer> answerArray = [];
-  int index = 0;
   List<ArrayResult> resultArray = [];
+  HttpClient httpClient = new HttpClient();
+  Timer timer;
 
   @override
   void initState() {
@@ -34,7 +42,10 @@ class _QuestionPage extends State<QuestionPage> {
             weight: res['questions'][i]['weight']
           );
           answerArray.add(answer);
-          questionArray.last.answers = answerArray;
+          if (questionArray.last.answers.isNotEmpty) {
+            questionArray.last.answers.clear();
+          }
+          questionArray.last.answers.addAll(answerArray);
         } else {
           answerArray.clear();
           answer = new Answer(
@@ -47,6 +58,7 @@ class _QuestionPage extends State<QuestionPage> {
           Question question = new Question(
             idQuestion: res['questions'][i]['id_question'],
             description: res['questions'][i]['description'],
+            answers: []
           );
           questionArray.add(question);
           ArrayResult arrayResult = new ArrayResult(
@@ -58,7 +70,9 @@ class _QuestionPage extends State<QuestionPage> {
       setState(() {
         isLoaded = true;
       });
+      _startTimer();
     }).catchError((error) {
+      print(error);
       showDialog(
         context: context,
         child: new AlertDialog(
@@ -74,6 +88,21 @@ class _QuestionPage extends State<QuestionPage> {
           ],
         )
       );
+    });
+  }
+
+  _startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    timer = new Timer.periodic(oneSec, (Timer t) {
+      setState(() {
+        Duration dur = new Duration(seconds: seconds);
+        if (dur.inSeconds < 59) {
+          seconds += 1;
+        } else {
+          minutes++;
+          seconds = 0;
+        }
+      });
     });
   }
 
@@ -118,7 +147,7 @@ class _QuestionPage extends State<QuestionPage> {
     resultArray[index].idAnswer = questionArray[index].answers[value - 1].idAnswer;
   }
 
-  clickBtnFinish(BuildContext context) {
+  _clickBtnFinish() {
     showDialog(
       context: context,
       child: new AlertDialog(
@@ -132,13 +161,70 @@ class _QuestionPage extends State<QuestionPage> {
           ),
           new FlatButton(
             child: new Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/result');
-            },
+            onPressed: _calculateResultAndSave,
           )
         ],
       )
     );
+  }
+
+  _calculateResultAndSave() async {
+    timer.cancel();
+    resultEnd = 0;
+    for (int i = 0; i < questionArray.length; i++) {
+      questionArray[i].answers.forEach((answer) {
+        if (answer.idAnswer == resultArray[i].idAnswer) {
+          resultEnd += answer.weight;
+        }
+      });
+    }
+    await _saveResult();
+    await _getMial();
+
+    DateTime now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String date = formatter.format(now);
+
+    Duration countTime = new Duration(minutes: minutes, seconds: seconds);
+    // print('mail: ' + mail);
+    // print('date: ' + date);
+    // print('result: ' + resultEnd.toString());
+    // print('count time: ' + countTime.inSeconds.toString());
+    httpClient.saveResult(resultArray, mail, 1, date, resultEnd, countTime.inSeconds).then((res) {
+      TotalOptionsResponse totalOptionsResponse = new TotalOptionsResponse(
+        numberPoint: res['total_options'],
+        totalOptions: res['number_point']
+      );
+      response = totalOptionsResponse;
+      Navigator.of(context).pushReplacementNamed('/result');
+    }).catchError((error) {
+      print(error);
+      showDialog(
+        context: context,
+        child: new AlertDialog(
+          title: new Text('Error message'),
+          content: new Text('Check your network'),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        )
+      );
+    });
+  }
+
+  _saveResult() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('resultEnd', resultEnd);
+  }
+
+  _getMial() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    mail = prefs.getString('mail');
   }
 
   @override
@@ -161,7 +247,7 @@ class _QuestionPage extends State<QuestionPage> {
       child: new RaisedButton(
         color: Colors.blue,
         child: new Text('Next', style: new TextStyle(color: Colors.white),),
-        onPressed: _pressedNext,
+        onPressed: groupValue != 0 ? _pressedNext : null,
       ),
     );
 
@@ -171,7 +257,7 @@ class _QuestionPage extends State<QuestionPage> {
       child: new RaisedButton(
         color: Colors.blue,
         child: new Text('Finish the test', style: new TextStyle(color: Colors.white),),
-        onPressed: clickBtnFinish(context)
+        onPressed: groupValue != 0 ? _clickBtnFinish : null,
       ),
     );
 
@@ -180,9 +266,17 @@ class _QuestionPage extends State<QuestionPage> {
         title: new Text(title, style: new TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
         automaticallyImplyLeading: false,
+        centerTitle: true,
+        leading: new Container(
+          padding: const EdgeInsets.only(top: 18.0, left: 10.0),
+          child: new Text(
+            isLoaded ? minutes.toString().padLeft(2, '0') + ':' + seconds.toString().padLeft(2, '0') : '',
+            style: new TextStyle(color: Colors.white),
+          )
+        ),
         actions: <Widget>[
           new Padding(
-            padding: const EdgeInsets.only(top: 18.0),
+            padding: const EdgeInsets.only(top: 18.0, right: 10.0),
             child: new Text(
               isLoaded ? (index + 1).toString() + '/' + questionArray.length.toString() : '',
               style: new TextStyle(color: Colors.white),
@@ -190,102 +284,178 @@ class _QuestionPage extends State<QuestionPage> {
           ),
         ],
       ),
-      body: isLoaded ? new Container(
-        padding: const EdgeInsets.all(10.0),
-        child: new Column(
-          children: <Widget>[
-            new Expanded(
-              child: new Column(
-                children: <Widget>[
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: new Text(questionArray[index].description, style: new TextStyle(fontSize: 17.0)),
-                  ),
-                  new Container(
-                    child: new Row(
-                      children: <Widget>[
-                        new Radio<int>(
-                          groupValue: groupValue,
-                          value: 1,
-                          onChanged: _pressRadioButton,
+      body: isLoaded ? new SafeArea(
+        top: false,
+        bottom: false,
+        left: false,
+        right: false,
+        child: new Container(
+          padding: const EdgeInsets.all(10.0),
+          child: new Column(
+            children: <Widget>[
+              new Expanded(
+                child: new SingleChildScrollView(
+                  child: new Column(
+                    children: <Widget>[
+                      new Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: new Text(questionArray[index].description, style: new TextStyle(fontSize: 17.0)),
+                      ),
+                      new GestureDetector(
+                        child: new Container(
+                          child: new Row(
+                            children: <Widget>[
+                              new Radio<int>(
+                                groupValue: groupValue,
+                                value: 1,
+                                onChanged: _pressRadioButton,
+                              ),
+                              new Text(questionArray[index].answers[0].title)
+                            ],
+                          ),
+                          decoration: new BoxDecoration(
+                            color: Theme.of(context).canvasColor,
+                          ),
                         ),
-                        new Text(questionArray[index].answers[0].title)
-                      ],
-                    )
-                  ),
-                  new Container(
-                    child: new Row(
-                      children: <Widget>[
-                        new Radio<int>(
-                          groupValue: groupValue,
-                          value: 2,
-                          onChanged: _pressRadioButton,
+                        onTap: () {
+                          setState(() {
+                            groupValue = 1;
+                          });
+                          resultArray[index].idAnswer = questionArray[index].answers[1 - 1].idAnswer;
+                        },
+                      ),
+                      new GestureDetector(
+                        child: new Container(
+                          child: new Row(
+                            children: <Widget>[
+                              new Radio<int>(
+                                groupValue: groupValue,
+                                value: 2,
+                                onChanged: _pressRadioButton,
+                              ),
+                              new Text(questionArray[index].answers[1].title)
+                            ],
+                          ),
+                          decoration: new BoxDecoration(
+                            color: Theme.of(context).canvasColor,
+                          ),
                         ),
-                        new Text(questionArray[index].answers[1].title)
-                      ],
-                    )
-                  ),
-                  new Container(
-                    child: new Row(
-                      children: <Widget>[
-                        new Radio<int>(
-                          groupValue: groupValue,
-                          value: 3,
-                          onChanged: _pressRadioButton,
+                        onTap: () {
+                          setState(() {
+                            groupValue = 2;
+                          });
+                          resultArray[index].idAnswer = questionArray[index].answers[2 - 1].idAnswer;
+                        },
+                      ),
+                      new GestureDetector(
+                        child: new Container(
+                          child: new Row(
+                            children: <Widget>[
+                              new Radio<int>(
+                                groupValue: groupValue,
+                                value: 3,
+                                onChanged: _pressRadioButton,
+                              ),
+                              new Text(questionArray[index].answers[2].title)
+                            ],
+                          ),
+                          decoration: new BoxDecoration(
+                            color: Theme.of(context).canvasColor,
+                          ),
                         ),
-                        new Text(questionArray[index].answers[2].title)
-                      ],
-                    )
-                  ),
-                  new Container(
-                    child: new Row(
-                      children: <Widget>[
-                        new Radio<int>(
-                          groupValue: groupValue,
-                          value: 4,
-                          onChanged: _pressRadioButton,
+                        onTap: () {
+                          setState(() {
+                            groupValue = 3;
+                          });
+                          resultArray[index].idAnswer = questionArray[index].answers[3 - 1].idAnswer;
+                        },
+                      ),
+                      new GestureDetector(
+                        child: new Container(
+                          child: new Row(
+                            children: <Widget>[
+                              new Radio<int>(
+                                groupValue: groupValue,
+                                value: 4,
+                                onChanged: _pressRadioButton,
+                              ),
+                              new Text(questionArray[index].answers[3].title)
+                            ],
+                          ),
+                          decoration: new BoxDecoration(
+                            color: Theme.of(context).canvasColor,
+                          ),
                         ),
-                        new Text(questionArray[index].answers[3].title)
-                      ],
-                    )
-                  ),
-                  new Container(
-                    child: new Row(
-                      children: <Widget>[
-                        new Radio<int>(
-                          groupValue: groupValue,
-                          value: 5,
-                          onChanged: _pressRadioButton,
+                        onTap: () {
+                          setState(() {
+                            groupValue = 4;
+                          });
+                          resultArray[index].idAnswer = questionArray[index].answers[4 - 1].idAnswer;
+                        },
+                      ),
+                      new GestureDetector(
+                        child: new Container(
+                          // height: 100.0,
+                          width: MediaQuery.of(context).size.width,
+                          child: new Row(
+                            children: <Widget>[
+                              new Radio<int>(
+                                groupValue: groupValue,
+                                value: 5,
+                                onChanged: _pressRadioButton,
+                              ),
+                              new Text(questionArray[index].answers[4].title)
+                            ],
+                          ),
+                          decoration: new BoxDecoration(
+                            color: Theme.of(context).canvasColor,
+                          ),
                         ),
-                        new Text(questionArray[index].answers[4].title)
-                      ],
-                    )
-                  ),
-                  new Container(
-                    child: new Row(
-                      children: <Widget>[
-                        new Radio<int>(
-                          groupValue: groupValue,
-                          value: 6,
-                          onChanged: _pressRadioButton,
+                        onTap: () {
+                          setState(() {
+                            groupValue = 5;
+                          });
+                          resultArray[index].idAnswer = questionArray[index].answers[5 - 1].idAnswer;
+                        },
+                      ),
+                      new GestureDetector(
+                        child: new Container(
+                          child: new Row(
+                            children: <Widget>[
+                              new Radio<int>(
+                                groupValue: groupValue,
+                                value: 6,
+                                onChanged: _pressRadioButton,
+                              ),
+                              new Text(questionArray[index].answers[5].title)
+                            ],
+                          ),
+                          decoration: new BoxDecoration(
+                            color: Theme.of(context).canvasColor,
+                          ),
                         ),
-                        new Text(questionArray[index].answers[5].title)
-                      ],
-                    )
+                        onTap: () {
+                          setState(() {
+                            groupValue = 6;
+                          });
+                          resultArray[index].idAnswer = questionArray[index].answers[6 - 1].idAnswer;
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                )
               ),
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              child: new Row(
-                children: <Widget>[
-                  btnBack,
-                  index == questionArray.length - 1 ? btnFinish : btnNext
-                ],
-              )
-            ),
-          ],
+              new Container(
+                width: MediaQuery.of(context).size.width,
+                child: new Row(
+                  children: <Widget>[
+                    btnBack,
+                    index == questionArray.length - 1 ? btnFinish : btnNext
+                  ],
+                )
+              ),
+            ],
+          )
         )
       ) : lineProgress,
     );

@@ -1,5 +1,15 @@
+TotalOptionsResponse response;
+
 class User {
-  User({this.mail, this.password, this.birthday, this.idSexs, this.firstName, this.lastName, this.city});
+  User({
+    this.mail,
+    this.password,
+    this.birthday,
+    this.idSexs,
+    this.firstName,
+    this.lastName,
+    this.city
+  });
 
   String mail;
   String password;
@@ -11,14 +21,21 @@ class User {
 }
 
 class Sexs {
-  Sexs({this.idSexs, this.name});
+  Sexs({
+    this.idSexs,
+    this.name
+  }) : assert(idSexs != null && name != null);
 
   int idSexs;
   String name;
 }
 
 class Question {
-  Question({this.idQuestion, this.description, this.answers});
+  Question({
+    this.idQuestion,
+    this.description,
+    this.answers
+  }) : assert(idQuestion != null && description != null && answers != null);
 
   int idQuestion;
   String description;
@@ -26,7 +43,12 @@ class Question {
 }
 
 class Answer {
-  Answer({this.idAnswer, this.indexAnswer, this.title, this.weight});
+  Answer({
+    this.idAnswer,
+    this.indexAnswer,
+    this.title,
+    this.weight
+  }) : assert(idAnswer != null && indexAnswer != null && title != null && weight != null);
 
   int idAnswer;
   String title;
@@ -35,17 +57,55 @@ class Answer {
 }
 
 class ArrayResult {
-  ArrayResult({this.idAnswer, this.idQuestion});
+  ArrayResult({
+    this.idAnswer,
+    this.idQuestion
+  }) : assert(idQuestion != null);
 
   int idAnswer;
   int idQuestion;
+
+  Map toMap() {
+    Map map = {
+      "id_answer": this.idAnswer,
+      "id_question": this.idQuestion,
+    };
+    return map;
+  }
 }
 
 class Result {
-  Result({this.idAnswer, this.idQuestion, this.idStatistics, this.mail});
+  Result({
+    this.idAnswer,
+    this.idQuestion,
+    this.idStatistics,
+    this.mail
+  }) : assert(idAnswer != null && idQuestion != null && idStatistics != null && mail != null);
 
   int idAnswer;
   int idQuestion;
   String mail;
   int idStatistics;
+}
+
+class TotalOptions {
+  TotalOptions({
+    this.description,
+    this.fromValues,
+    this.toValues,
+  }) : assert(description != null && fromValues != null && toValues != null);
+
+  int fromValues;
+  int toValues;
+  String description;
+}
+
+class TotalOptionsResponse {
+  TotalOptionsResponse({
+    this.totalOptions,
+    this.numberPoint
+  }) : assert(totalOptions != null && numberPoint != null);
+
+  List<TotalOptions> totalOptions;
+  int numberPoint;
 }

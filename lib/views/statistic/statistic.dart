@@ -24,9 +24,35 @@ class _StatisticPage extends State<StatisticPage> {
         backgroundColor: Colors.blue,
         automaticallyImplyLeading: false,
       ),
-      body: new SingleChildScrollView(
-        padding: const EdgeInsets.all(10.0),
-        child: new Text('Statistics')
+      body: new SafeArea(
+        top: false,
+        bottom: false,
+        left: false,
+        right: false,
+        child: new Container(
+          padding: const EdgeInsets.all(10.0),
+          child: new Column(
+            children: <Widget>[
+              new Expanded(
+                child: new SingleChildScrollView(
+                  child: new Text('Statistics')
+                )
+              ),
+              new Container(
+              padding: const EdgeInsets.only(top: 10.0),
+              width: MediaQuery.of(context).size.width,
+                child: new RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  child: new Text('Return on home page'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/home');
+                  },
+                ),
+              ),
+            ],
+          )
+        )
       )
     );
   }

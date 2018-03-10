@@ -5,15 +5,18 @@ import "../models/models.dart";
 
 class HttpClient {
 
+  String urlServer = "https://salty-mesa-77909.herokuapp.com/";
+  String urlLocal = "http://192.168.90.133:5000/";
+
   Future getAllSexs() async {
-    var url = "https://salty-mesa-77909.herokuapp.com/users/sexs";
+    var url = urlLocal + "users/sexs";
     return await http.post(url).then((response) {
       return JSON.decode(response.body);
     });
   }
 
   Future getAllUsers() async {
-    var url = "https://salty-mesa-77909.herokuapp.com/users/";
+    var url = urlLocal + "users/";
     return await http.post(url).then((response) {
       return JSON.decode(response.body);
     });
@@ -25,7 +28,7 @@ class HttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = "https://salty-mesa-77909.herokuapp.com/tests/id";
+    var url = urlLocal + "tests/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -37,7 +40,7 @@ class HttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = "https://salty-mesa-77909.herokuapp.com/questions/id";
+    var url = urlLocal + "questions/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -49,9 +52,12 @@ class HttpClient {
       "password": password,
     };
     String lData = JSON.encode(body);
+    print(lData);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = "https://salty-mesa-77909.herokuapp.com/users/id";
+    var url = urlLocal + "users/id";
+    print(url);
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      print(response.body);
       return JSON.decode(response.body);
     });
   }
@@ -68,7 +74,32 @@ class HttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = "https://salty-mesa-77909.herokuapp.com/users/logup";
+    var url = urlLocal + "users/logup";
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
+  }
+
+  saveResult(List<ArrayResult> arrayResult, String mail, int idTest, String date, int numberPoint, int countTime) async {
+    var body = {
+      "results": [],
+      "statistic": {
+        "id_test": idTest,
+        "mail": mail,
+        "date": date,
+        "number_point": numberPoint,
+        "count_time": countTime
+      }
+    };
+    List array = [];
+    for (int i = 0; i < arrayResult.length; i++) {
+      array.add(arrayResult[i].toMap());
+    }
+    body["results"] = array;
+    print(body);
+    String lData = JSON.encode(body);
+    Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
+    var url = urlLocal + "results/add";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });

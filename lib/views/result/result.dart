@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../modules/http.client.dart';
+import '../../models/models.dart';
 
 class ResultPage extends StatefulWidget {
 
@@ -14,6 +15,7 @@ class _ResultPage extends State<ResultPage> {
   @override
   void initState() {
     super.initState();
+    print(response);
   }
 
   @override
@@ -24,61 +26,69 @@ class _ResultPage extends State<ResultPage> {
         backgroundColor: Colors.blue,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
-      body: new Container(
-        padding: const EdgeInsets.all(10.0),
-        child: new Column(
-          children: <Widget>[
-            new Expanded(
-              child: new Column(
-                children: <Widget>[
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: new Text(
-                      'Ваши набранные очки: 20',
-                      style: new TextStyle(fontSize: 20.0),
-                    ),
-                  ),
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: new Text(
-                      'Уверен в себе',
-                      style: new TextStyle(fontSize: 20.0),
-                    ),
-                  ),
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: new Text(
-                      'Уверенный в себе - боец, закаленный, решительный, упорный, героический, работоспособный, сильный, волевой, твердый, бесстрашный, отважный, самостоятельный.',
-                    ),
+      body: new SafeArea(
+        top: false,
+        bottom: false,
+        left: false,
+        right: false,
+        child: new Container(
+          padding: const EdgeInsets.all(10.0),
+          child: new Column(
+            children: <Widget>[
+              new SingleChildScrollView(
+                child: new Expanded(
+                  child: new Column(
+                    children: <Widget>[
+                      new Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: new Text(
+                          'Ваши набранные очки: 20',
+                          style: new TextStyle(fontSize: 20.0),
+                        ),
+                      ),
+                      new Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: new Text(
+                          'Уверен в себе',
+                          style: new TextStyle(fontSize: 20.0),
+                        ),
+                      ),
+                      new Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: new Text(
+                          'Уверенный в себе - боец, закаленный, решительный, упорный, героический, работоспособный, сильный, волевой, твердый, бесстрашный, отважный, самостоятельный.',
+                        ),
+                      )
+                    ],
                   )
-                ],
+                ),
+              ),
+              new Container(
+                padding: const EdgeInsets.only(top: 10.0),
+                width: MediaQuery.of(context).size.width,
+                child: new RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  child: new Text('Return on home page'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/home');
+                  },
+                ),
+              ),
+              new Container(
+                padding: const EdgeInsets.only(top: 10.0),
+                width: MediaQuery.of(context).size.width,
+                child: new RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  child: new Text('Look total options'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/total');
+                  },
+                ),
               )
-            ),
-            new Container(
-              padding: const EdgeInsets.only(top: 10.0),
-              width: MediaQuery.of(context).size.width,
-              child: new RaisedButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                child: new Text('Return on home page'),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/home');
-                },
-              ),
-            ),
-            new Container(
-              padding: const EdgeInsets.only(top: 10.0),
-              width: MediaQuery.of(context).size.width,
-              child: new RaisedButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                child: new Text('Look total options'),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/total');
-                },
-              ),
-            )
-          ],
+            ],
+          )
         )
       )
     );

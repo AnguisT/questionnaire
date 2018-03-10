@@ -48,36 +48,49 @@ class _TestPage extends State<TestPage> {
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(title, style: new TextStyle(color: Colors.white, fontSize: 17.0),),
+        title: new Text(
+          isLoaded ? title : 'Wait...',
+          style: new TextStyle(
+            color: Colors.white,
+            fontSize: 17.0
+          ),
+        ),
         backgroundColor: Colors.blue,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: isLoaded ? new Container(
         padding: const EdgeInsets.all(10.0),
-        child: new Column(
-          children: <Widget>[
-            new Expanded(
-              child: new Container(
-                child: new Text(
-                  description,
-                  style: new TextStyle(fontSize: 20.0)
+        child: new SafeArea(
+          top: false,
+          bottom: false,
+          left: false,
+          right: false,
+          child: new Column(
+            children: <Widget>[
+              new Expanded(
+                child: new SingleChildScrollView(
+                  child: new Container(
+                    child: new Text(
+                      description,
+                      style: new TextStyle(fontSize: 20.0)
+                    ),
+                  ),
+                )
+              ),
+              new Container(
+                padding: const EdgeInsets.only(top: 10.0),
+                width: MediaQuery.of(context).size.width,
+                child: new RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  child: new Text('Start'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/question');
+                  },
                 ),
-              ),
-            ),
-            new Container(
-              // alignment: FractionalOffset.topCenter,
-              padding: const EdgeInsets.only(top: 10.0),
-              width: MediaQuery.of(context).size.width,
-              child: new RaisedButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                child: new Text('Start'),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/question');
-                },
-              ),
-            )
-          ],
+              )
+            ],
+          )
         )
       ) : lineProgress,
     );

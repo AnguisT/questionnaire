@@ -22,33 +22,34 @@ class _TotalOptionPage extends State<TotalOptionPage> {
   Widget build(BuildContext context) {
     Widget lineProgress = new LinearProgressIndicator();
 
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Total option', style: new TextStyle(color: Colors.white),),
-        backgroundColor: Colors.blue,
-        iconTheme: new IconThemeData(color: Colors.white),
-      ),
-      body: isLoaded ? new Container(
+    Widget bodyAndroid = new SafeArea(
+      top: false,
+      bottom: false,
+      left: false,
+      right: false,
+      child: new Container(
         padding: const EdgeInsets.all(10.0),
         child: new Column(
           children: <Widget>[
             new Expanded(
-              child: new Column(
-                children: <Widget>[
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: new Text(
-                      'Уверен в себе',
-                      style: new TextStyle(fontSize: 20.0),
+              child: new SingleChildScrollView(
+                child: new Column(
+                  children: <Widget>[
+                    new Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: new Text(
+                        'Уверен в себе',
+                        style: new TextStyle(fontSize: 20.0),
+                      ),
                     ),
-                  ),
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: new Text(
-                      'Уверенный в себе - боец, закаленный, решительный, упорный, героический, работоспособный, сильный, волевой, твердый, бесстрашный, отважный, самостоятельный.',
-                    ),
-                  )
-                ],
+                    new Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: new Text(
+                        'Уверенный в себе - боец, закаленный, решительный, упорный, героический, работоспособный, сильный, волевой, твердый, бесстрашный, отважный, самостоятельный.',
+                      ),
+                    )
+                  ],
+                )
               )
             ),
             new Container(
@@ -65,7 +66,16 @@ class _TotalOptionPage extends State<TotalOptionPage> {
             ),
           ],
         )
-      ) : lineProgress
+      )
+    );
+
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('Total option', style: new TextStyle(color: Colors.white),),
+        backgroundColor: Colors.blue,
+        iconTheme: new IconThemeData(color: Colors.white),
+      ),
+      body: isLoaded ? bodyAndroid : lineProgress
     );
   }
 }
