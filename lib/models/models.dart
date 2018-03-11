@@ -111,3 +111,21 @@ class TotalOptionsResponse {
   List<TotalOptions> totalOptions;
   int numberPoint;
 }
+
+class Statistics {
+  Statistics({
+    this.date,
+    this.toTitle,
+    this.testTitle,
+    this.description,
+    this.countTime,
+    this.numberPoint,
+  }) : assert(date != null && toTitle != null && testTitle != null && description != null && countTime != null && numberPoint != null);
+
+  String date;
+  String toTitle;
+  String testTitle;
+  String description;
+  int countTime;
+  int numberPoint;
+}

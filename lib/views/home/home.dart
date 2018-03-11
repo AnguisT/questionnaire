@@ -73,7 +73,9 @@ class _HomePage extends State<HomePage> {
                       textColor: Colors.white,
                       color: Colors.blue,
                       child: new Text('Profile'),
-                      onPressed: null,
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/profile');
+                      },
                     )
                   )
                 ],

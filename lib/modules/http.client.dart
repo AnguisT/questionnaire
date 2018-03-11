@@ -63,6 +63,31 @@ class CustomHttpClient {
     });
   }
 
+  Future getAllStatistics(String mail) async {
+    var body = {
+      "mail": mail,
+      "id_test": 1,
+    };
+    String lData = JSON.encode(body);
+    Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
+    var url = urlLocal + "statistics/own";
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
+  }
+
+  Future getUserByMail(String mail) async {
+    var body = {
+      "mail": mail
+    };
+    String lData = JSON.encode(body);
+    Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
+    var url = urlLocal + "users/id";
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
+  }
+
   Future logIn(String mail, String password) async {
     var body = {
       "mail": mail,

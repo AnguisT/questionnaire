@@ -2,13 +2,14 @@
 import 'package:flutter/material.dart';
 
 // class
-import './views/login/login.dart';
 import './views/home/home.dart';
-import './views/sigup/signup.dart';
 import './views/test/test.dart';
+import './views/login/login.dart';
+import './views/sigup/signup.dart';
+import './views/result/result.dart';
+import './views/profile/profile.dart';
 import './views/question/question.dart';
 import './views/statistic/statistic.dart';
-import './views/result/result.dart';
 import './views/total.options/total.options.dart';
 
 void main() {
@@ -25,9 +26,10 @@ void main() {
         '/signup': (BuildContext context) => new SignupPage(),
         '/test': (BuildContext context) => new TestPage(),
         '/question': (BuildContext context) => new QuestionPage(),
-        '/statistics': (BuildContext context) => new StatisticPage(),
+        '/statistics': (BuildContext context) => new StatisticsPage(),
         '/result': (BuildContext context) => new ResultPage(),
-        '/totaloptions': (BuildContext context) => new TotalOptionsPage()
+        '/totaloptions': (BuildContext context) => new TotalOptionsPage(),
+        '/profile': (BuildContext context) => new ProfilePage(),
       },
     )
   );

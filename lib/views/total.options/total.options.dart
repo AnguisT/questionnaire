@@ -111,7 +111,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
 
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Total option', style: new TextStyle(color: Colors.white),),
+        title: new Text('Total options', style: new TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
         iconTheme: new IconThemeData(color: Colors.white),
       ),

@@ -66,7 +66,7 @@ class _LoginPage extends State<LoginPage> {
           Navigator.of(context).pushReplacementNamed('/home');
         }
       }).catchError((error) {
-        print('Error: ' + error);
+        print(error);
         showDialog(
           context: context,
           child: new AlertDialog(
