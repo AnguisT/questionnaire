@@ -1,7 +1,6 @@
 // package
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // class
 import '../../models/models.dart';
@@ -15,7 +14,6 @@ class StatisticsPage extends StatefulWidget {
 
 class _StatisticsPage extends State<StatisticsPage> {
 
-  String mail;
   bool isLoaded = false;
   List<Statistics> arrayStatistics = [];
   CustomHttpClient httpClient = new CustomHttpClient();
@@ -27,8 +25,8 @@ class _StatisticsPage extends State<StatisticsPage> {
   }
 
   _getMial() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    mail = prefs.getString('mail');
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // mail = prefs.getString('mail');
     _fillArray();
   }
 

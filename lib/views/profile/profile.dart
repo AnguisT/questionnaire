@@ -1,6 +1,5 @@
 // package
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // class
 import '../../models/models.dart';
@@ -15,7 +14,6 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePage extends State<ProfilePage> {
 
-  String mail;
   bool isLoaded = false;
   CustomHttpClient httpClient = new CustomHttpClient();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
@@ -25,14 +23,13 @@ class _ProfilePage extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _getMial();
   }
 
-  _getMial() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    mail = prefs.getString('mail');
-    _fillArray();
-  }
+  // _getMial() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   mail = prefs.getString('mail');
+  //   _fillArray();
+  // }
 
   _fillArray() {
     httpClient.getUserByMail(mail).then((res) {

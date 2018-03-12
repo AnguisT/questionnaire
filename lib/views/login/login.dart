@@ -1,10 +1,10 @@
 // package
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // class
+import '../../models/models.dart';
 import '../../modules/http.client.dart';
 
 class LoginPage extends StatefulWidget {
@@ -25,10 +25,10 @@ class _LoginPage extends State<LoginPage> {
     super.initState();
   }
 
-  _saveMail(mail) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('mail', mail);
-  }
+  // _saveMail(mail) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('mail', mail);
+  // }
 
   logIn() async {
     final FormState form = _formKey.currentState;
@@ -59,7 +59,7 @@ class _LoginPage extends State<LoginPage> {
             )
           );
         } else {
-          await _saveMail(res['user'][0]['mail']);
+          mail = res['user'][0]['mail'];
           Navigator.of(context).pushReplacementNamed('/home');
         }
       }).catchError((error) {

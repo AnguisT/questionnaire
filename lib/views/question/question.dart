@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // package
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +19,6 @@ class _QuestionPage extends State<QuestionPage> {
 
   String title = 'Question';
   String description = 'Description';
-  String mail = '';
   int groupValue = 0;
   int index = 0;
   int resultEnd = 0;
@@ -192,7 +190,7 @@ class _QuestionPage extends State<QuestionPage> {
     }
 
     await _saveResult();
-    await _getMial();
+    // await _getMial();
 
     DateTime now = new DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
@@ -234,14 +232,12 @@ class _QuestionPage extends State<QuestionPage> {
   }
 
   _saveResult() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('resultEnd', resultEnd);
+    resultEndModels = resultEnd;
   }
 
-  _getMial() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    mail = prefs.getString('mail');
-  }
+  // _getMial() async {
+  //   mail = prefs.getString('mail');
+  // }
 
   Future<bool> _onWillPop() async {
     bool res;
