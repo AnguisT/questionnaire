@@ -12,9 +12,10 @@ class _HomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Home page', style: new TextStyle(color: Colors.white)),
+        title: new Text('Welcome to application Test Reisas', style: new TextStyle(color: Colors.white, fontSize: 17.0)),
         backgroundColor: Colors.blue,
         automaticallyImplyLeading: false,
+        centerTitle: true,
       ),
       body: new SafeArea(
         top: false,

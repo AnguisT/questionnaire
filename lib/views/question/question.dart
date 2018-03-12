@@ -243,6 +243,34 @@ class _QuestionPage extends State<QuestionPage> {
     mail = prefs.getString('mail');
   }
 
+  Future<bool> _onWillPop() async {
+    bool res;
+    await showDialog(
+      context: context,
+      child: new AlertDialog(
+        content: new Text('Do you really want to end the test?'),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text('Cancel'),
+            onPressed: () {
+              res = false;
+              Navigator.of(context).pop();
+            },
+          ),
+          new FlatButton(
+            child: new Text('OK'),
+            onPressed: () {
+              timer.cancel();
+              res = true;
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget lineProgress = new LinearProgressIndicator();
@@ -305,173 +333,176 @@ class _QuestionPage extends State<QuestionPage> {
         bottom: false,
         left: false,
         right: false,
-        child: new Container(
-          padding: const EdgeInsets.all(10.0),
-          child: new Column(
-            children: <Widget>[
-              new Expanded(
-                child: new SingleChildScrollView(
-                  child: new Column(
-                    children: <Widget>[
-                      new Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: new Text(questionArray[index].description, style: new TextStyle(fontSize: 17.0)),
-                      ),
-                      new GestureDetector(
-                        child: new Container(
-                          child: new Row(
-                            children: <Widget>[
-                              new Radio<int>(
-                                groupValue: groupValue,
-                                value: 1,
-                                onChanged: _pressRadioButton,
-                              ),
-                              new Text(questionArray[index].answers[0].title)
-                            ],
-                          ),
-                          decoration: new BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            groupValue = 1;
-                          });
-                          resultArray[index].idAnswer = questionArray[index].answers[1 - 1].idAnswer;
-                        },
-                      ),
-                      new GestureDetector(
-                        child: new Container(
-                          child: new Row(
-                            children: <Widget>[
-                              new Radio<int>(
-                                groupValue: groupValue,
-                                value: 2,
-                                onChanged: _pressRadioButton,
-                              ),
-                              new Text(questionArray[index].answers[1].title)
-                            ],
-                          ),
-                          decoration: new BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            groupValue = 2;
-                          });
-                          resultArray[index].idAnswer = questionArray[index].answers[2 - 1].idAnswer;
-                        },
-                      ),
-                      new GestureDetector(
-                        child: new Container(
-                          child: new Row(
-                            children: <Widget>[
-                              new Radio<int>(
-                                groupValue: groupValue,
-                                value: 3,
-                                onChanged: _pressRadioButton,
-                              ),
-                              new Text(questionArray[index].answers[2].title)
-                            ],
-                          ),
-                          decoration: new BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            groupValue = 3;
-                          });
-                          resultArray[index].idAnswer = questionArray[index].answers[3 - 1].idAnswer;
-                        },
-                      ),
-                      new GestureDetector(
-                        child: new Container(
-                          child: new Row(
-                            children: <Widget>[
-                              new Radio<int>(
-                                groupValue: groupValue,
-                                value: 4,
-                                onChanged: _pressRadioButton,
-                              ),
-                              new Text(questionArray[index].answers[3].title)
-                            ],
-                          ),
-                          decoration: new BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                          ),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            groupValue = 4;
-                          });
-                          resultArray[index].idAnswer = questionArray[index].answers[4 - 1].idAnswer;
-                        },
-                      ),
-                      new GestureDetector(
-                        child: new Container(
-                          // height: 100.0,
+        child: new Form(
+          child: new Container(
+            padding: const EdgeInsets.all(10.0),
+            child: new Column(
+              children: <Widget>[
+                new Expanded(
+                  child: new SingleChildScrollView(
+                    child: new Column(
+                      children: <Widget>[
+                        new Container(
                           width: MediaQuery.of(context).size.width,
-                          child: new Row(
-                            children: <Widget>[
-                              new Radio<int>(
-                                groupValue: groupValue,
-                                value: 5,
-                                onChanged: _pressRadioButton,
-                              ),
-                              new Text(questionArray[index].answers[4].title)
-                            ],
-                          ),
-                          decoration: new BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                          ),
+                          child: new Text(questionArray[index].description, style: new TextStyle(fontSize: 17.0)),
                         ),
-                        onTap: () {
-                          setState(() {
-                            groupValue = 5;
-                          });
-                          resultArray[index].idAnswer = questionArray[index].answers[5 - 1].idAnswer;
-                        },
-                      ),
-                      new GestureDetector(
-                        child: new Container(
-                          child: new Row(
-                            children: <Widget>[
-                              new Radio<int>(
-                                groupValue: groupValue,
-                                value: 6,
-                                onChanged: _pressRadioButton,
-                              ),
-                              new Text(questionArray[index].answers[5].title)
-                            ],
+                        new GestureDetector(
+                          child: new Container(
+                            child: new Row(
+                              children: <Widget>[
+                                new Radio<int>(
+                                  groupValue: groupValue,
+                                  value: 1,
+                                  onChanged: _pressRadioButton,
+                                ),
+                                new Text(questionArray[index].answers[0].title)
+                              ],
+                            ),
+                            decoration: new BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                            ),
                           ),
-                          decoration: new BoxDecoration(
-                            color: Theme.of(context).canvasColor,
-                          ),
+                          onTap: () {
+                            setState(() {
+                              groupValue = 1;
+                            });
+                            resultArray[index].idAnswer = questionArray[index].answers[1 - 1].idAnswer;
+                          },
                         ),
-                        onTap: () {
-                          setState(() {
-                            groupValue = 6;
-                          });
-                          resultArray[index].idAnswer = questionArray[index].answers[6 - 1].idAnswer;
-                        },
-                      ),
+                        new GestureDetector(
+                          child: new Container(
+                            child: new Row(
+                              children: <Widget>[
+                                new Radio<int>(
+                                  groupValue: groupValue,
+                                  value: 2,
+                                  onChanged: _pressRadioButton,
+                                ),
+                                new Text(questionArray[index].answers[1].title)
+                              ],
+                            ),
+                            decoration: new BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              groupValue = 2;
+                            });
+                            resultArray[index].idAnswer = questionArray[index].answers[2 - 1].idAnswer;
+                          },
+                        ),
+                        new GestureDetector(
+                          child: new Container(
+                            child: new Row(
+                              children: <Widget>[
+                                new Radio<int>(
+                                  groupValue: groupValue,
+                                  value: 3,
+                                  onChanged: _pressRadioButton,
+                                ),
+                                new Text(questionArray[index].answers[2].title)
+                              ],
+                            ),
+                            decoration: new BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              groupValue = 3;
+                            });
+                            resultArray[index].idAnswer = questionArray[index].answers[3 - 1].idAnswer;
+                          },
+                        ),
+                        new GestureDetector(
+                          child: new Container(
+                            child: new Row(
+                              children: <Widget>[
+                                new Radio<int>(
+                                  groupValue: groupValue,
+                                  value: 4,
+                                  onChanged: _pressRadioButton,
+                                ),
+                                new Text(questionArray[index].answers[3].title)
+                              ],
+                            ),
+                            decoration: new BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              groupValue = 4;
+                            });
+                            resultArray[index].idAnswer = questionArray[index].answers[4 - 1].idAnswer;
+                          },
+                        ),
+                        new GestureDetector(
+                          child: new Container(
+                            // height: 100.0,
+                            width: MediaQuery.of(context).size.width,
+                            child: new Row(
+                              children: <Widget>[
+                                new Radio<int>(
+                                  groupValue: groupValue,
+                                  value: 5,
+                                  onChanged: _pressRadioButton,
+                                ),
+                                new Text(questionArray[index].answers[4].title)
+                              ],
+                            ),
+                            decoration: new BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              groupValue = 5;
+                            });
+                            resultArray[index].idAnswer = questionArray[index].answers[5 - 1].idAnswer;
+                          },
+                        ),
+                        new GestureDetector(
+                          child: new Container(
+                            child: new Row(
+                              children: <Widget>[
+                                new Radio<int>(
+                                  groupValue: groupValue,
+                                  value: 6,
+                                  onChanged: _pressRadioButton,
+                                ),
+                                new Text(questionArray[index].answers[5].title)
+                              ],
+                            ),
+                            decoration: new BoxDecoration(
+                              color: Theme.of(context).canvasColor,
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              groupValue = 6;
+                            });
+                            resultArray[index].idAnswer = questionArray[index].answers[6 - 1].idAnswer;
+                          },
+                        ),
+                      ],
+                    ),
+                  )
+                ),
+                new Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: new Row(
+                    children: <Widget>[
+                      btnBack,
+                      index == questionArray.length - 1 ? btnFinish : btnNext
                     ],
-                  ),
-                )
-              ),
-              new Container(
-                width: MediaQuery.of(context).size.width,
-                child: new Row(
-                  children: <Widget>[
-                    btnBack,
-                    index == questionArray.length - 1 ? btnFinish : btnNext
-                  ],
-                )
-              ),
-            ],
-          )
+                  )
+                ),
+              ],
+            )
+          ),
+          onWillPop: _onWillPop,
         )
       ) : lineProgress,
     );

@@ -51,6 +51,13 @@ class _ResultPage extends State<ResultPage> {
                       new Container(
                         width: MediaQuery.of(context).size.width,
                         child: new Text(
+                          'From points ${response.totalOptions[0].fromValues} to points ${response.totalOptions[0].toValues}',
+                          style: new TextStyle(fontSize: 20.0),
+                        ),
+                      ),
+                      new Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: new Text(
                           response.totalOptions[0].title,
                           style: new TextStyle(fontSize: 20.0),
                         ),

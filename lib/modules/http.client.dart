@@ -14,14 +14,14 @@ class CustomHttpClient {
   String urlLocal = "https://gentle-journey-37004.herokuapp.com/";
 
   Future getAllSexs() async {
-    var url = urlLocal + "users/sexs";
+    var url = urlServer + "users/sexs";
     return await http.post(url).then((response) {
       return JSON.decode(response.body);
     });
   }
 
   Future getAllUsers() async {
-    var url = urlLocal + "users/";
+    var url = urlServer + "users/";
     return await http.post(url).then((response) {
       return JSON.decode(response.body);
     });
@@ -33,7 +33,7 @@ class CustomHttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = urlLocal + "tests/id";
+    var url = urlServer + "tests/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -45,7 +45,7 @@ class CustomHttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = urlLocal + "questions/id";
+    var url = urlServer + "questions/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -53,11 +53,11 @@ class CustomHttpClient {
 
   Future getAllTotalOptions() async {
     var body = {
-      "id_tests": 1,
+      "id_test": 1,
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = urlLocal + "totaloptions/";
+    var url = urlServer + "totaloptions/";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -70,7 +70,7 @@ class CustomHttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = urlLocal + "statistics/own";
+    var url = urlServer + "statistics/own";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -82,7 +82,7 @@ class CustomHttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = urlLocal + "users/id";
+    var url = urlServer + "users/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -95,7 +95,7 @@ class CustomHttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = urlLocal + "users/id";
+    var url = urlServer + "users/login";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -113,7 +113,7 @@ class CustomHttpClient {
     };
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = urlLocal + "users/logup";
+    var url = urlServer + "users/logup";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     });
@@ -137,8 +137,26 @@ class CustomHttpClient {
     body["results"] = array;
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
-    var url = urlLocal + "results/add";
+    var url = urlServer + "results/add";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      return JSON.decode(response.body);
+    });
+  }
+
+  updateUser(User user) async {
+    var body = {
+      "mail": user.mail,
+      "password": user.password,
+      "first_name": user.firstName,
+      "last_name": user.lastName,
+      "city": user.city,
+    };
+    print(body);
+    String lData = JSON.encode(body);
+    Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
+    var url = urlServer + "users/update";
+    return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      print(response.body);
       return JSON.decode(response.body);
     });
   }

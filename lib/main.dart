@@ -9,7 +9,8 @@ import './views/sigup/signup.dart';
 import './views/result/result.dart';
 import './views/profile/profile.dart';
 import './views/question/question.dart';
-import './views/statistic/statistic.dart';
+import './views/statistics/statistics.dart';
+import './views/statistics/desc.statistics.dart';
 import './views/total.options/total.options.dart';
 
 void main() {
@@ -30,6 +31,7 @@ void main() {
         '/result': (BuildContext context) => new ResultPage(),
         '/totaloptions': (BuildContext context) => new TotalOptionsPage(),
         '/profile': (BuildContext context) => new ProfilePage(),
+        '/descstatistics': (BuildContext context) => new DescStatisticsPage(),
       },
     )
   );

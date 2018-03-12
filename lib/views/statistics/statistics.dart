@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // class
-import '../../modules/http.client.dart';
 import '../../models/models.dart';
+import '../../modules/http.client.dart';
 
 class StatisticsPage extends StatefulWidget {
 
@@ -58,27 +58,17 @@ class _StatisticsPage extends State<StatisticsPage> {
   }
 
   _getMoreInformatino(Statistics item) {
-    showDialog(
-      context: context,
-      child: new AlertDialog(
-        title: new Text('Information'),
-        content: new Column(
-          children: <Widget>[
-            new Text('Your result: ' + item.toTitle),
-            new Text('Amount recruited points: ' + item.numberPoint.toString()),
-            new Text('The amount of time spent on the test: ' + item.numberPoint.toString()),
-          ],
-        ),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }
-          )
-        ],
-      )
+    Statistics stat = new Statistics(
+      countTime: item.countTime,
+      date: item.date,
+      description: item.description,
+      numberPoint: item.numberPoint,
+      testTitle: item.testTitle,
+      toTitle: item.toTitle
     );
+    descStatistics = stat;
+
+    Navigator.of(context).pushNamed('/descstatistics');
   }
 
   Widget buildListStatistics(BuildContext context, Statistics item) {

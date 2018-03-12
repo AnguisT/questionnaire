@@ -1,11 +1,11 @@
 // package
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // class
 import '../../models/models.dart';
 import '../../modules/http.client.dart';
+import '../../models/widget.models.dart';
 
 class ProfilePage extends StatefulWidget {
 
@@ -18,7 +18,9 @@ class _ProfilePage extends State<ProfilePage> {
   String mail;
   bool isLoaded = false;
   CustomHttpClient httpClient = new CustomHttpClient();
-  User statistics;
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  User user;
+  TextEditingController _userController = new TextEditingController();
 
   @override
   void initState() {
@@ -35,7 +37,7 @@ class _ProfilePage extends State<ProfilePage> {
   _fillArray() {
     httpClient.getUserByMail(mail).then((res) {
       setState(() {
-        statistics = new User(
+        user = new User(
           mail: res['users'][0]['mail'],
           password: res['users'][0]['password'],
           firstName: res['users'][0]['first_name'],
@@ -49,92 +51,113 @@ class _ProfilePage extends State<ProfilePage> {
     });
   }
 
-  _changePassword() {
+  String _validationPassword(val) {
+    if (val.length < 6) {
+      return 'Password too short';
+    }
+    return null;
+  }
+
+  String _validationOther(val) {
+    if (val.length < 1) {
+      return 'Too short';
+    }
+    final RegExp exp = new RegExp(r'^[a-zA-Zа-яА-Я]');
+    if (!exp.hasMatch(val)) {
+      return 'Letters only';
+    }
+    return null;
+  }
+
+  _changeUser(String text, { bool password: false, bool firstName: false, bool lastName: false, bool city: false }) {
+    String title = 'Change';
+
+    User updateUser = new User();
+
+    if (password) {
+      title = 'Change password';
+    } else if (firstName) {
+      title = 'Change first name';
+    } else if (lastName) {
+      title = 'Change last name';
+    } else if (city) {
+      title = 'Change city';
+    }
+
     showDialog(
       context: context,
-      child: new AlertDialog(
-        title: new Text('Change'),
-        content: new Container(),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+      child: new SystemPadding(
+        child: new AlertDialog(
+          title: new Text(title),
+          content: new Form(
+            key: _formKey,
+            autovalidate: true,
+            child: new TextFormField(
+              controller: _userController,
+              decoration: new InputDecoration(
+                hintText: text
+              ),
+              validator: (val) {
+                if (password) {
+                  return _validationPassword(val);
+                } else {
+                  return _validationOther(val);
+                }
+              },
+            ),
           ),
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: () {},
-          ),
-        ],
-      )
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text('OK'),
+              onPressed: () {
+                updateUser.mail = mail;
+                if (password) {
+                  updateUser.password = _userController.text;
+                  updateUser.firstName = user.firstName;
+                  updateUser.lastName= user.lastName;
+                  updateUser.city = user.city;
+                } else if (firstName) {
+                  updateUser.password = user.password;
+                  updateUser.firstName = _userController.text;
+                  updateUser.lastName= user.lastName;
+                  updateUser.city = user.city;
+                } else if (lastName) {
+                  updateUser.password = user.password;
+                  updateUser.firstName = user.firstName;
+                  updateUser.lastName= _userController.text;
+                  updateUser.city = user.city;
+                } else if (city) {
+                  updateUser.password = user.password;
+                  updateUser.firstName = user.firstName;
+                  updateUser.lastName= user.lastName;
+                  updateUser.city = _userController.text;
+                }
+                _updateUser(updateUser);
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  _changeFirstName() {
-    showDialog(
-      context: context,
-      child: new AlertDialog(
-        title: new Text('Change'),
-        content: new Container(),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: () {},
-          ),
-        ],
-      )
-    );
-  }
-
-  _changeLastName() {
-    showDialog(
-      context: context,
-      child: new AlertDialog(
-        title: new Text('Change'),
-        content: new Container(),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: () {},
-          ),
-        ],
-      )
-    );
-  }
-
-  _changeCity() {
-    showDialog(
-      context: context,
-      child: new AlertDialog(
-        title: new Text('Change'),
-        content: new Container(),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: () {},
-          ),
-        ],
-      )
-    );
+  _updateUser(User updateUser) {
+    final FormState form = _formKey.currentState;
+    if (form.validate()) {
+      Navigator.of(context).pop();
+      setState(() {
+        isLoaded = false;
+      });
+      httpClient.updateUser(updateUser).then((res) {
+        _fillArray();
+      });
+    }
   }
 
   @override
@@ -162,7 +185,7 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Mail: ' + statistics.mail
+                          'Mail: ' + user.mail
                         ),
                       ),
                     ),
@@ -173,44 +196,52 @@ class _ProfilePage extends State<ProfilePage> {
                           'Change password',
                         ),
                         trailing: new Icon(Icons.edit),
-                        onTap: _changePassword,
+                        onTap: () {
+                          _changeUser(user.password, password: true);
+                        },
                       ),
                     ),
                     new Divider(),
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'First name: ' + statistics.firstName,
+                          'First name: ' + user.firstName,
                         ),
                         trailing: new Icon(Icons.edit),
-                        onTap: _changeFirstName,
+                        onTap: () {
+                          _changeUser(user.firstName, firstName: true);
+                        },
                       ),
                     ),
                     new Divider(),
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Last name: ' + statistics.lastName,
+                          'Last name: ' + user.lastName,
                         ),
                         trailing: new Icon(Icons.edit),
-                        onTap: _changeLastName,
+                        onTap: () {
+                          _changeUser(user.lastName, lastName: true);
+                        },
                       ),
                     ),
                     new Divider(),
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'City: ' + statistics.city,
+                          'City: ' + user.city,
                         ),
                         trailing: new Icon(Icons.edit),
-                        onTap: _changeCity,
+                        onTap: () {
+                          _changeUser(user.city, city: true);
+                        },
                       ),
                     ),
                     new Divider(),
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Birthday: ${statistics.birthday.year.toString()}-${statistics.birthday.month.toString().padLeft(2, '0')}-${statistics.birthday.day.toString().padLeft(2, '0')}',
+                          'Birthday: ${user.birthday.year.toString()}-${user.birthday.month.toString().padLeft(2, '0')}-${user.birthday.day.toString().padLeft(2, '0')}',
                         ),
                       ),
                     ),
@@ -218,7 +249,7 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Sexs: ' + (statistics.idSexs == 1 ? 'Мужской' : 'Женский'),
+                          'Sex: ' + (user.idSexs == 1 ? 'Мужской' : 'Женский'),
                         ),
                       ),
                     ),

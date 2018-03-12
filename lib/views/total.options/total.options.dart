@@ -22,7 +22,6 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
   void initState() {
     super.initState();
     httpClient.getAllTotalOptions().then((res) {
-      print(res);
       setState(() {
         for (int i = 0; i < res['total_options'].length; i++) {
           TotalOptions totalOptions = new TotalOptions(
@@ -58,16 +57,21 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
 
   Widget buildListTotalOptions(BuildContext context, TotalOptions item) {
     return new MergeSemantics(
-      child: new Container(
-        child: new ListTile(
-          title: new Text(item.title),
-          subtitle: new Text(
-            'From ${item.fromValues.toString()} points to ${item.toValues.toString()} points',
+      child: new Column(
+        children: <Widget>[
+          new Container(
+            child: new ListTile(
+              title: new Text(item.title),
+              subtitle: new Text(
+                'From ${item.fromValues.toString()} points to ${item.toValues.toString()} points',
+              ),
+              onTap: () {
+                _getDescripition(item.description);
+              }
+            ),
           ),
-          onTap: () {
-            _getDescripition(item.description);
-          }
-        ),
+          new Divider(),
+        ],
       )
     );
   }

@@ -1,6 +1,3 @@
-// dart
-import 'dart:io';
-
 // package
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,7 +39,7 @@ class _LoginPage extends State<LoginPage> {
       });
       form.save();
       await httpClient.logIn(_mailController.text, _passwordController.text).then((res) async {
-        if (res['users'].length == 0) {
+        if (res['user'].length == 0) {
           showDialog(
             context: context,
             child: new AlertDialog(
@@ -62,7 +59,7 @@ class _LoginPage extends State<LoginPage> {
             )
           );
         } else {
-          await _saveMail(res['users'][0]['mail']);
+          await _saveMail(res['user'][0]['mail']);
           Navigator.of(context).pushReplacementNamed('/home');
         }
       }).catchError((error) {
@@ -95,7 +92,7 @@ class _LoginPage extends State<LoginPage> {
 
   String _validationEmail(val) {
     if (!val.contains('@')) {
-      return 'Not a valid email.';
+      return 'Not a valid email';
     }
     final RegExp cityExp = new RegExp(r'^[a-zA-Z]');
     if (!cityExp.hasMatch(val)) {
@@ -106,7 +103,7 @@ class _LoginPage extends State<LoginPage> {
 
   String _validationPassword(val) {
     if (val.length < 6) {
-      return 'Password too short.';
+      return 'Password too short';
     }
     return null;
   }
@@ -116,118 +113,6 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget scaffoldIOS = new CupertinoPageScaffold(
-      child: new SafeArea(
-        top: false,
-        bottom: false,
-        left: false,
-        right: false,
-        child: new SingleChildScrollView(
-          child: new Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3,
-                child: new Center(
-                  child: new Text(
-                    'Welcome to application Test Reisas',
-                    style: new TextStyle(
-                      fontSize: 30.0,
-                      color: Colors.white,
-                      decoration: TextDecoration.none
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                )
-              ),
-              new Container(
-                padding: const EdgeInsets.all(10.0),
-                child: new Form(
-                  key: _formKey,
-                  autovalidate: _autovalidate,
-                  child: new Column(
-                    children: <Widget>[
-                      new Container(
-                        child: new TextFormField(
-                          controller: _mailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: new TextStyle(
-                            color: Colors.white
-                          ),
-                          decoration: new InputDecoration(
-                            icon: const Icon(Icons.email),
-                            labelText: 'E-mail',
-                            labelStyle: new TextStyle(
-                              color: Colors.white
-                            ),
-                            hintText: 'Enter you e-mail',
-                            hintStyle: new TextStyle(
-                              color: Colors.white
-                            ),
-                          ),
-                          validator: _validationEmail,
-                          // onSaved: (val) => _mailController.text = val,
-                        ),
-                      ),
-                      new Container(
-                        child: new TextFormField(
-                          controller: _passwordController,
-                          style: new TextStyle(
-                            color: Colors.white
-                          ),
-                          decoration: new InputDecoration(
-                            icon: const Icon(Icons.security),
-                            labelText: 'Password',
-                            labelStyle: new TextStyle(
-                              color: Colors.white
-                            ),
-                            hintText: 'Enter you password',
-                            hintStyle: new TextStyle(
-                              color: Colors.white
-                            )
-                          ),
-                          obscureText: true,
-                          validator: _validationPassword,
-                          // onSaved: (val) => _passwordController.text = val,
-                        ),
-                      )
-                    ]
-                  ),
-                ),
-              ),
-              new Container(
-                height: 150.0,
-                child: new Column(
-                  children: <Widget>[
-                    new Container(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 10.0, right: 10.0),
-                      width: MediaQuery.of(context).size.width,
-                      child: new CupertinoButton(
-                        child: new Text('Log In', style: new TextStyle(color: Colors.blue),),
-                        color: Colors.white,
-                        onPressed: !isDisabled ? logIn : null,
-                      ),
-                    ),
-                    new Container(
-                      padding: const EdgeInsets.only(top: 5.0, bottom: 10.0, left: 10.0, right: 10.0),
-                      width: MediaQuery.of(context).size.width,
-                      child: new CupertinoButton(
-                        child: new Text('Sign Up', style: new TextStyle(color: Colors.blue),),
-                        color: Colors.white,
-                        onPressed: !isDisabled ? signUp : null,
-                      )
-                    ),
-                  ],
-                )
-              ),
-            ],
-          )
-        )
-      ),
-      backgroundColor: Colors.blue,
-    );
-
     Widget scaffoldAndroid = new Scaffold(
       backgroundColor: Colors.blue,
       body: new SafeArea(
@@ -279,7 +164,6 @@ class _LoginPage extends State<LoginPage> {
                             ),
                           ),
                           validator: _validationEmail,
-                          // onSaved: (val) => _mailController.text = val,
                         ),
                       ),
                       new Container(
@@ -301,7 +185,6 @@ class _LoginPage extends State<LoginPage> {
                           ),
                           obscureText: true,
                           validator: _validationPassword,
-                          // onSaved: (val) => _passwordController.text = val,
                         ),
                       )
                     ]
@@ -341,6 +224,6 @@ class _LoginPage extends State<LoginPage> {
       )
     );
 
-    return Platform.isIOS ? scaffoldIOS : scaffoldAndroid;
+    return scaffoldAndroid;
   }
 }

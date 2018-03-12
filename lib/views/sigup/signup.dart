@@ -293,48 +293,70 @@ class _SignupPage extends State<SignupPage> {
                           child: new Row(
                             children: <Widget>[
                               new Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.blue,
+                                ),
                                 width: MediaQuery.of(context).size.width / 2 - 10.0,
-                                child: new Row(
-                                  children: <Widget>[
-                                    new Radio<int>(
-                                      groupValue: radioValue,
-                                      value: 1,
-                                      activeColor: Colors.white,
-                                      onChanged: (int value) {
-                                        user.idSexs = value;
-                                        setState(() {
-                                          radioValue = value;
-                                        });
-                                      },
-                                    ),
-                                    new Text(
-                                      'Мужской',
-                                      style: new TextStyle(color: Colors.white)
-                                    )
-                                  ],
-                                )
+                                child: new GestureDetector(
+                                  child: new Row(
+                                    children: <Widget>[
+                                      new Radio<int>(
+                                        groupValue: radioValue,
+                                        value: 1,
+                                        activeColor: Colors.white,
+                                        onChanged: (int value) {
+                                          user.idSexs = value;
+                                          setState(() {
+                                            radioValue = value;
+                                          });
+                                        },
+                                      ),
+                                      new Text(
+                                        'Мужской',
+                                        style: new TextStyle(color: Colors.white)
+                                      )
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    user.idSexs = 1;
+                                    setState(() {
+                                      radioValue = 1;
+                                    });
+                                  }
+                                ),
                               ),
                               new Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.blue,
+                                ),
                                 width: MediaQuery.of(context).size.width / 2 - 10.0,
-                                child: new Row(
-                                  children: <Widget>[
-                                    new Radio<int>(
-                                      groupValue: radioValue,
-                                      value: 2,
-                                      activeColor: Colors.white,
-                                      onChanged: (int value) {
-                                        user.idSexs = value;
-                                        setState(() {
-                                          radioValue = value;
-                                        });
-                                      },
-                                    ),
-                                    new Text(
-                                      'Женский',
-                                      style: new TextStyle(color: Colors.white)
-                                    )
-                                  ],
-                                )
+                                child: new GestureDetector(
+                                  child: new Row(
+                                    children: <Widget>[
+                                      new Radio<int>(
+                                        groupValue: radioValue,
+                                        value: 2,
+                                        activeColor: Colors.white,
+                                        onChanged: (int value) {
+                                          user.idSexs = value;
+                                          setState(() {
+                                            radioValue = value;
+                                          });
+                                        },
+                                      ),
+                                      new Text(
+                                        'Женский',
+                                        style: new TextStyle(color: Colors.white)
+                                      )
+                                    ],
+                                  ),
+                                  onTap: () {
+                                    user.idSexs = 2;
+                                    setState(() {
+                                      radioValue = 2;
+                                    });
+                                  },
+                                ),
                               ),
                             ]
                           )

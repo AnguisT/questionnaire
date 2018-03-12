@@ -1,4 +1,5 @@
 TotalOptionsResponse response;
+Statistics descStatistics;
 
 class User {
   User({
@@ -129,3 +130,21 @@ class Statistics {
   int countTime;
   int numberPoint;
 }
+
+// class DescStatistics {
+//   DescStatistics({
+//     this.date,
+//     this.toTitle,
+//     this.testTitle,
+//     this.description,
+//     this.countTime,
+//     this.numberPoint,
+//   }) : assert(date != null && toTitle != null && testTitle != null && description != null && countTime != null && numberPoint != null);
+
+//   String date;
+//   String toTitle;
+//   String testTitle;
+//   String description;
+//   int countTime;
+//   int numberPoint;
+// }
