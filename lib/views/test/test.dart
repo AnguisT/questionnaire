@@ -75,7 +75,8 @@ class _TestPage extends State<TestPage> {
                   child: new Container(
                     child: new Text(
                       description,
-                      style: new TextStyle(fontSize: 20.0)
+                      textAlign: TextAlign.justify,
+                      style: new TextStyle(fontSize: 18.0)
                     ),
                   ),
                 )
@@ -88,7 +89,7 @@ class _TestPage extends State<TestPage> {
                   textColor: Colors.white,
                   child: new Text('Start'),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/question');
+                    Navigator.of(context).pushReplacementNamed('/question');
                   },
                 ),
               )

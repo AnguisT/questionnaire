@@ -42,30 +42,51 @@ class _ResultPage extends State<ResultPage> {
                   child: new Column(
                     children: <Widget>[
                       new Container(
+                        padding: const EdgeInsets.only(bottom: 10.0),
                         width: MediaQuery.of(context).size.width,
-                        child: new Text(
-                          'You have recruited ' + response.numberPoint.toString() + ' points',
-                          style: new TextStyle(fontSize: 20.0),
-                        ),
+                        child: new Row(
+                          children: <Widget>[
+                            new Text(
+                              'You scored the following points: ',
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                            new Text(
+                              response.numberPoint.toString(),
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                          ],
+                        )
                       ),
                       new Container(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
                         width: MediaQuery.of(context).size.width,
                         child: new Text(
                           'From points ${response.totalOptions[0].fromValues} to points ${response.totalOptions[0].toValues}',
-                          style: new TextStyle(fontSize: 20.0),
+                          style: new TextStyle(fontSize: 16.0),
                         ),
                       ),
                       new Container(
                         width: MediaQuery.of(context).size.width,
-                        child: new Text(
-                          response.totalOptions[0].title,
-                          style: new TextStyle(fontSize: 20.0),
-                        ),
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 13.5),
+                        child: new Row(
+                          children: <Widget>[
+                            new Text(
+                              'Your result: ',
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                            new Text(
+                              response.totalOptions[0].title,
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                          ],
+                        )
                       ),
                       new Container(
                         width: MediaQuery.of(context).size.width,
                         child: new Text(
-                          response.totalOptions[0].description
+                          response.totalOptions[0].description,
+                          textAlign: TextAlign.justify,
+                          style: new TextStyle(fontSize: 16.0, height: 1.5),
                         ),
                       )
                     ],
@@ -78,9 +99,9 @@ class _ResultPage extends State<ResultPage> {
                 child: new RaisedButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  child: new Text('Return on home page'),
+                  child: new Text('Look statistics'),
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed('/home');
+                    Navigator.of(context).pushReplacementNamed('/statistics');
                   },
                 ),
               ),
@@ -92,7 +113,7 @@ class _ResultPage extends State<ResultPage> {
                   textColor: Colors.white,
                   child: new Text('Look total options'),
                   onPressed: () {
-                    Navigator.of(context).pushReplacementNamed('/total');
+                    Navigator.of(context).pushReplacementNamed('/totaloptions');
                   },
                 ),
               )

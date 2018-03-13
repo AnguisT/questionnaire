@@ -115,18 +115,6 @@ class _StatisticsPage extends State<StatisticsPage> {
                   children: listStatistics.toList(),
                 )
               ),
-              new Container(
-                padding: const EdgeInsets.only(top: 10.0),
-                width: MediaQuery.of(context).size.width,
-                child: new RaisedButton(
-                  color: Colors.blue,
-                  textColor: Colors.white,
-                  child: new Text('Return on home page'),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/home');
-                  },
-                ),
-              ),
             ],
           )
         )

@@ -98,6 +98,9 @@ class CustomHttpClient {
     var url = urlServer + "users/login";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      print('qwerty');
+      return 'Error';
     });
   }
 

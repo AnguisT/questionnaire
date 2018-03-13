@@ -23,6 +23,9 @@ class _LoginPage extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
   }
 
   // _saveMail(mail) async {
@@ -60,6 +63,7 @@ class _LoginPage extends State<LoginPage> {
           );
         } else {
           mail = res['user'][0]['mail'];
+          firstNameForHomePage = res['user'][0]['first_name'];
           Navigator.of(context).pushReplacementNamed('/home');
         }
       }).catchError((error) {

@@ -1,4 +1,8 @@
+// package
 import 'package:flutter/material.dart';
+
+// class
+import '../../models/models.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -12,7 +16,13 @@ class _HomePage extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Welcome to application Test Reisas', style: new TextStyle(color: Colors.white, fontSize: 17.0)),
+        title: new Text(
+          'Welcome to application Test Reisas',
+          style: new TextStyle(
+            color: Colors.white,
+            fontSize: 17.0
+          )
+        ),
         backgroundColor: Colors.blue,
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -22,65 +32,74 @@ class _HomePage extends State<HomePage> {
         bottom: false,
         left: false,
         right: false,
-        child: new SingleChildScrollView(
+        child: new Center(
           child: new Container(
-            child: new Center(
-              child: new Column(
-                children: <Widget>[
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 100.0,
-                    padding: const EdgeInsets.all(10.0),
-                    child: new RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: new Text('Start test'),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/test');
-                      },
-                    )
-                  ),
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 100.0,
-                    padding: const EdgeInsets.all(10.0),
-                    child: new RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: new Text('Look statistics'),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/statistics');
-                      },
-                    )
-                  ),
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 100.0,
-                    padding: const EdgeInsets.all(10.0),
-                    child: new RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: new Text('Total options'),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/totaloptions');
-                      },
-                    )
-                  ),
-                  new Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 100.0,
-                    padding: const EdgeInsets.all(10.0),
-                    child: new RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.blue,
-                      child: new Text('Profile'),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/profile');
-                      },
-                    )
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: 80.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: new Text(
+                    'Hello ' + firstNameForHomePage,
+                    textAlign: TextAlign.center,
+                    style: new TextStyle(fontSize: 17.0),
                   )
-                ],
-              )
+                ),
+                new Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: 80.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: new RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    child: new Text('Start test'),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/test');
+                    },
+                  )
+                ),
+                new Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: 80.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: new RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    child: new Text('Look statistics'),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/statistics');
+                    },
+                  )
+                ),
+                new Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: 80.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: new RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    child: new Text('Total options'),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/totaloptions');
+                    },
+                  )
+                ),
+                new Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: 80.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: new RaisedButton(
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    child: new Text('Profile'),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/profile');
+                    },
+                  )
+                )
+              ],
             )
           )
         )

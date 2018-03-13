@@ -1,6 +1,7 @@
 TotalOptionsResponse response;
 Statistics descStatistics;
 String mail;
+String firstNameForHomePage;
 int resultEndModels;
 
 class User {

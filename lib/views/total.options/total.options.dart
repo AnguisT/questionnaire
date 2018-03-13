@@ -65,6 +65,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
               subtitle: new Text(
                 'From ${item.fromValues.toString()} points to ${item.toValues.toString()} points',
               ),
+              trailing: new Icon(Icons.description),
               onTap: () {
                 _getDescripition(item.description);
               }
@@ -95,18 +96,6 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
               child: new ListView(
                 children: listTotalOptions.toList(),
               )
-            ),
-            new Container(
-              padding: const EdgeInsets.only(top: 10.0),
-              width: MediaQuery.of(context).size.width,
-              child: new RaisedButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                child: new Text('Return on home page'),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/home');
-                },
-              ),
             ),
           ],
         )

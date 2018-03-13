@@ -44,36 +44,74 @@ class _DescStatisticsPage extends State<DescStatisticsPage> {
                     children: <Widget>[
                       new Container(
                         width: MediaQuery.of(context).size.width,
-                        child: new Text(
-                          'Date of passing the test: ' + descStatistics.date,
-                          style: new TextStyle(fontSize: 18.0),
-                        ),
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: new Row(
+                          children: <Widget>[
+                            new Text(
+                              'Date of passing the test: ',
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                            new Text(
+                              descStatistics.date,
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                          ],
+                        )
+                      ),
+                      new Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
+                        child: new Row(
+                          children: <Widget>[
+                            new Text(
+                              'You scored the following points: ',
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                            new Text(
+                              descStatistics.numberPoint.toString(),
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                          ],
+                        )
+                      ),
+                      new Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
+                        child: new Row(
+                          children: <Widget>[
+                            new Text(
+                              'Time spent on test: ',
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                            new Text(
+                              descStatistics.countTime.toString() + ' seconds',
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                          ],
+                        )
+                      ),
+                      new Container(
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 13.5),
+                        child: new Row(
+                          children: <Widget>[
+                            new Text(
+                              'Your result: ',
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                            new Text(
+                              descStatistics.toTitle,
+                              style: new TextStyle(fontSize: 16.0),
+                            ),
+                          ],
+                        )
                       ),
                       new Container(
                         width: MediaQuery.of(context).size.width,
                         child: new Text(
-                          'You have recruited ' + descStatistics.numberPoint.toString() + ' points',
-                          style: new TextStyle(fontSize: 18.0),
-                        ),
-                      ),
-                      new Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: new Text(
-                          'Time spent on test: ' + descStatistics.countTime.toString(),
-                          style: new TextStyle(fontSize: 18.0),
-                        ),
-                      ),
-                      new Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: new Text(
-                          'Result: ' + descStatistics.toTitle,
-                          style: new TextStyle(fontSize: 18.0),
-                        ),
-                      ),
-                      new Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: new Text(
-                          'Description: ' + descStatistics.description
+                          descStatistics.description,
+                          textAlign: TextAlign.justify,
+                          style: new TextStyle(fontSize: 16.0, height: 1.5),
                         ),
                       )
                     ],
