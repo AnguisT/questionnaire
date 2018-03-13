@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // class
+import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 import '../../models/models.dart';
 
@@ -96,10 +97,10 @@ class _ResultPage extends State<ResultPage> {
               new Container(
                 padding: const EdgeInsets.only(top: 10.0),
                 width: MediaQuery.of(context).size.width,
-                child: new RaisedButton(
+                child: new CustomButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  child: new Text('Look statistics'),
+                  text: 'Look statistics',
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/statistics');
                   },
@@ -108,10 +109,10 @@ class _ResultPage extends State<ResultPage> {
               new Container(
                 padding: const EdgeInsets.only(top: 10.0),
                 width: MediaQuery.of(context).size.width,
-                child: new RaisedButton(
+                child: new CustomButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  child: new Text('Look total options'),
+                  text: 'Look total options',
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/totaloptions');
                   },

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // class
+import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 import '../../models/models.dart';
 
@@ -391,10 +392,10 @@ class _SignupPage extends State<SignupPage> {
             new Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0, bottom: 10.0),
-              child: new RaisedButton(
+              child: new CustomButton(
                 color: Colors.white,
                 textColor: Colors.blue,
-                child: new Text('Sign up'),
+                text: 'Sign up',
                 onPressed: !isDisabled ? _signUp : null,
               )
             ),

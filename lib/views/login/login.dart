@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 // class
 import '../../models/models.dart';
+import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 
 class LoginPage extends StatefulWidget {
@@ -70,20 +71,15 @@ class _LoginPage extends State<LoginPage> {
         } else {
           showDialog(
             context: context,
-            child: new AlertDialog(
-              title: new Text('Error message'),
+            child: new CustomAlertDialoog(
+              title: 'Error message',
               content: new Text('Check your network'),
-              actions: <Widget>[
-                new FlatButton(
-                  child: new Text('OK'),
-                  onPressed: () {
-                    setState(() {
-                      isDisabled = false;
-                    });
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
+              onOk: () {
+                setState(() {
+                  isDisabled = false;
+                });
+                Navigator.of(context).pop();
+              },
             )
           );
         }
@@ -197,14 +193,14 @@ class _LoginPage extends State<LoginPage> {
                 ),
               ),
               new Container(
-                height: 120.0,
+                height: 150.0,
                 child: new Column(
                   children: <Widget>[
                     new Container(
                       padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 10.0, right: 10.0),
                       width: MediaQuery.of(context).size.width,
-                      child: new RaisedButton(
-                        child: new Text('Log In'),
+                      child: new CustomButton(
+                        text: 'Log In',
                         color: Colors.white,
                         textColor: Colors.blue,
                         onPressed: !isDisabled ? logIn : null,
@@ -213,8 +209,8 @@ class _LoginPage extends State<LoginPage> {
                     new Container(
                       padding: const EdgeInsets.only(top: 5.0, bottom: 10.0, left: 10.0, right: 10.0),
                       width: MediaQuery.of(context).size.width,
-                      child: new RaisedButton(
-                        child: new Text('Sign Up'),
+                      child: new CustomButton(
+                        text: 'Sign Up',
                         color: Colors.white,
                         textColor: Colors.blue,
                         onPressed: !isDisabled ? signUp : null,

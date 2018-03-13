@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // class
+import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 
 class TestPage extends StatefulWidget {
@@ -86,10 +87,10 @@ class _TestPage extends State<TestPage> {
               new Container(
                 padding: const EdgeInsets.only(top: 10.0),
                 width: MediaQuery.of(context).size.width,
-                child: new RaisedButton(
+                child: new CustomButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  child: new Text('Start'),
+                  text: 'Start',
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/question');
                   },

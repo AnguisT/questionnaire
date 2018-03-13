@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 // class
+import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 import '../../models/models.dart';
 
@@ -276,9 +277,10 @@ class _QuestionPage extends State<QuestionPage> {
     Widget btnBack = new Container(
       width: MediaQuery.of(context).size.width / 2 - 10,
       padding: const EdgeInsets.only(top: 10.0, right: 5.0),
-      child: new RaisedButton(
+      child: new CustomButton(
         color: Colors.blue,
-        child: new Text('Back', style: new TextStyle(color: Colors.white),),
+        text: 'Back',
+        textColor: Colors.white,
         onPressed: index == 0 ? null : _pressedBack,
       ),
     );
@@ -286,9 +288,10 @@ class _QuestionPage extends State<QuestionPage> {
     Widget btnNext = new Container(
       width: MediaQuery.of(context).size.width / 2 - 10,
       padding: const EdgeInsets.only(top: 10.0, left: 5.0),
-      child: new RaisedButton(
+      child: new CustomButton(
         color: Colors.blue,
-        child: new Text('Next', style: new TextStyle(color: Colors.white),),
+        text: 'Next',
+        textColor: Colors.white,
         onPressed: groupValue != 0 ? _pressedNext : null,
       ),
     );
@@ -296,9 +299,10 @@ class _QuestionPage extends State<QuestionPage> {
     Widget btnFinish = new Container(
       width: MediaQuery.of(context).size.width / 2 - 10,
       padding: const EdgeInsets.only(top: 10.0, left: 5.0),
-      child: new RaisedButton(
+      child: new CustomButton(
         color: Colors.blue,
-        child: new Text('Finish the test', style: new TextStyle(color: Colors.white),),
+        text: 'Finish the test',
+        textColor: Colors.white,
         onPressed: groupValue != 0 ? _clickBtnFinish : null,
       ),
     );

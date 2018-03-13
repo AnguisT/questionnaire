@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // class
 import '../../models/models.dart';
+import '../../models/widget.models.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -81,10 +82,10 @@ class _HomePage extends State<HomePage> {
                   width: MediaQuery.of(context).size.width / 1.2,
                   height: 80.0,
                   padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
+                  child: new CustomButton(
                     textColor: Colors.white,
                     color: Colors.blue,
-                    child: new Text('Start test'),
+                    text: 'Start test',
                     onPressed: () {
                       Navigator.of(context).pushNamed('/test');
                     },
@@ -94,10 +95,10 @@ class _HomePage extends State<HomePage> {
                   width: MediaQuery.of(context).size.width / 1.2,
                   height: 80.0,
                   padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
+                  child: new CustomButton(
                     textColor: Colors.white,
                     color: Colors.blue,
-                    child: new Text('Look statistics'),
+                    text: 'Look statistics',
                     onPressed: () {
                       Navigator.of(context).pushNamed('/statistics');
                     },
@@ -107,10 +108,10 @@ class _HomePage extends State<HomePage> {
                   width: MediaQuery.of(context).size.width / 1.2,
                   height: 80.0,
                   padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
+                  child: new CustomButton(
                     textColor: Colors.white,
                     color: Colors.blue,
-                    child: new Text('Total options'),
+                    text: 'Total options',
                     onPressed: () {
                       Navigator.of(context).pushNamed('/totaloptions');
                     },
@@ -120,10 +121,10 @@ class _HomePage extends State<HomePage> {
                   width: MediaQuery.of(context).size.width / 1.2,
                   height: 80.0,
                   padding: const EdgeInsets.all(10.0),
-                  child: new RaisedButton(
+                  child: new CustomButton(
                     textColor: Colors.white,
                     color: Colors.blue,
-                    child: new Text('Profile'),
+                    text: 'Profile',
                     onPressed: () {
                       Navigator.of(context).pushNamed('/profile');
                     },
