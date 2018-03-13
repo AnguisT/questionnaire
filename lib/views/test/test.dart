@@ -21,27 +21,29 @@ class _TestPage extends State<TestPage> {
   void initState() {
     super.initState();
     httpClient.getTest().then((res) {
-      setState(() {
-        title = res['tests'][0]['title'];
-        description = res['tests'][0]['description'];
-        isLoaded = true;
-      });
-    }).catchError((error) {
-      showDialog(
-        context: context,
-        child: new AlertDialog(
-          title: new Text('Error message'),
-          content: new Text('Check your network'),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        )
-      );
+      if (res != 'Error'){
+        setState(() {
+          title = res['tests'][0]['title'];
+          description = res['tests'][0]['description'];
+          isLoaded = true;
+        });
+      } else {
+        showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+                },
+              )
+            ],
+          )
+        );
+      }
     });
   }
 

@@ -22,18 +22,36 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
   void initState() {
     super.initState();
     httpClient.getAllTotalOptions().then((res) {
-      setState(() {
-        for (int i = 0; i < res['total_options'].length; i++) {
-          TotalOptions totalOptions = new TotalOptions(
-            fromValues: res['total_options'][i]['from_values'],
-            toValues: res['total_options'][i]['to_values'],
-            title: res['total_options'][i]['title'],
-            description: res['total_options'][i]['description']
-          );
-          arrayTotalOptions.add(totalOptions);
-        }
-        isLoaded = true;
-      });
+      if (res != 'Error') {
+        setState(() {
+          for (int i = 0; i < res['total_options'].length; i++) {
+            TotalOptions totalOptions = new TotalOptions(
+              fromValues: res['total_options'][i]['from_values'],
+              toValues: res['total_options'][i]['to_values'],
+              title: res['total_options'][i]['title'],
+              description: res['total_options'][i]['description']
+            );
+            arrayTotalOptions.add(totalOptions);
+          }
+          isLoaded = true;
+        });
+      } else {
+        showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+                },
+              )
+            ],
+          )
+        );
+      }
     });
   }
 

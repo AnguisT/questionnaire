@@ -34,18 +34,36 @@ class _ProfilePage extends State<ProfilePage> {
 
   _fillArray() {
     httpClient.getUserByMail(mail).then((res) {
-      setState(() {
-        user = new User(
-          mail: res['users'][0]['mail'],
-          password: res['users'][0]['password'],
-          firstName: res['users'][0]['first_name'],
-          lastName: res['users'][0]['last_name'],
-          birthday: DateTime.parse(res['users'][0]['birthday']),
-          city: res['users'][0]['city'],
-          idSexs: res['users'][0]['id_sexs'],
+      if (res != 'Error') {
+        setState(() {
+          user = new User(
+            mail: res['users'][0]['mail'],
+            password: res['users'][0]['password'],
+            firstName: res['users'][0]['first_name'],
+            lastName: res['users'][0]['last_name'],
+            birthday: DateTime.parse(res['users'][0]['birthday']),
+            city: res['users'][0]['city'],
+            idSexs: res['users'][0]['id_sexs'],
+          );
+          isLoaded = true;
+        });
+      } else {
+        showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+                },
+              )
+            ],
+          )
         );
-        isLoaded = true;
-      });
+      }
     });
   }
 

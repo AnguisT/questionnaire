@@ -1,3 +1,6 @@
+// dart
+import 'dart:async';
+
 // package
 import 'package:flutter/material.dart';
 
@@ -11,6 +14,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+
+  Future<bool> _onWillPop() async {
+    bool res;
+    await showDialog(
+      context: context,
+      child: new AlertDialog(
+        content: new Text('Do you really want to exit?'),
+        actions: <Widget>[
+          new FlatButton(
+            child: new Text('Cancel'),
+            onPressed: () {
+              res = false;
+              Navigator.of(context).pop();
+            },
+          ),
+          new FlatButton(
+            child: new Text('OK'),
+            onPressed: () {
+              res = true;
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      ),
+    );
+    return res;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +63,7 @@ class _HomePage extends State<HomePage> {
         left: false,
         right: false,
         child: new Center(
-          child: new Container(
+          child: new Form(
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -100,7 +130,8 @@ class _HomePage extends State<HomePage> {
                   )
                 )
               ],
-            )
+            ),
+            onWillPop: _onWillPop,
           )
         )
       )

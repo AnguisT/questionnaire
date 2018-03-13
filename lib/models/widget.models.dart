@@ -8,14 +8,12 @@ import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
   CustomButton({
-    this.inAndroid = false,
     this.color = Colors.white,
     @required this.text,
     this.textColor = Colors.white,
     @required this.onPressed,
   }) : assert(text != null && text != '');
 
-  bool inAndroid = true;
   String text;
   Color textColor;
   Color color;

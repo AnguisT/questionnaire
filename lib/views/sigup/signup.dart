@@ -106,12 +106,35 @@ class _SignupPage extends State<SignupPage> {
         isDisabled = true;
       });
       httpClient.signUp(user).then((val) {
-        if (val['isLogup'] == false) {
+        if (val != 'Error') {
+          if (val['isLogup'] == false) {
+            showDialog(
+              context: context,
+              child: new AlertDialog(
+                title: new Text('This is mail already exist'),
+                content: new Text(val['message']),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text('OK'),
+                    onPressed: () {
+                      setState(() {
+                        isDisabled = false;
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              )
+            );
+          } else {
+            Navigator.of(context).pop();
+          }
+        } else {
           showDialog(
             context: context,
             child: new AlertDialog(
               title: new Text('Error message'),
-              content: new Text(val['message']),
+              content: new Text('Check your network'),
               actions: <Widget>[
                 new FlatButton(
                   child: new Text('OK'),
@@ -125,8 +148,6 @@ class _SignupPage extends State<SignupPage> {
               ],
             )
           );
-        } else {
-          Navigator.of(context).pop();
         }
       });
     }

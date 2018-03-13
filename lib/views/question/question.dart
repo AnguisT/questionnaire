@@ -35,62 +35,63 @@ class _QuestionPage extends State<QuestionPage> {
   void initState() {
     super.initState();
     httpClient.getAllQuestion().then((res) {
-      for (var i = 0; i < res['questions'].length; i++) {
-        Answer answer;
-        if (questionArray.isNotEmpty && questionArray.last.idQuestion == res['questions'][i]['id_question']) {
-          answer = new Answer(
-            idAnswer: res['questions'][i]['id_answer'],
-            indexAnswer: res['questions'][i]['index_answer'],
-            title: res['questions'][i]['title'],
-            weight: res['questions'][i]['weight']
-          );
-          answerArray.add(answer);
-          if (questionArray.last.answers.isNotEmpty) {
-            questionArray.last.answers.clear();
+      if (res != 'Error') {
+        for (var i = 0; i < res['questions'].length; i++) {
+          Answer answer;
+          if (questionArray.isNotEmpty && questionArray.last.idQuestion == res['questions'][i]['id_question']) {
+            answer = new Answer(
+              idAnswer: res['questions'][i]['id_answer'],
+              indexAnswer: res['questions'][i]['index_answer'],
+              title: res['questions'][i]['title'],
+              weight: res['questions'][i]['weight']
+            );
+            answerArray.add(answer);
+            if (questionArray.last.answers.isNotEmpty) {
+              questionArray.last.answers.clear();
+            }
+            questionArray.last.answers.addAll(answerArray);
+          } else {
+            answerArray.clear();
+            answer = new Answer(
+              idAnswer: res['questions'][i]['id_answer'],
+              indexAnswer: res['questions'][i]['index_answer'],
+              title: res['questions'][i]['title'],
+              weight: res['questions'][i]['weight']
+            );
+            answerArray.add(answer);
+            Question question = new Question(
+              idQuestion: res['questions'][i]['id_question'],
+              description: res['questions'][i]['description'],
+              answers: []
+            );
+            questionArray.add(question);
+            ArrayResult arrayResult = new ArrayResult(
+              idQuestion: res['questions'][i]['id_question'],
+            );
+            resultArray.add(arrayResult);
           }
-          questionArray.last.answers.addAll(answerArray);
-        } else {
-          answerArray.clear();
-          answer = new Answer(
-            idAnswer: res['questions'][i]['id_answer'],
-            indexAnswer: res['questions'][i]['index_answer'],
-            title: res['questions'][i]['title'],
-            weight: res['questions'][i]['weight']
-          );
-          answerArray.add(answer);
-          Question question = new Question(
-            idQuestion: res['questions'][i]['id_question'],
-            description: res['questions'][i]['description'],
-            answers: []
-          );
-          questionArray.add(question);
-          ArrayResult arrayResult = new ArrayResult(
-            idQuestion: res['questions'][i]['id_question'],
-          );
-          resultArray.add(arrayResult);
         }
+        setState(() {
+          isLoaded = true;
+        });
+        _startTimer();
+      } else {
+        showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed('/test');
+                },
+              )
+            ],
+          )
+        );
       }
-      setState(() {
-        isLoaded = true;
-      });
-      _startTimer();
-    }).catchError((error) {
-      print(error);
-      showDialog(
-        context: context,
-        child: new AlertDialog(
-          title: new Text('Error message'),
-          content: new Text('Check your network'),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/test');
-              },
-            )
-          ],
-        )
-      );
     });
   }
 
@@ -198,36 +199,37 @@ class _QuestionPage extends State<QuestionPage> {
 
     Duration countTime = new Duration(minutes: minutes, seconds: seconds);
     httpClient.saveResult(resultArray, mail, 1, date, resultEnd, countTime.inSeconds).then((res) {
-      TotalOptionsResponse totalOptionsResponse = new TotalOptionsResponse(
-        numberPoint: res['number_point'],
-        totalOptions: []
-      );
-      TotalOptions totalOptions = new TotalOptions(
-        fromValues: res['total_options'][0]['from_values'],
-        toValues: res['total_options'][0]['to_values'],
-        description: res['total_options'][0]['description'],
-        title: res['total_options'][0]['title']
-      );
-      totalOptionsResponse.totalOptions.add(totalOptions);
-      response = totalOptionsResponse;
-      Navigator.of(context).pushReplacementNamed('/result');
-    }).catchError((error) {
-      print(error);
-      showDialog(
-        context: context,
-        child: new AlertDialog(
-          title: new Text('Error message'),
-          content: new Text('Check your network'),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        )
-      );
+      if (res != 'Error') {
+        TotalOptionsResponse totalOptionsResponse = new TotalOptionsResponse(
+          numberPoint: res['number_point'],
+          totalOptions: []
+        );
+        TotalOptions totalOptions = new TotalOptions(
+          fromValues: res['total_options'][0]['from_values'],
+          toValues: res['total_options'][0]['to_values'],
+          description: res['total_options'][0]['description'],
+          title: res['total_options'][0]['title']
+        );
+        totalOptionsResponse.totalOptions.add(totalOptions);
+        response = totalOptionsResponse;
+        Navigator.of(context).pushReplacementNamed('/result');
+      } else {
+        showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          )
+        );
+      }
     });
   }
 
@@ -258,7 +260,7 @@ class _QuestionPage extends State<QuestionPage> {
             onPressed: () {
               timer.cancel();
               res = true;
-              Navigator.of(context).pop();
+              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
             },
           ),
         ],

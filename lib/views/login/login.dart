@@ -42,12 +42,37 @@ class _LoginPage extends State<LoginPage> {
       });
       form.save();
       await httpClient.logIn(_mailController.text, _passwordController.text).then((res) async {
-        if (res['user'].length == 0) {
+        if (res != 'Error') {
+          if (res['user'].length == 0) {
+            showDialog(
+              context: context,
+              child: new AlertDialog(
+                title: new Text('Error message'),
+                content: new Text('Incorrect password or login'),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text('OK'),
+                    onPressed: () {
+                      setState(() {
+                        isDisabled = false;
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              )
+            );
+          } else {
+            mail = res['user'][0]['mail'];
+            firstNameForHomePage = res['user'][0]['first_name'];
+            Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+          }
+        } else {
           showDialog(
             context: context,
             child: new AlertDialog(
               title: new Text('Error message'),
-              content: new Text('Incorrect password or login'),
+              content: new Text('Check your network'),
               actions: <Widget>[
                 new FlatButton(
                   child: new Text('OK'),
@@ -61,31 +86,7 @@ class _LoginPage extends State<LoginPage> {
               ],
             )
           );
-        } else {
-          mail = res['user'][0]['mail'];
-          firstNameForHomePage = res['user'][0]['first_name'];
-          Navigator.of(context).pushReplacementNamed('/home');
         }
-      }).catchError((error) {
-        print(error);
-        showDialog(
-          context: context,
-          child: new AlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text('OK'),
-                onPressed: () {
-                  setState(() {
-                    isDisabled = false;
-                  });
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          )
-        );
       });
     }
   }

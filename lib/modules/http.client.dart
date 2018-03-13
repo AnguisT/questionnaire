@@ -17,6 +17,8 @@ class CustomHttpClient {
     var url = urlServer + "users/sexs";
     return await http.post(url).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 
@@ -24,6 +26,8 @@ class CustomHttpClient {
     var url = urlServer + "users/";
     return await http.post(url).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 
@@ -36,6 +40,8 @@ class CustomHttpClient {
     var url = urlServer + "tests/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 
@@ -48,6 +54,8 @@ class CustomHttpClient {
     var url = urlServer + "questions/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 
@@ -60,6 +68,8 @@ class CustomHttpClient {
     var url = urlServer + "totaloptions/";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 
@@ -73,6 +83,8 @@ class CustomHttpClient {
     var url = urlServer + "statistics/own";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 
@@ -85,6 +97,8 @@ class CustomHttpClient {
     var url = urlServer + "users/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 
@@ -99,7 +113,6 @@ class CustomHttpClient {
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
     }).catchError((error) {
-      print('qwerty');
       return 'Error';
     });
   }
@@ -119,6 +132,8 @@ class CustomHttpClient {
     var url = urlServer + "users/logup";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 
@@ -142,7 +157,11 @@ class CustomHttpClient {
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "results/add";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
+      print(response);
       return JSON.decode(response.body);
+    }).catchError((error) {
+      print(error);
+      return 'Error';
     });
   }
 
@@ -161,6 +180,8 @@ class CustomHttpClient {
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
       print(response.body);
       return JSON.decode(response.body);
+    }).catchError((error) {
+      return 'Error';
     });
   }
 }

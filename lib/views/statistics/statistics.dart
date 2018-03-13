@@ -32,26 +32,44 @@ class _StatisticsPage extends State<StatisticsPage> {
 
   _fillArray() {
     httpClient.getAllStatistics(mail).then((res) {
-      for (int i = 0; i < res['statistics'].length; i++) {
-        setState(() {
-          DateTime dateTime = DateTime.parse(res['statistics'][i]['date']);
-          var formatter = new DateFormat('yyyy-MM-dd');
-          String date = formatter.format(dateTime);
+      if (res != 'Error') {
+        for (int i = 0; i < res['statistics'].length; i++) {
+          setState(() {
+            DateTime dateTime = DateTime.parse(res['statistics'][i]['date']);
+            var formatter = new DateFormat('yyyy-MM-dd');
+            String date = formatter.format(dateTime);
 
-          Statistics statistics = new Statistics(
-            date: date,
-            toTitle: res['statistics'][i]['tstitle'],
-            testTitle: res['statistics'][i]['title'],
-            description: res['statistics'][i]['description'],
-            countTime: res['statistics'][i]['count_time'],
-            numberPoint: res['statistics'][i]['number_point'],
-          );
-          arrayStatistics.add(statistics);
+            Statistics statistics = new Statistics(
+              date: date,
+              toTitle: res['statistics'][i]['tstitle'],
+              testTitle: res['statistics'][i]['title'],
+              description: res['statistics'][i]['description'],
+              countTime: res['statistics'][i]['count_time'],
+              numberPoint: res['statistics'][i]['number_point'],
+            );
+            arrayStatistics.add(statistics);
+          });
+        }
+        setState(() {
+          isLoaded = true;
         });
+      } else {
+        showDialog(
+          context: context,
+          child: new AlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+                },
+              )
+            ],
+          )
+        );
       }
-      setState(() {
-        isLoaded = true;
-      });
     });
   }
 
