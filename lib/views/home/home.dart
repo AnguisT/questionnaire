@@ -21,7 +21,7 @@ class _HomePage extends State<HomePage> {
     bool res;
     await showDialog(
       context: context,
-      child: new CustomAlertDialog(
+      builder: (BuildContext builder) => new CustomAlertDialog(
         content: new Text('Do you really want to exit?'),
         onCancel: () {
           res = false;

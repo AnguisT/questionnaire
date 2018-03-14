@@ -16,7 +16,7 @@ class CustomHttpClient {
   Future getAllSexs() async {
     var url = urlServer + "users/sexs";
     return await http.post(url).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -25,7 +25,7 @@ class CustomHttpClient {
   Future getAllUsers() async {
     var url = urlServer + "users/";
     return await http.post(url).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -35,11 +35,11 @@ class CustomHttpClient {
     var body = {
       "id_test": 1,
     };
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "tests/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -49,11 +49,11 @@ class CustomHttpClient {
     var body = {
       "id_test": 1,
     };
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "questions/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -63,11 +63,11 @@ class CustomHttpClient {
     var body = {
       "id_test": 1,
     };
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "totaloptions/";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -78,11 +78,11 @@ class CustomHttpClient {
       "mail": mail,
       "id_test": 1,
     };
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "statistics/own";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -92,11 +92,11 @@ class CustomHttpClient {
     var body = {
       "mail": mail
     };
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "users/id";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -107,11 +107,11 @@ class CustomHttpClient {
       "mail": mail,
       "password": password,
     };
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "users/login";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -127,11 +127,11 @@ class CustomHttpClient {
       "last_name": user.lastName,
       "city": user.city
     };
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "users/logup";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -153,11 +153,11 @@ class CustomHttpClient {
       array.add(arrayResult[i].toMap());
     }
     body["results"] = array;
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "results/add";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });
@@ -171,11 +171,11 @@ class CustomHttpClient {
       "last_name": user.lastName,
       "city": user.city,
     };
-    String lData = JSON.encode(body);
+    String lData = json.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "users/update";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      return JSON.decode(response.body);
+      return json.decode(response.body);
     }).catchError((error) {
       return 'Error';
     });

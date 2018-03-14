@@ -31,7 +31,7 @@ class _TestPage extends State<TestPage> {
       } else {
         showDialog(
           context: context,
-          child: new CustomAlertDialog(
+          builder: (BuildContext context) => new CustomAlertDialog(
             title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {

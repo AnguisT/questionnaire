@@ -39,7 +39,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
       } else {
         showDialog(
           context: context,
-          child: new CustomAlertDialog(
+          builder: (BuildContext context) => new CustomAlertDialog(
             title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
@@ -54,7 +54,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
   _getDescripition(String description) {
     showDialog(
       context: context,
-      child: new CustomAlertDialog(
+      builder: (BuildContext context) => new CustomAlertDialog(
         title: new Text('Description'),
         content: new Text(description),
         onOk: () {

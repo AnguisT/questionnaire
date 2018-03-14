@@ -79,7 +79,7 @@ class _QuestionPage extends State<QuestionPage> {
       } else {
         showDialog(
           context: context,
-          child: new CustomAlertDialog(
+          builder: (BuildContext context) => new CustomAlertDialog(
             title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
@@ -150,7 +150,7 @@ class _QuestionPage extends State<QuestionPage> {
   _clickBtnFinish() {
     showDialog(
       context: context,
-      child: new CustomAlertDialog(
+      builder: (BuildContext context) => new CustomAlertDialog(
         content: new Text('Do you really want to finish the test?'),
         onCancel: () {
           Navigator.of(context).pop();
@@ -204,7 +204,7 @@ class _QuestionPage extends State<QuestionPage> {
       } else {
         showDialog(
           context: context,
-          child: new CustomAlertDialog(
+          builder: (BuildContext context) => new CustomAlertDialog(
             title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
@@ -228,7 +228,7 @@ class _QuestionPage extends State<QuestionPage> {
     bool res;
     await showDialog(
       context: context,
-      child: new CustomAlertDialog(
+      builder: (BuildContext context) => new CustomAlertDialog(
         content: new Text('Do you really want to end the test?'),
         onCancel: () {
           res = false;

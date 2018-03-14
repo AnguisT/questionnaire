@@ -57,7 +57,7 @@ class _StatisticsPage extends State<StatisticsPage> {
       } else {
         showDialog(
           context: context,
-          child: new CustomAlertDialog(
+          builder: (BuildContext context) => new CustomAlertDialog(
             title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {

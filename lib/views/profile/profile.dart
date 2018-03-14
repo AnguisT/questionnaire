@@ -53,7 +53,7 @@ class _ProfilePage extends State<ProfilePage> {
       } else {
         showDialog(
           context: context,
-          child: new CustomAlertDialog(
+          builder: (BuildContext context) => new CustomAlertDialog(
             title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
@@ -100,7 +100,7 @@ class _ProfilePage extends State<ProfilePage> {
 
     showDialog(
       context: context,
-      child: new SystemPadding(
+      builder: (BuildContext context) => new SystemPadding(
         child: new CustomAlertDialog(
           title: new Text(title),
           content: new Form(
