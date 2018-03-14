@@ -46,7 +46,7 @@ class CustomAlertDialog extends StatelessWidget {
     this.onCancel
   });
 
-  final String title;
+  final Widget title;
   final Widget content;
   final VoidCallback onOk;
   final VoidCallback onCancel;
@@ -55,8 +55,8 @@ class CustomAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // Android Alert Dialog with title and with/without cancel button
-    Widget alertDialogAndroidWithTitleWithCancel = new AlertDialog(
-      title: new Text(title),
+    Widget alertDialogAndroidWithCancel = new AlertDialog(
+      title: title,
       content: content,
       actions: <Widget>[
         new FlatButton(
@@ -70,33 +70,8 @@ class CustomAlertDialog extends StatelessWidget {
       ],
     );
 
-    Widget alertDialogAndroidWithTitleWithoutCancel = new AlertDialog(
-      title: new Text(title),
-      content: content,
-      actions: <Widget>[
-        new FlatButton(
-          child: new Text('OK'),
-          onPressed: onOk
-        ),
-      ],
-    );
-
-    // Android Alert Dialog with/without title and with cancel button
-    Widget alertDialogAndroidWithoutTitleWithCancel = new AlertDialog(
-      content: content,
-      actions: <Widget>[
-        new FlatButton(
-          child: new Text('Cancel'),
-          onPressed: onCancel
-        ),
-        new FlatButton(
-          child: new Text('OK'),
-          onPressed: onOk
-        ),
-      ],
-    );
-
-    Widget alertDialogAndroidWithoutTitleWithoutCancel = new AlertDialog(
+    Widget alertDialogAndroidWithoutCancel = new AlertDialog(
+      title: title,
       content: content,
       actions: <Widget>[
         new FlatButton(
@@ -107,8 +82,8 @@ class CustomAlertDialog extends StatelessWidget {
     );
 
     // IOS Alert Dialog with title and with/without cancel button
-    Widget alertDialogIOSWithTitleWithCancel = new CupertinoAlertDialog(
-      title: new Text(title),
+    Widget alertDialogIOSWithCancel = new CupertinoAlertDialog(
+      title: title,
       content: content,
       actions: <Widget>[
         new CupertinoDialogAction(
@@ -124,8 +99,8 @@ class CustomAlertDialog extends StatelessWidget {
       ]
     );
 
-    Widget alertDialogIOSWithTitleWithoutCancel = new CupertinoAlertDialog(
-      title: new Text(title),
+    Widget alertDialogIOSWithoutCancel = new CupertinoAlertDialog(
+      title: title,
       content: content,
       actions: <Widget>[
         new CupertinoDialogAction(
@@ -136,48 +111,34 @@ class CustomAlertDialog extends StatelessWidget {
       ]
     );
 
-    // IOS Alert Dialog with/without title and with cancel button
-    Widget alertDialogIOSWithoutTitleWithCancel = new CupertinoAlertDialog(
-      content: content,
-      actions: <Widget>[
-        new CupertinoDialogAction(
-          child: const Text('Cancel'),
-          isDestructiveAction: true,
-          onPressed: onCancel
-        ),
-        new CupertinoDialogAction(
-          child: const Text('OK'),
-          isDefaultAction: true,
-          onPressed: onOk
-        ),
-      ]
-    );
-
-    Widget alertDialogIOSWithoutTitleWithoutCancel = new CupertinoAlertDialog(
-      content: content,
-      actions: <Widget>[
-        new CupertinoDialogAction(
-          child: const Text('OK'),
-          isDefaultAction: true,
-          onPressed: onOk
-        ),
-      ]
-    );
-
-
-    Widget alertDialogAndroidWithTitleWithOrWithoutButton = onCancel != null ? alertDialogAndroidWithTitleWithCancel : alertDialogAndroidWithTitleWithoutCancel;
-
-    Widget alertDialogAndroidWithoutTitleWithOrWithoutButton = onCancel != null ? alertDialogAndroidWithoutTitleWithCancel : alertDialogAndroidWithoutTitleWithoutCancel;
-
-
-    Widget alertDialogIOSWithTitleWithOrWithoutButton = onCancel != null ? alertDialogIOSWithTitleWithCancel : alertDialogIOSWithTitleWithoutCancel;
-
-    Widget alertDialogIOSWithoutTitleWithOrWithoutButton = onCancel != null ? alertDialogIOSWithoutTitleWithCancel : alertDialogIOSWithoutTitleWithoutCancel;
-
-    Widget alertDialogAndroid = (title == null ? alertDialogAndroidWithoutTitleWithOrWithoutButton : alertDialogAndroidWithTitleWithOrWithoutButton);
-    Widget alertDialogIOS = (title == null ? alertDialogIOSWithoutTitleWithOrWithoutButton : alertDialogIOSWithTitleWithOrWithoutButton);
+    Widget alertDialogAndroid = (onCancel == null ? alertDialogAndroidWithoutCancel : alertDialogAndroidWithCancel);
+    Widget alertDialogIOS = (onCancel == null ? alertDialogIOSWithoutCancel : alertDialogIOSWithCancel);
 
     return Platform.isIOS ? alertDialogIOS : alertDialogAndroid;
+  }
+}
+
+class CustomNavigationBar extends StatelessWidget {
+  CustomNavigationBar({
+    @required this.title,
+    this.centerTitle: false,
+    this.hideButtonBack: false,
+    this.backgroundColor,
+  }) : assert(title != null);
+
+  final Widget title;
+  final Widget leading;
+  final IconThemeData iconTheme;
+  final Colors backgroundColor;
+  final List<Widget> actions;
+  final bool centerTitle;
+  final bool hideButtonBack;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget navigationBarIOS = new CupertinoNavigationBar();
+
+    // TODO: implement build
   }
 }
 

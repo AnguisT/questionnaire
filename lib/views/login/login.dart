@@ -48,7 +48,7 @@ class _LoginPage extends State<LoginPage> {
             showDialog(
               context: context,
               child: new CustomAlertDialog(
-                title: 'Error message',
+                title: new Text('Error message'),
                 content: new Text('Incorrect password or login'),
                 onOk: () {
                   setState(() {
@@ -67,7 +67,7 @@ class _LoginPage extends State<LoginPage> {
           showDialog(
             context: context,
             child: new CustomAlertDialog(
-              title: 'Error message',
+              title: new Text('Error message'),
               content: new Text('Check your network'),
               onOk: () {
                 setState(() {

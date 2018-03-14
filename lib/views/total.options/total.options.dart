@@ -40,7 +40,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: 'Error message',
+            title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
               Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
@@ -55,7 +55,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
     showDialog(
       context: context,
       child: new CustomAlertDialog(
-        title: 'Description',
+        title: new Text('Description'),
         content: new Text(description),
         onOk: () {
           Navigator.of(context).pop();

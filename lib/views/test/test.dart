@@ -32,7 +32,7 @@ class _TestPage extends State<TestPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: 'Error message',
+            title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
               Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);

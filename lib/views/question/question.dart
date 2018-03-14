@@ -80,7 +80,7 @@ class _QuestionPage extends State<QuestionPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: 'Error message',
+            title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
               Navigator.of(context).pushReplacementNamed('/test');
@@ -205,7 +205,7 @@ class _QuestionPage extends State<QuestionPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: 'Error message',
+            title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
               Navigator.of(context).pop();

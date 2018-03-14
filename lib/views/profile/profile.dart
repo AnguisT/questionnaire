@@ -51,7 +51,7 @@ class _ProfilePage extends State<ProfilePage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: 'Error message',
+            title: new Text('Error message'),
             content: new Text('Check your network'),
             onOk: () {
               Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
@@ -99,7 +99,7 @@ class _ProfilePage extends State<ProfilePage> {
       context: context,
       child: new SystemPadding(
         child: new CustomAlertDialog(
-          title: title,
+          title: new Text(title),
           content: new Form(
             key: _formKey,
             autovalidate: true,

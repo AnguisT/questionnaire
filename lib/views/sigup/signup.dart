@@ -112,7 +112,7 @@ class _SignupPage extends State<SignupPage> {
             showDialog(
               context: context,
               child: new CustomAlertDialog(
-                title: 'This is mail already exist',
+                title: new Text('This is mail already exist'),
                 content: new Text(val['message']),
                 onOk: () {
                   setState(() {
@@ -129,7 +129,7 @@ class _SignupPage extends State<SignupPage> {
           showDialog(
             context: context,
             child: new CustomAlertDialog(
-              title: 'Error message',
+              title: new Text('Error message'),
               content: new Text('Check your network'),
               onOk: () {
                 setState(() {
