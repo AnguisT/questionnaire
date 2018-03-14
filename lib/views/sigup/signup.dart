@@ -111,20 +111,15 @@ class _SignupPage extends State<SignupPage> {
           if (val['isLogup'] == false) {
             showDialog(
               context: context,
-              child: new AlertDialog(
-                title: new Text('This is mail already exist'),
+              child: new CustomAlertDialog(
+                title: 'This is mail already exist',
                 content: new Text(val['message']),
-                actions: <Widget>[
-                  new FlatButton(
-                    child: new Text('OK'),
-                    onPressed: () {
-                      setState(() {
-                        isDisabled = false;
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
+                onOk: () {
+                  setState(() {
+                    isDisabled = false;
+                  });
+                  Navigator.of(context).pop();
+                },
               )
             );
           } else {
@@ -133,20 +128,15 @@ class _SignupPage extends State<SignupPage> {
         } else {
           showDialog(
             context: context,
-            child: new AlertDialog(
-              title: new Text('Error message'),
+            child: new CustomAlertDialog(
+              title: 'Error message',
               content: new Text('Check your network'),
-              actions: <Widget>[
-                new FlatButton(
-                  child: new Text('OK'),
-                  onPressed: () {
-                    setState(() {
-                      isDisabled = false;
-                    });
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
+              onOk: () {
+                setState(() {
+                  isDisabled = false;
+                });
+                Navigator.of(context).pop();
+              },
             )
           );
         }

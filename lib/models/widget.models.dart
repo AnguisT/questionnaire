@@ -38,8 +38,8 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-class CustomAlertDialoog extends StatelessWidget {
-  CustomAlertDialoog({
+class CustomAlertDialog extends StatelessWidget {
+  CustomAlertDialog({
     this.title,
     @required this.content,
     @required this.onOk,

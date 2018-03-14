@@ -47,20 +47,15 @@ class _LoginPage extends State<LoginPage> {
           if (res['user'].length == 0) {
             showDialog(
               context: context,
-              child: new AlertDialog(
-                title: new Text('Error message'),
+              child: new CustomAlertDialog(
+                title: 'Error message',
                 content: new Text('Incorrect password or login'),
-                actions: <Widget>[
-                  new FlatButton(
-                    child: new Text('OK'),
-                    onPressed: () {
-                      setState(() {
-                        isDisabled = false;
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
+                onOk: () {
+                  setState(() {
+                    isDisabled = false;
+                  });
+                  Navigator.of(context).pop();
+                },
               )
             );
           } else {
@@ -71,7 +66,7 @@ class _LoginPage extends State<LoginPage> {
         } else {
           showDialog(
             context: context,
-            child: new CustomAlertDialoog(
+            child: new CustomAlertDialog(
               title: 'Error message',
               content: new Text('Check your network'),
               onOk: () {

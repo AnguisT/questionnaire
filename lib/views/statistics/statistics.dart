@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 // class
 import '../../models/models.dart';
+import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 
 class StatisticsPage extends StatefulWidget {
@@ -56,17 +57,12 @@ class _StatisticsPage extends State<StatisticsPage> {
       } else {
         showDialog(
           context: context,
-          child: new AlertDialog(
-            title: new Text('Error message'),
+          child: new CustomAlertDialog(
+            title: 'Error message',
             content: new Text('Check your network'),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-                },
-              )
-            ],
+            onOk: () {
+              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+            },
           )
         );
       }

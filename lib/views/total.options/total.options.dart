@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 // class
 import '../../models/models.dart';
+import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 
 class TotalOptionsPage extends StatefulWidget {
@@ -38,17 +39,12 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
       } else {
         showDialog(
           context: context,
-          child: new AlertDialog(
-            title: new Text('Error message'),
+          child: new CustomAlertDialog(
+            title: 'Error message',
             content: new Text('Check your network'),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-                },
-              )
-            ],
+            onOk: () {
+              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+            },
           )
         );
       }
@@ -58,17 +54,12 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
   _getDescripition(String description) {
     showDialog(
       context: context,
-      child: new AlertDialog(
-        title: new Text('Description'),
+      child: new CustomAlertDialog(
+        title: 'Description',
         content: new Text(description),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }
-          )
-        ],
+        onOk: () {
+          Navigator.of(context).pop();
+        },
       )
     );
   }

@@ -79,17 +79,12 @@ class _QuestionPage extends State<QuestionPage> {
       } else {
         showDialog(
           context: context,
-          child: new AlertDialog(
-            title: new Text('Error message'),
+          child: new CustomAlertDialog(
+            title: 'Error message',
             content: new Text('Check your network'),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/test');
-                },
-              )
-            ],
+            onOk: () {
+              Navigator.of(context).pushReplacementNamed('/test');
+            },
           )
         );
       }
@@ -155,20 +150,12 @@ class _QuestionPage extends State<QuestionPage> {
   _clickBtnFinish() {
     showDialog(
       context: context,
-      child: new AlertDialog(
+      child: new CustomAlertDialog(
         content: new Text('Do you really want to finish the test?'),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: _calculateResultAndSave,
-          )
-        ],
+        onCancel: () {
+          Navigator.of(context).pop();
+        },
+        onOk: _calculateResultAndSave,
       )
     );
   }
@@ -217,17 +204,12 @@ class _QuestionPage extends State<QuestionPage> {
       } else {
         showDialog(
           context: context,
-          child: new AlertDialog(
-            title: new Text('Error message'),
+          child: new CustomAlertDialog(
+            title: 'Error message',
             content: new Text('Check your network'),
-            actions: <Widget>[
-              new FlatButton(
-                child: new Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
+            onOk: () {
+              Navigator.of(context).pop();
+            },
           )
         );
       }
@@ -246,25 +228,17 @@ class _QuestionPage extends State<QuestionPage> {
     bool res;
     await showDialog(
       context: context,
-      child: new AlertDialog(
+      child: new CustomAlertDialog(
         content: new Text('Do you really want to end the test?'),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('Cancel'),
-            onPressed: () {
-              res = false;
-              Navigator.of(context).pop();
-            },
-          ),
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: () {
-              timer.cancel();
-              res = true;
-              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-            },
-          ),
-        ],
+        onCancel: () {
+          res = false;
+          Navigator.of(context).pop();
+        },
+        onOk: () {
+          timer.cancel();
+          res = true;
+          Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        },
       ),
     );
     return res;

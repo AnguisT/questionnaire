@@ -20,24 +20,16 @@ class _HomePage extends State<HomePage> {
     bool res;
     await showDialog(
       context: context,
-      child: new AlertDialog(
+      child: new CustomAlertDialog(
         content: new Text('Do you really want to exit?'),
-        actions: <Widget>[
-          new FlatButton(
-            child: new Text('Cancel'),
-            onPressed: () {
-              res = false;
-              Navigator.of(context).pop();
-            },
-          ),
-          new FlatButton(
-            child: new Text('OK'),
-            onPressed: () {
-              res = true;
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+        onCancel: () {
+          res = false;
+          Navigator.of(context).pop();
+        },
+        onOk: () {
+          res = true;
+          Navigator.of(context).pop();
+        },
       ),
     );
     return res;
