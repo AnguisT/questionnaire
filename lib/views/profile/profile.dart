@@ -1,4 +1,7 @@
+// dart
+
 // package
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // class
@@ -168,9 +171,16 @@ class _ProfilePage extends State<ProfilePage> {
     Widget lineProgress = new LinearProgressIndicator();
 
     return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Profile', style: new TextStyle(color: Colors.white),),
+      appBar: new CustomNavigationBar(
+        title: new Text(
+          'Profile',
+          style: new TextStyle(
+            color: Colors.white,
+          )
+        ),
         backgroundColor: Colors.blue,
+        centerTitle: true,
+        buttonBack: true,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: isLoaded ? new SafeArea(

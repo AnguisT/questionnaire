@@ -157,10 +157,8 @@ class CustomHttpClient {
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "results/add";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      print(response);
       return JSON.decode(response.body);
     }).catchError((error) {
-      print(error);
       return 'Error';
     });
   }
@@ -173,12 +171,10 @@ class CustomHttpClient {
       "last_name": user.lastName,
       "city": user.city,
     };
-    print(body);
     String lData = JSON.encode(body);
     Map lHeaders = {"Content-type": "application/json", "Accept": "application/json"};
     var url = urlServer + "users/update";
     return await http.post(url, body: lData, headers: lHeaders).then((response) {
-      print(response.body);
       return JSON.decode(response.body);
     }).catchError((error) {
       return 'Error';

@@ -24,9 +24,10 @@ class _ResultPage extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: new CustomNavigationBar(
         title: new Text('Result', style: new TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
+        centerTitle: true,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: new SafeArea(

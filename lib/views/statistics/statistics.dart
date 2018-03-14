@@ -110,9 +110,10 @@ class _StatisticsPage extends State<StatisticsPage> {
     Widget lineProgress = new LinearProgressIndicator();
 
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: new CustomNavigationBar(
         title: new Text('Statistics', style: new TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
+        centerTitle: true,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: isLoaded ? new SafeArea(

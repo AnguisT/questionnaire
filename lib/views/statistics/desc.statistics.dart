@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // class
 import '../../models/models.dart';
+import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 
 class DescStatisticsPage extends StatefulWidget {
@@ -23,7 +24,7 @@ class _DescStatisticsPage extends State<DescStatisticsPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: new CustomNavigationBar(
         title: new Text(descStatistics.testTitle, style: new TextStyle(color: Colors.white, fontSize: 15.0),),
         centerTitle: true,
         backgroundColor: Colors.blue,

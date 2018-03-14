@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // package
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // class
@@ -38,16 +39,16 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: new CustomNavigationBar(
         title: new Text(
           'Welcome to application Test Reisas',
           style: new TextStyle(
             color: Colors.white,
-            fontSize: 17.0
+            fontSize: 16.0
           )
         ),
         backgroundColor: Colors.blue,
-        automaticallyImplyLeading: false,
+        buttonBack: false,
         centerTitle: true,
       ),
       body: new SafeArea(

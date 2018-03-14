@@ -155,9 +155,10 @@ class _SignupPage extends State<SignupPage> {
   Widget build(BuildContext context) {
     var body = new Scaffold(
       backgroundColor: Colors.blue,
-      appBar: new AppBar(
-        backgroundColor: Colors.blue[500], //grey[10],
+      appBar: new CustomNavigationBar(
+        backgroundColor: Colors.blue[500],
         title: new Text('Sign up', style: new TextStyle(color: Colors.white),),
+        centerTitle: true,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: new SafeArea(

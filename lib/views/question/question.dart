@@ -282,11 +282,11 @@ class _QuestionPage extends State<QuestionPage> {
     );
 
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: new CustomNavigationBar(
         title: new Text(title, style: new TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
-        automaticallyImplyLeading: false,
         centerTitle: true,
+        buttonBack: false,
         leading: new Container(
           padding: const EdgeInsets.only(top: 18.0, left: 10.0),
           child: new Text(
@@ -294,7 +294,7 @@ class _QuestionPage extends State<QuestionPage> {
             style: new TextStyle(color: Colors.white),
           )
         ),
-        actions: <Widget>[
+        actionsAndroid: <Widget>[
           new Padding(
             padding: const EdgeInsets.only(top: 18.0, right: 10.0),
             child: new Text(
@@ -303,6 +303,13 @@ class _QuestionPage extends State<QuestionPage> {
             )
           ),
         ],
+        trailingIOS: new Padding(
+          padding: const EdgeInsets.only(top: 18.0, right: 10.0),
+          child: new Text(
+            isLoaded ? (index + 1).toString() + '/' + questionArray.length.toString() : '',
+            style: new TextStyle(color: Colors.white),
+          )
+        ),
       ),
       body: isLoaded ? new SafeArea(
         top: false,

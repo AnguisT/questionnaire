@@ -14,9 +14,16 @@ class CustomButton extends StatelessWidget {
     @required this.onPressed,
   }) : assert(text != null && text != '');
 
+  /// Set the text in inside button
   final String text;
+
+  /// Set the color in inside button for [text]
   final Color textColor;
+
+  /// Set the color for button
   final Color color;
+
+  /// Set the function for button
   final VoidCallback onPressed;
 
   @override
@@ -46,15 +53,22 @@ class CustomAlertDialog extends StatelessWidget {
     this.onCancel
   });
 
+  /// The (optional) title of the dialog is displayed at the top of the dialog.
   final Widget title;
+
+  /// The (optional) content of the dialog is displayed in the center of the dialog.
   final Widget content;
+
+  /// Function for button [OK]
   final VoidCallback onOk;
+
+  /// Function for button [Cancel]
   final VoidCallback onCancel;
 
   @override
   Widget build(BuildContext context) {
 
-    // Android Alert Dialog with title and with/without cancel button
+    /// Android Alert Dialog with title and with cancel button
     Widget alertDialogAndroidWithCancel = new AlertDialog(
       title: title,
       content: content,
@@ -70,6 +84,7 @@ class CustomAlertDialog extends StatelessWidget {
       ],
     );
 
+    /// Android Alert Dialog with title and without cancel button
     Widget alertDialogAndroidWithoutCancel = new AlertDialog(
       title: title,
       content: content,
@@ -81,7 +96,7 @@ class CustomAlertDialog extends StatelessWidget {
       ],
     );
 
-    // IOS Alert Dialog with title and with/without cancel button
+    /// IOS Alert Dialog with title and with cancel button
     Widget alertDialogIOSWithCancel = new CupertinoAlertDialog(
       title: title,
       content: content,
@@ -99,6 +114,7 @@ class CustomAlertDialog extends StatelessWidget {
       ]
     );
 
+    /// IOS Alert Dialog with title and without cancel button
     Widget alertDialogIOSWithoutCancel = new CupertinoAlertDialog(
       title: title,
       content: content,
@@ -118,28 +134,72 @@ class CustomAlertDialog extends StatelessWidget {
   }
 }
 
-class CustomNavigationBar extends StatelessWidget {
+class CustomNavigationBar extends StatelessWidget implements PreferredSizeWidget {
   CustomNavigationBar({
     @required this.title,
-    this.centerTitle: false,
-    this.hideButtonBack: false,
     this.backgroundColor,
+    this.iconTheme,
+    this.leading,
+    this.actionsAndroid,
+    this.trailingIOS,
+    this.centerTitle: false,
+    this.buttonBack: true,
+    this.colorButtonBackIOS: Colors.white,
   }) : assert(title != null);
 
+  /// Widget displayed in the center app bar.
   final Widget title;
+
+  /// Widget to display before the [title] widget.
   final Widget leading;
+
+  /// Only IOS. Widgets to display after the [title] widget.
+  final Widget trailingIOS;
+
+  /// How will display back button
   final IconThemeData iconTheme;
-  final Colors backgroundColor;
-  final List<Widget> actions;
+
+  /// The color to use for the app bar.
+  final Color backgroundColor;
+
+  /// Only IOS. Set the color for the back button.
+  final Color colorButtonBackIOS;
+
+  /// Only android. Widgets to display after the [title] widget.
+  final List<Widget> actionsAndroid;
+
+  /// Will the title be in the center app bar.
   final bool centerTitle;
-  final bool hideButtonBack;
+
+  /// Hide or show back button.
+  final bool buttonBack;
 
   @override
   Widget build(BuildContext context) {
-    Widget navigationBarIOS = new CupertinoNavigationBar();
+    Widget navigationBarIOS = new CupertinoNavigationBar(
+      middle: title,
+      backgroundColor: backgroundColor,
+      automaticallyImplyLeading: buttonBack,
+      leading: leading,
+      trailing: trailingIOS,
+      actionsForegroundColor: colorButtonBackIOS,
+    );
 
-    // TODO: implement build
+    Widget navigationBarAndroid = new AppBar(
+      title: title,
+      backgroundColor: backgroundColor,
+      automaticallyImplyLeading: buttonBack,
+      centerTitle: centerTitle,
+      leading: leading,
+      actions: actionsAndroid,
+      iconTheme: iconTheme,
+    );
+
+    return Platform.isIOS ? navigationBarIOS : navigationBarAndroid;
   }
+
+  @override
+  Size get preferredSize => Platform.isIOS ? const Size.fromHeight(55.0) : const Size.fromHeight(55.0);
 }
 
 class SystemPadding extends StatelessWidget {

@@ -92,7 +92,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
 
     Widget lineProgress = new LinearProgressIndicator();
 
-    Widget bodyAndroid = new SafeArea(
+    Widget body = new SafeArea(
       top: false,
       bottom: false,
       left: false,
@@ -112,12 +112,12 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
     );
 
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: new CustomNavigationBar(
         title: new Text('Total options', style: new TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
-      body: isLoaded ? bodyAndroid : lineProgress
+      body: isLoaded ? body : lineProgress
     );
   }
 }

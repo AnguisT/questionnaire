@@ -48,7 +48,7 @@ class _TestPage extends State<TestPage> {
     Widget lineProgress = new LinearProgressIndicator();
 
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: new CustomNavigationBar(
         title: new Text(
           isLoaded ? title : 'Wait...',
           style: new TextStyle(
