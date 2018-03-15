@@ -66,16 +66,18 @@ class _LoginPage extends State<LoginPage> {
         } else {
           showDialog(
             context: context,
-            builder: (BuildContext context) => new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
-              onOk: () {
-                setState(() {
-                  isDisabled = false;
-                });
-                Navigator.of(context).pop();
-              },
-            )
+            builder: (BuildContext context) {
+              return new CustomAlertDialog(
+                title: new Text('Error message'),
+                content: new Text('Check your network'),
+                onOk: () {
+                  setState(() {
+                    isDisabled = false;
+                  });
+                  Navigator.of(context).pop();
+                },
+              );
+            }
           );
         }
       });
@@ -121,7 +123,7 @@ class _LoginPage extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Container(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery.of(context).size.width / 1.2,
                 height: MediaQuery.of(context).size.height / 3,
                 child: new Center(
                   child: new Text(

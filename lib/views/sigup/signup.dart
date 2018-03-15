@@ -111,16 +111,18 @@ class _SignupPage extends State<SignupPage> {
           if (val['isLogup'] == false) {
             showDialog(
               context: context,
-              builder: (BuildContext context) => new CustomAlertDialog(
-                title: new Text('This is mail already exist'),
-                content: new Text(val['message']),
-                onOk: () {
-                  setState(() {
-                    isDisabled = false;
-                  });
-                  Navigator.of(context).pop();
-                },
-              )
+              builder: (BuildContext context) {
+                return new CustomAlertDialog(
+                  title: new Text('This is mail already exist'),
+                  content: new Text(val['message']),
+                  onOk: () {
+                    setState(() {
+                      isDisabled = false;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                );
+              }
             );
           } else {
             Navigator.of(context).pop();
@@ -128,16 +130,18 @@ class _SignupPage extends State<SignupPage> {
         } else {
           showDialog(
             context: context,
-            builder: (BuildContext context) => new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
-              onOk: () {
-                setState(() {
-                  isDisabled = false;
-                });
-                Navigator.of(context).pop();
-              },
-            )
+            builder: (BuildContext context) {
+              return new CustomAlertDialog(
+                title: new Text('Error message'),
+                content: new Text('Check your network'),
+                onOk: () {
+                  setState(() {
+                    isDisabled = false;
+                  });
+                  Navigator.of(context).pop();
+                },
+              );
+            }
           );
         }
       });

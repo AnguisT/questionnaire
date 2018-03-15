@@ -57,13 +57,15 @@ class _StatisticsPage extends State<StatisticsPage> {
       } else {
         showDialog(
           context: context,
-          builder: (BuildContext context) => new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
-            onOk: () {
-              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-            },
-          )
+          builder: (BuildContext context) {
+            return new CustomAlertDialog(
+              title: new Text('Error message'),
+              content: new Text('Check your network'),
+              onOk: () {
+                Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+              },
+            );
+          }
         );
       }
     });

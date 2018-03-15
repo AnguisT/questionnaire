@@ -39,13 +39,15 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
       } else {
         showDialog(
           context: context,
-          builder: (BuildContext context) => new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
-            onOk: () {
-              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-            },
-          )
+          builder: (BuildContext context) {
+            return new CustomAlertDialog(
+              title: new Text('Error message'),
+              content: new Text('Check your network'),
+              onOk: () {
+                Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+              },
+            );
+          }
         );
       }
     });
@@ -54,13 +56,15 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
   _getDescripition(String description) {
     showDialog(
       context: context,
-      builder: (BuildContext context) => new CustomAlertDialog(
-        title: new Text('Description'),
-        content: new Text(description),
-        onOk: () {
-          Navigator.of(context).pop();
-        },
-      )
+      builder: (BuildContext context) {
+        return new CustomAlertDialog(
+          title: new Text('Description'),
+          content: new Text(description),
+          onOk: () {
+            Navigator.of(context).pop();
+          },
+        );
+      }
     );
   }
 

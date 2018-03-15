@@ -53,13 +53,15 @@ class _ProfilePage extends State<ProfilePage> {
       } else {
         showDialog(
           context: context,
-          builder: (BuildContext context) => new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
-            onOk: () {
-              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-            },
-          )
+          builder: (BuildContext context) {
+            return new CustomAlertDialog(
+              title: new Text('Error message'),
+              content: new Text('Check your network'),
+              onOk: () {
+                Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+              },
+            );
+          }
         );
       }
     });
@@ -100,56 +102,58 @@ class _ProfilePage extends State<ProfilePage> {
 
     showDialog(
       context: context,
-      builder: (BuildContext context) => new SystemPadding(
-        child: new CustomAlertDialog(
-          title: new Text(title),
-          content: new Form(
-            key: _formKey,
-            autovalidate: true,
-            child: new TextFormField(
-              controller: _userController,
-              decoration: new InputDecoration(
-                hintText: text
+      builder: (BuildContext context) {
+        return new SystemPadding(
+          child: new CustomAlertDialog(
+            title: new Text(title),
+            content: new Form(
+              key: _formKey,
+              autovalidate: true,
+              child: new TextFormField(
+                controller: _userController,
+                decoration: new InputDecoration(
+                  hintText: text
+                ),
+                validator: (val) {
+                  if (password) {
+                    return _validationPassword(val);
+                  } else {
+                    return _validationOther(val);
+                  }
+                },
               ),
-              validator: (val) {
-                if (password) {
-                  return _validationPassword(val);
-                } else {
-                  return _validationOther(val);
-                }
-              },
             ),
+            onCancel: () {
+              Navigator.of(context).pop();
+            },
+            onOk: () {
+              updateUser.mail = mail;
+              if (password) {
+                updateUser.password = _userController.text;
+                updateUser.firstName = user.firstName;
+                updateUser.lastName= user.lastName;
+                updateUser.city = user.city;
+              } else if (firstName) {
+                updateUser.password = user.password;
+                updateUser.firstName = _userController.text;
+                updateUser.lastName= user.lastName;
+                updateUser.city = user.city;
+              } else if (lastName) {
+                updateUser.password = user.password;
+                updateUser.firstName = user.firstName;
+                updateUser.lastName= _userController.text;
+                updateUser.city = user.city;
+              } else if (city) {
+                updateUser.password = user.password;
+                updateUser.firstName = user.firstName;
+                updateUser.lastName= user.lastName;
+                updateUser.city = _userController.text;
+              }
+              _updateUser(updateUser);
+            },
           ),
-          onCancel: () {
-            Navigator.of(context).pop();
-          },
-          onOk: () {
-            updateUser.mail = mail;
-            if (password) {
-              updateUser.password = _userController.text;
-              updateUser.firstName = user.firstName;
-              updateUser.lastName= user.lastName;
-              updateUser.city = user.city;
-            } else if (firstName) {
-              updateUser.password = user.password;
-              updateUser.firstName = _userController.text;
-              updateUser.lastName= user.lastName;
-              updateUser.city = user.city;
-            } else if (lastName) {
-              updateUser.password = user.password;
-              updateUser.firstName = user.firstName;
-              updateUser.lastName= _userController.text;
-              updateUser.city = user.city;
-            } else if (city) {
-              updateUser.password = user.password;
-              updateUser.firstName = user.firstName;
-              updateUser.lastName= user.lastName;
-              updateUser.city = _userController.text;
-            }
-            _updateUser(updateUser);
-          },
-        ),
-      ),
+        );
+      }
     );
   }
 
