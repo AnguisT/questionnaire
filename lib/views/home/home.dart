@@ -21,19 +21,17 @@ class _HomePage extends State<HomePage> {
     bool res;
     await showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return new CustomAlertDialog(
-          content: new Text('Do you really want to exit?'),
-          onCancel: () {
-            res = false;
-            Navigator.of(context).pop();
-          },
-          onOk: () {
-            res = true;
-            Navigator.of(context).pop();
-          },
-        );
-      }
+      child: new CustomAlertDialog(
+        content: new Text('Do you really want to exit?'),
+        onCancel: () {
+          res = false;
+          Navigator.of(context).pop();
+        },
+        onOk: () {
+          res = true;
+          Navigator.of(context).pop();
+        },
+      )
     );
     return res;
   }
@@ -54,10 +52,10 @@ class _HomePage extends State<HomePage> {
         centerTitle: true,
       ),
       body: new SafeArea(
-        top: false,
-        bottom: false,
-        left: false,
-        right: false,
+        top: true,
+        bottom: true,
+        left: true,
+        right: true,
         child: new Center(
           child: new Form(
             child: new Column(

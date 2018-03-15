@@ -47,18 +47,16 @@ class _LoginPage extends State<LoginPage> {
           if (res['user'].length == 0) {
             showDialog(
               context: context,
-              builder: (BuildContext context) {
-                return new CustomAlertDialog(
-                  title: new Text('Error message'),
-                  content: new Text('Incorrect password or login'),
-                  onOk: () {
-                    setState(() {
-                      isDisabled = false;
-                    });
-                    Navigator.of(context).pop();
-                  },
-                );
-              }
+              child: new CustomAlertDialog(
+                title: new Text('Error message'),
+                content: new Text('Incorrect password or login'),
+                onOk: () {
+                  setState(() {
+                    isDisabled = false;
+                  });
+                  Navigator.of(context).pop();
+                },
+              )
             );
           } else {
             mail = res['user'][0]['mail'];
@@ -68,18 +66,16 @@ class _LoginPage extends State<LoginPage> {
         } else {
           showDialog(
             context: context,
-            builder: (BuildContext context) {
-              return new CustomAlertDialog(
-                title: new Text('Error message'),
-                content: new Text('Check your network'),
-                onOk: () {
-                  setState(() {
-                    isDisabled = false;
-                  });
-                  Navigator.of(context).pop();
-                },
-              );
-            }
+            child: new CustomAlertDialog(
+              title: new Text('Error message'),
+              content: new Text('Check your network'),
+              onOk: () {
+                setState(() {
+                  isDisabled = false;
+                });
+                Navigator.of(context).pop();
+              },
+            )
           );
         }
       });
@@ -116,10 +112,10 @@ class _LoginPage extends State<LoginPage> {
     Widget scaffoldAndroid = new Scaffold(
       backgroundColor: Colors.blue,
       body: new SafeArea(
-        top: false,
-        bottom: false,
-        left: false,
-        right: false,
+        top: true,
+        bottom: true,
+        left: true,
+        right: true,
         child: new SingleChildScrollView(
           child: new Column(
             mainAxisAlignment: MainAxisAlignment.center,

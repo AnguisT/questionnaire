@@ -79,15 +79,13 @@ class _QuestionPage extends State<QuestionPage> {
       } else {
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
-              onOk: () {
-                Navigator.of(context).pushReplacementNamed('/test');
-              },
-            );
-          }
+          child: new CustomAlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            onOk: () {
+              Navigator.of(context).pushReplacementNamed('/test');
+            },
+          )
         );
       }
     });
@@ -152,15 +150,13 @@ class _QuestionPage extends State<QuestionPage> {
   _clickBtnFinish() {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return new CustomAlertDialog(
-          content: new Text('Do you really want to finish the test?'),
-          onCancel: () {
-            Navigator.of(context).pop();
-          },
-          onOk: _calculateResultAndSave,
-        );
-      }
+      child: new CustomAlertDialog(
+        content: new Text('Do you really want to finish the test?'),
+        onCancel: () {
+          Navigator.of(context).pop();
+        },
+        onOk: _calculateResultAndSave,
+      )
     );
   }
 
@@ -208,15 +204,13 @@ class _QuestionPage extends State<QuestionPage> {
       } else {
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
-              onOk: () {
-                Navigator.of(context).pop();
-              },
-            );
-          }
+          child: new CustomAlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            onOk: () {
+              Navigator.of(context).pop();
+            },
+          )
         );
       }
     });
@@ -234,20 +228,18 @@ class _QuestionPage extends State<QuestionPage> {
     bool res;
     await showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return new CustomAlertDialog(
-          content: new Text('Do you really want to end the test?'),
-          onCancel: () {
-            res = false;
-            Navigator.of(context).pop();
-          },
-          onOk: () {
-            timer.cancel();
-            res = true;
-            Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-          },
-        );
-      }
+      child: new CustomAlertDialog(
+        content: new Text('Do you really want to end the test?'),
+        onCancel: () {
+          res = false;
+          Navigator.of(context).pop();
+        },
+        onOk: () {
+          timer.cancel();
+          res = true;
+          Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        },
+      )
     );
     return res;
   }
@@ -320,10 +312,10 @@ class _QuestionPage extends State<QuestionPage> {
         ),
       ),
       body: isLoaded ? new SafeArea(
-        top: false,
-        bottom: false,
-        left: false,
-        right: false,
+        top: true,
+        bottom: true,
+        left: true,
+        right: true,
         child: new Form(
           child: new Container(
             padding: const EdgeInsets.all(10.0),

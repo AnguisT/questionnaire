@@ -31,15 +31,13 @@ class _TestPage extends State<TestPage> {
       } else {
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
-              onOk: () {
-                Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-              },
-            );
-          }
+          child: new CustomAlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            onOk: () {
+              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+            },
+          )
         );
       }
     });
@@ -64,10 +62,10 @@ class _TestPage extends State<TestPage> {
       body: isLoaded ? new Container(
         padding: const EdgeInsets.all(10.0),
         child: new SafeArea(
-          top: false,
-          bottom: false,
-          left: false,
-          right: false,
+          top: true,
+          bottom: true,
+          left: true,
+          right: true,
           child: new Column(
             children: <Widget>[
               new Expanded(

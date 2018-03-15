@@ -31,10 +31,10 @@ class _ResultPage extends State<ResultPage> {
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: new SafeArea(
-        top: false,
-        bottom: false,
-        left: false,
-        right: false,
+        top: true,
+        bottom: true,
+        left: true,
+        right: true,
         child: new Container(
           padding: const EdgeInsets.all(10.0),
           child: new Column(

@@ -57,15 +57,13 @@ class _StatisticsPage extends State<StatisticsPage> {
       } else {
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
-              onOk: () {
-                Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-              },
-            );
-          }
+          child: new CustomAlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            onOk: () {
+              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+            },
+          )
         );
       }
     });
@@ -119,10 +117,10 @@ class _StatisticsPage extends State<StatisticsPage> {
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: isLoaded ? new SafeArea(
-        top: false,
-        bottom: false,
-        left: false,
-        right: false,
+        top: true,
+        bottom: true,
+        left: true,
+        right: true,
         child: new Container(
           padding: const EdgeInsets.all(10.0),
           child: new Column(

@@ -39,15 +39,13 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
       } else {
         showDialog(
           context: context,
-          builder: (BuildContext context) {
-            return new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
-              onOk: () {
-                Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-              },
-            );
-          }
+          child: new CustomAlertDialog(
+            title: new Text('Error message'),
+            content: new Text('Check your network'),
+            onOk: () {
+              Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+            },
+          )
         );
       }
     });
@@ -56,15 +54,13 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
   _getDescripition(String description) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return new CustomAlertDialog(
-          title: new Text('Description'),
-          content: new Text(description),
-          onOk: () {
-            Navigator.of(context).pop();
-          },
-        );
-      }
+      child: new CustomAlertDialog(
+        title: new Text('Description'),
+        content: new Text(description),
+        onOk: () {
+          Navigator.of(context).pop();
+        },
+      )
     );
   }
 
@@ -97,10 +93,10 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
     Widget lineProgress = new LinearProgressIndicator();
 
     Widget body = new SafeArea(
-      top: false,
-      bottom: false,
-      left: false,
-      right: false,
+      top: true,
+      bottom: true,
+      left: true,
+      right: true,
       child: new Container(
         padding: const EdgeInsets.all(10.0),
         child: new Column(
