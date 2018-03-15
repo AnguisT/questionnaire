@@ -47,16 +47,18 @@ class _LoginPage extends State<LoginPage> {
           if (res['user'].length == 0) {
             showDialog(
               context: context,
-              builder: (BuildContext context) => new CustomAlertDialog(
-                title: new Text('Error message'),
-                content: new Text('Incorrect password or login'),
-                onOk: () {
-                  setState(() {
-                    isDisabled = false;
-                  });
-                  Navigator.of(context).pop();
-                },
-              )
+              builder: (BuildContext context) {
+                return new CustomAlertDialog(
+                  title: new Text('Error message'),
+                  content: new Text('Incorrect password or login'),
+                  onOk: () {
+                    setState(() {
+                      isDisabled = false;
+                    });
+                    Navigator.of(context).pop();
+                  },
+                );
+              }
             );
           } else {
             mail = res['user'][0]['mail'];
