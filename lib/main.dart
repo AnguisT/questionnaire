@@ -16,7 +16,7 @@ import './views/total.options/total.options.dart';
 void main() {
   runApp(
     new MaterialApp(
-      title: 'Questionnaire',
+      title: 'Test Reisas',
       debugShowCheckedModeBanner: false,
       theme: new ThemeData(
         primaryColor: Colors.white,
