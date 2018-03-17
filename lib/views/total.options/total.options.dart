@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import '../../models/models.dart';
 import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
+import '../../modules/localizations.dart';
 
 class TotalOptionsPage extends StatefulWidget {
 
@@ -15,9 +16,10 @@ class TotalOptionsPage extends StatefulWidget {
 
 class _TotalOptionsPage extends State<TotalOptionsPage> {
 
-  CustomHttpClient httpClient = new CustomHttpClient();
   bool isLoaded = false;
   List<TotalOptions> arrayTotalOptions = [];
+  CustomHttpClient httpClient = new CustomHttpClient();
+  DemoLocalizations local = new DemoLocalizations();
 
   @override
   void initState() {
@@ -40,8 +42,8 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
+            title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+            content: new Text(local.localizedValues[languageCode]['errorMessage']['error_message']),
             onOk: () {
               Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
             },
@@ -55,7 +57,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
     showDialog(
       context: context,
       child: new CustomAlertDialog(
-        title: new Text('Description'),
+        title: new Text(local.localizedValues[languageCode]['totalOptionsPage']['description_title']),
         content: new Text(description),
         onOk: () {
           Navigator.of(context).pop();
@@ -72,7 +74,7 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
             child: new ListTile(
               title: new Text(item.title),
               subtitle: new Text(
-                'From ${item.fromValues.toString()} points to ${item.toValues.toString()} points',
+                '${local.localizedValues[languageCode]['totalOptionsPage']['from_points']} ${item.fromValues.toString()} ${local.localizedValues[languageCode]['totalOptionsPage']['points']} ${local.localizedValues[languageCode]['totalOptionsPage']['to_points']} ${item.toValues.toString()} ${local.localizedValues[languageCode]['totalOptionsPage']['points']}',
               ),
               trailing: new Icon(Icons.description),
               onTap: () {
@@ -113,9 +115,10 @@ class _TotalOptionsPage extends State<TotalOptionsPage> {
 
     return new Scaffold(
       appBar: new CustomNavigationBar(
-        title: new Text('Total options', style: new TextStyle(color: Colors.white),),
+        title: new Text(local.localizedValues[languageCode]['totalOptionsPage']['title_bar'], style: new TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
         iconTheme: new IconThemeData(color: Colors.white),
+        centerTitle: true,
       ),
       body: isLoaded ? body : lineProgress
     );

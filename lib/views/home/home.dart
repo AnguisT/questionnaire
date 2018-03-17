@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // class
 import '../../models/models.dart';
 import '../../models/widget.models.dart';
+import '../../modules/localizations.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -17,12 +18,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
 
+  DemoLocalizations local = new DemoLocalizations();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Future<bool> _onWillPop() async {
     bool res;
     await showDialog(
       context: context,
       child: new CustomAlertDialog(
-        content: new Text('Do you really want to exit?'),
+        content: new Text(local.localizedValues[languageCode]['homePage']['exit_from_app']),
         onCancel: () {
           res = false;
           Navigator.of(context).pop();
@@ -41,7 +49,7 @@ class _HomePage extends State<HomePage> {
     return new Scaffold(
       appBar: new CustomNavigationBar(
         title: new Text(
-          'Welcome to application Test Reisas',
+          local.localizedValues[languageCode]['homePage']['title_bar'],
           style: new TextStyle(
             color: Colors.white,
             fontSize: 16.0
@@ -66,7 +74,7 @@ class _HomePage extends State<HomePage> {
                   height: 80.0,
                   padding: const EdgeInsets.all(10.0),
                   child: new Text(
-                    'Hello ' + firstNameForHomePage,
+                    local.localizedValues[languageCode]['homePage']['hello'] + ' ' + firstNameForHomePage,
                     textAlign: TextAlign.center,
                     style: new TextStyle(fontSize: 17.0),
                   )
@@ -78,7 +86,7 @@ class _HomePage extends State<HomePage> {
                   child: new CustomButton(
                     textColor: Colors.white,
                     color: Colors.blue,
-                    text: 'Start test',
+                    text: local.localizedValues[languageCode]['homePage']['start_test'],
                     onPressed: () {
                       Navigator.of(context).pushNamed('/test');
                     },
@@ -91,7 +99,7 @@ class _HomePage extends State<HomePage> {
                   child: new CustomButton(
                     textColor: Colors.white,
                     color: Colors.blue,
-                    text: 'Look statistics',
+                    text: local.localizedValues[languageCode]['homePage']['look_statistics'],
                     onPressed: () {
                       Navigator.of(context).pushNamed('/statistics');
                     },
@@ -104,7 +112,7 @@ class _HomePage extends State<HomePage> {
                   child: new CustomButton(
                     textColor: Colors.white,
                     color: Colors.blue,
-                    text: 'Total options',
+                    text: local.localizedValues[languageCode]['homePage']['total_options'],
                     onPressed: () {
                       Navigator.of(context).pushNamed('/totaloptions');
                     },
@@ -117,7 +125,7 @@ class _HomePage extends State<HomePage> {
                   child: new CustomButton(
                     textColor: Colors.white,
                     color: Colors.blue,
-                    text: 'Profile',
+                    text: local.localizedValues[languageCode]['homePage']['profile'],
                     onPressed: () {
                       Navigator.of(context).pushNamed('/profile');
                     },

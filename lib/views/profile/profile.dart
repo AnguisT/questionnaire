@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import '../../models/models.dart';
 import '../../modules/http.client.dart';
 import '../../models/widget.models.dart';
+import '../../modules/localizations.dart';
 
 class ProfilePage extends StatefulWidget {
 
@@ -18,9 +19,12 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePage extends State<ProfilePage> {
 
   bool isLoaded = false;
-  CustomHttpClient httpClient = new CustomHttpClient();
-  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  bool switchSelect = false;
+  int languageVal = 1;
   User user;
+  CustomHttpClient httpClient = new CustomHttpClient();
+  DemoLocalizations local = new DemoLocalizations();
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   TextEditingController _userController = new TextEditingController();
 
   @override
@@ -28,12 +32,6 @@ class _ProfilePage extends State<ProfilePage> {
     super.initState();
     _fillArray();
   }
-
-  // _getMial() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   mail = prefs.getString('mail');
-  //   _fillArray();
-  // }
 
   _fillArray() {
     httpClient.getUserByMail(mail).then((res) {
@@ -54,8 +52,8 @@ class _ProfilePage extends State<ProfilePage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
+            title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+            content: new Text(local.localizedValues[languageCode]['errorMessage']['error_message']),
             onOk: () {
               Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
             },
@@ -67,35 +65,35 @@ class _ProfilePage extends State<ProfilePage> {
 
   String _validationPassword(val) {
     if (val.length < 6) {
-      return 'Password too short';
+      return local.localizedValues[languageCode]['profilePage']['password']['password_invalid'];
     }
     return null;
   }
 
   String _validationOther(val) {
     if (val.length < 1) {
-      return 'Too short';
+      return local.localizedValues[languageCode]['profilePage']['empty'];
     }
     final RegExp exp = new RegExp(r'^[a-zA-Zа-яА-Я]');
     if (!exp.hasMatch(val)) {
-      return 'Letters only';
+      return local.localizedValues[languageCode]['profilePage']['only_letters'];
     }
     return null;
   }
 
   _changeUser(String text, { bool password: false, bool firstName: false, bool lastName: false, bool city: false }) {
-    String title = 'Change';
+    String title;
 
     User updateUser = new User();
 
     if (password) {
-      title = 'Change password';
+      title = local.localizedValues[languageCode]['profilePage']['password']['password_title'];
     } else if (firstName) {
-      title = 'Change first name';
+      title = local.localizedValues[languageCode]['profilePage']['first_name']['first_name_change'];
     } else if (lastName) {
-      title = 'Change last name';
+      title = local.localizedValues[languageCode]['profilePage']['last_name']['last_name_change'];
     } else if (city) {
-      title = 'Change city';
+      title = local.localizedValues[languageCode]['profilePage']['city']['city_change'];
     }
 
     showDialog(
@@ -156,6 +154,7 @@ class _ProfilePage extends State<ProfilePage> {
   _updateUser(User updateUser) {
     final FormState form = _formKey.currentState;
     if (form.validate()) {
+      _userController.clear();
       Navigator.of(context).pop();
       setState(() {
         isLoaded = false;
@@ -173,7 +172,7 @@ class _ProfilePage extends State<ProfilePage> {
     return new Scaffold(
       appBar: new CustomNavigationBar(
         title: new Text(
-          'Profile',
+          local.localizedValues[languageCode]['profilePage']['title_bar'],
           style: new TextStyle(
             color: Colors.white,
           )
@@ -198,7 +197,7 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Mail: ' + user.mail
+                          '${local.localizedValues[languageCode]['profilePage']['email_title']}: ' + user.mail
                         ),
                       ),
                     ),
@@ -206,7 +205,7 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Change password',
+                          local.localizedValues[languageCode]['profilePage']['password']['password_title'],
                         ),
                         trailing: new Icon(Icons.edit),
                         onTap: () {
@@ -218,7 +217,7 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'First name: ' + user.firstName,
+                          '${local.localizedValues[languageCode]['profilePage']['first_name']['first_name_title']}: ' + user.firstName,
                         ),
                         trailing: new Icon(Icons.edit),
                         onTap: () {
@@ -230,7 +229,7 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Last name: ' + user.lastName,
+                          '${local.localizedValues[languageCode]['profilePage']['last_name']['last_name_title']}: ' + user.lastName,
                         ),
                         trailing: new Icon(Icons.edit),
                         onTap: () {
@@ -242,7 +241,7 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'City: ' + user.city,
+                          '${local.localizedValues[languageCode]['profilePage']['city']['city_title']}: ' + user.city,
                         ),
                         trailing: new Icon(Icons.edit),
                         onTap: () {
@@ -254,7 +253,7 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Birthday: ${user.birthday.year.toString()}-${user.birthday.month.toString().padLeft(2, '0')}-${user.birthday.day.toString().padLeft(2, '0')}',
+                          '${local.localizedValues[languageCode]['profilePage']['birthday_title']}: ${user.birthday.year.toString()}-${user.birthday.month.toString().padLeft(2, '0')}-${user.birthday.day.toString().padLeft(2, '0')}',
                         ),
                       ),
                     ),
@@ -262,8 +261,23 @@ class _ProfilePage extends State<ProfilePage> {
                     new Container(
                       child: new ListTile(
                         title: new Text(
-                          'Sex: ' + (user.idSexs == 1 ? 'Мужской' : 'Женский'),
+                          '${local.localizedValues[languageCode]['profilePage']['sex']['sex_title']}: '
+                          + (user.idSexs == 1 ? local.localizedValues[languageCode]['profilePage']['sex']['male']
+                          : local.localizedValues[languageCode]['profilePage']['sex']['female']),
                         ),
+                      ),
+                    ),
+                    new Divider(),
+                    new Container(
+                      child: new ListTile(
+                        title: new Text(local.localizedValues[languageCode]['profilePage']['language_title'],
+                        ),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            child: new RadioInDialog(),
+                          );
+                        },
                       ),
                     ),
                     new Divider(),

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 // class
 import '../../models/models.dart';
-import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
+import '../../models/widget.models.dart';
+import '../../modules/localizations.dart';
 
 class StatisticsPage extends StatefulWidget {
 
@@ -18,6 +19,7 @@ class _StatisticsPage extends State<StatisticsPage> {
   bool isLoaded = false;
   List<Statistics> arrayStatistics = [];
   CustomHttpClient httpClient = new CustomHttpClient();
+  DemoLocalizations local = new DemoLocalizations();
 
   @override
   void initState() {
@@ -26,8 +28,6 @@ class _StatisticsPage extends State<StatisticsPage> {
   }
 
   _getMial() async {
-    // SharedPreferences prefs = await SharedPreferences.getInstance();
-    // mail = prefs.getString('mail');
     _fillArray();
   }
 
@@ -58,8 +58,8 @@ class _StatisticsPage extends State<StatisticsPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
+            title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+            content: new Text(local.localizedValues[languageCode]['errorMessage']['error_message']),
             onOk: () {
               Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
             },
@@ -90,7 +90,7 @@ class _StatisticsPage extends State<StatisticsPage> {
           new Container(
             child: new ListTile(
               title: new Text(item.testTitle),
-              subtitle: new Text('Date of passing the test: ${item.date}'),
+              subtitle: new Text('${local.localizedValues[languageCode]['statisticsPage']['date_passing']}: ${item.date}'),
               trailing: new Icon(Icons.description),
               onTap: () {
                 _getMoreInformatino(item);
@@ -111,7 +111,10 @@ class _StatisticsPage extends State<StatisticsPage> {
 
     return new Scaffold(
       appBar: new CustomNavigationBar(
-        title: new Text('Statistics', style: new TextStyle(color: Colors.white),),
+        title: new Text(
+          local.localizedValues[languageCode]['statisticsPage']['title_bar'],
+          style: new TextStyle(color: Colors.white),
+        ),
         backgroundColor: Colors.blue,
         centerTitle: true,
         iconTheme: new IconThemeData(color: Colors.white),

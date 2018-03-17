@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 import '../../models/models.dart';
+import '../../modules/localizations.dart';
 
 class ResultPage extends StatefulWidget {
 
@@ -15,6 +16,7 @@ class ResultPage extends StatefulWidget {
 class _ResultPage extends State<ResultPage> {
 
   CustomHttpClient httpClient = new CustomHttpClient();
+  DemoLocalizations local = new DemoLocalizations();
 
   @override
   void initState() {
@@ -25,7 +27,7 @@ class _ResultPage extends State<ResultPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new CustomNavigationBar(
-        title: new Text('Result', style: new TextStyle(color: Colors.white),),
+        title: new Text(local.localizedValues[languageCode]['resultPage']['title_bar'], style: new TextStyle(color: Colors.white),),
         backgroundColor: Colors.blue,
         centerTitle: true,
         iconTheme: new IconThemeData(color: Colors.white),
@@ -49,7 +51,7 @@ class _ResultPage extends State<ResultPage> {
                         child: new Row(
                           children: <Widget>[
                             new Text(
-                              'You scored the following points: ',
+                              '${local.localizedValues[languageCode]['resultPage']['scored_points']}: ',
                               style: new TextStyle(fontSize: 16.0),
                             ),
                             new Text(
@@ -63,7 +65,7 @@ class _ResultPage extends State<ResultPage> {
                         padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
                         width: MediaQuery.of(context).size.width,
                         child: new Text(
-                          'From points ${response.totalOptions[0].fromValues} to points ${response.totalOptions[0].toValues}',
+                          '${local.localizedValues[languageCode]['resultPage']['from_points']} ${response.totalOptions[0].fromValues} ${local.localizedValues[languageCode]['resultPage']['points']} ${local.localizedValues[languageCode]['resultPage']['to_points']} ${response.totalOptions[0].toValues} ${local.localizedValues[languageCode]['resultPage']['points']}',
                           style: new TextStyle(fontSize: 16.0),
                         ),
                       ),
@@ -73,7 +75,7 @@ class _ResultPage extends State<ResultPage> {
                         child: new Row(
                           children: <Widget>[
                             new Text(
-                              'Your result: ',
+                              '${local.localizedValues[languageCode]['resultPage']['result']}: ',
                               style: new TextStyle(fontSize: 16.0),
                             ),
                             new Text(
@@ -101,7 +103,7 @@ class _ResultPage extends State<ResultPage> {
                 child: new CustomButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  text: 'Look statistics',
+                  text: local.localizedValues[languageCode]['resultPage']['look_statistics'],
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/statistics');
                   },
@@ -113,7 +115,7 @@ class _ResultPage extends State<ResultPage> {
                 child: new CustomButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  text: 'Look total options',
+                  text: local.localizedValues[languageCode]['resultPage']['look_total_options'],
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/totaloptions');
                   },

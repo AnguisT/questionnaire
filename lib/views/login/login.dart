@@ -5,8 +5,9 @@ import 'package:flutter/services.dart';
 
 // class
 import '../../models/models.dart';
-import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
+import '../../models/widget.models.dart';
+import '../../modules/localizations.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -16,10 +17,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
 
+  bool isDisabled = false;
   bool _autovalidate = false;
   CustomHttpClient httpClient = new CustomHttpClient();
+  DemoLocalizations local = new DemoLocalizations();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  bool isDisabled = false;
 
   @override
   void initState() {
@@ -28,11 +30,6 @@ class _LoginPage extends State<LoginPage> {
       DeviceOrientation.portraitUp,
     ]);
   }
-
-  // _saveMail(mail) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('mail', mail);
-  // }
 
   logIn() async {
     final FormState form = _formKey.currentState;
@@ -48,8 +45,8 @@ class _LoginPage extends State<LoginPage> {
             showDialog(
               context: context,
               child: new CustomAlertDialog(
-                title: new Text('Error message'),
-                content: new Text('Incorrect password or login'),
+                title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+                content: new Text(local.localizedValues[languageCode]['errorMessage']['incorrect_password_mail']),
                 onOk: () {
                   setState(() {
                     isDisabled = false;
@@ -67,8 +64,8 @@ class _LoginPage extends State<LoginPage> {
           showDialog(
             context: context,
             child: new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
+              title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+              content: new Text(local.localizedValues[languageCode]['errorMessage']['error_message']),
               onOk: () {
                 setState(() {
                   isDisabled = false;
@@ -88,18 +85,14 @@ class _LoginPage extends State<LoginPage> {
 
   String _validationEmail(val) {
     if (!val.contains('@')) {
-      return 'Not a valid email';
-    }
-    final RegExp cityExp = new RegExp(r'^[a-zA-Z]');
-    if (!cityExp.hasMatch(val)) {
-      return 'English letters only';
+      return local.localizedValues[languageCode]['loginPage']['email']['email_invalid'];
     }
     return null;
   }
 
   String _validationPassword(val) {
     if (val.length < 6) {
-      return 'Password too short';
+      return local.localizedValues[languageCode]['loginPage']['password']['password_invalid'];
     }
     return null;
   }
@@ -109,7 +102,7 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget scaffoldAndroid = new Scaffold(
+    return new Scaffold(
       backgroundColor: Colors.blue,
       body: new SafeArea(
         top: true,
@@ -125,7 +118,7 @@ class _LoginPage extends State<LoginPage> {
                 height: MediaQuery.of(context).size.height / 3,
                 child: new Center(
                   child: new Text(
-                    'Welcome to application Test Reisas',
+                    local.localizedValues[languageCode]['loginPage']['title'],
                     style: new TextStyle(
                       fontSize: 30.0,
                       color: Colors.white
@@ -150,11 +143,11 @@ class _LoginPage extends State<LoginPage> {
                           ),
                           decoration: new InputDecoration(
                             icon: const Icon(Icons.email),
-                            labelText: 'E-mail',
+                            labelText: local.localizedValues[languageCode]['loginPage']['email']['email_label'],
                             labelStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            hintText: 'Enter you e-mail',
+                            hintText: local.localizedValues[languageCode]['loginPage']['email']['email_hint'],
                             hintStyle: new TextStyle(
                               color: Colors.white
                             ),
@@ -170,11 +163,11 @@ class _LoginPage extends State<LoginPage> {
                           ),
                           decoration: new InputDecoration(
                             icon: const Icon(Icons.security),
-                            labelText: 'Password',
+                            labelText: local.localizedValues[languageCode]['loginPage']['password']['password_label'],
                             labelStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            hintText: 'Enter you password',
+                            hintText: local.localizedValues[languageCode]['loginPage']['password']['password_hint'],
                             hintStyle: new TextStyle(
                               color: Colors.white
                             )
@@ -195,7 +188,7 @@ class _LoginPage extends State<LoginPage> {
                       padding: const EdgeInsets.only(top: 10.0, bottom: 5.0, left: 10.0, right: 10.0),
                       width: MediaQuery.of(context).size.width,
                       child: new CustomButton(
-                        text: 'Log In',
+                        text: local.localizedValues[languageCode]['loginPage']['log_in'],
                         color: Colors.white,
                         textColor: Colors.blue,
                         onPressed: !isDisabled ? logIn : null,
@@ -205,7 +198,7 @@ class _LoginPage extends State<LoginPage> {
                       padding: const EdgeInsets.only(top: 5.0, bottom: 10.0, left: 10.0, right: 10.0),
                       width: MediaQuery.of(context).size.width,
                       child: new CustomButton(
-                        text: 'Sign Up',
+                        text: local.localizedValues[languageCode]['loginPage']['sign_up'],
                         color: Colors.white,
                         textColor: Colors.blue,
                         onPressed: !isDisabled ? signUp : null,
@@ -219,7 +212,5 @@ class _LoginPage extends State<LoginPage> {
         )
       )
     );
-
-    return scaffoldAndroid;
   }
 }

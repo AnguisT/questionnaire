@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 import '../../models/models.dart';
+import '../../modules/localizations.dart';
 
 class QuestionPage extends StatefulWidget {
 
@@ -18,23 +19,24 @@ class QuestionPage extends StatefulWidget {
 
 class _QuestionPage extends State<QuestionPage> {
 
-  String title = 'Question';
-  String description = 'Description';
+  String title;
   int groupValue = 0;
   int index = 0;
   int resultEnd = 0;
   int seconds = 0;
   int minutes = 0;
   bool isLoaded = false;
-  List<Question> questionArray = [];
   List<Answer> answerArray = [];
+  List<Question> questionArray = [];
   List<ArrayResult> resultArray = [];
-  CustomHttpClient httpClient = new CustomHttpClient();
   Timer timer;
+  CustomHttpClient httpClient = new CustomHttpClient();
+  DemoLocalizations local = new DemoLocalizations();
 
   @override
   void initState() {
     super.initState();
+    title = local.localizedValues[languageCode]['questionPage']['title_bar'];
     httpClient.getAllQuestion().then((res) {
       if (res != 'Error') {
         for (var i = 0; i < res['questions'].length; i++) {
@@ -80,8 +82,8 @@ class _QuestionPage extends State<QuestionPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
+            title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+            content: new Text(local.localizedValues[languageCode]['errorMessage']['error_message']),
             onOk: () {
               Navigator.of(context).pushReplacementNamed('/test');
             },
@@ -151,7 +153,7 @@ class _QuestionPage extends State<QuestionPage> {
     showDialog(
       context: context,
       child: new CustomAlertDialog(
-        content: new Text('Do you really want to finish the test?'),
+        content: new Text(local.localizedValues[languageCode]['questionPage']['finish']),
         onCancel: () {
           Navigator.of(context).pop();
         },
@@ -165,7 +167,7 @@ class _QuestionPage extends State<QuestionPage> {
     Navigator.of(context).pop();
 
     setState(() {
-      title = 'Wait, goes is a counting points';
+      title = local.localizedValues[languageCode]['questionPage']['wait_counting'];
       isLoaded = false;
     });
 
@@ -205,8 +207,8 @@ class _QuestionPage extends State<QuestionPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
+            title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+            content: new Text(local.localizedValues[languageCode]['errorMessage']['error_message']),
             onOk: () {
               Navigator.of(context).pop();
             },
@@ -220,16 +222,12 @@ class _QuestionPage extends State<QuestionPage> {
     resultEndModels = resultEnd;
   }
 
-  // _getMial() async {
-  //   mail = prefs.getString('mail');
-  // }
-
   Future<bool> _onWillPop() async {
     bool res;
     await showDialog(
       context: context,
       child: new CustomAlertDialog(
-        content: new Text('Do you really want to end the test?'),
+        content: new Text(local.localizedValues[languageCode]['questionPage']['exit']),
         onCancel: () {
           res = false;
           Navigator.of(context).pop();
@@ -253,7 +251,7 @@ class _QuestionPage extends State<QuestionPage> {
       padding: const EdgeInsets.only(top: 10.0, right: 5.0),
       child: new CustomButton(
         color: Colors.blue,
-        text: 'Back',
+        text: local.localizedValues[languageCode]['questionPage']['btn_back'],
         textColor: Colors.white,
         onPressed: index == 0 ? null : _pressedBack,
       ),
@@ -264,7 +262,7 @@ class _QuestionPage extends State<QuestionPage> {
       padding: const EdgeInsets.only(top: 10.0, left: 5.0),
       child: new CustomButton(
         color: Colors.blue,
-        text: 'Next',
+        text: local.localizedValues[languageCode]['questionPage']['btn_next'],
         textColor: Colors.white,
         onPressed: groupValue != 0 ? _pressedNext : null,
       ),
@@ -275,7 +273,7 @@ class _QuestionPage extends State<QuestionPage> {
       padding: const EdgeInsets.only(top: 10.0, left: 5.0),
       child: new CustomButton(
         color: Colors.blue,
-        text: 'Finish the test',
+        text: local.localizedValues[languageCode]['questionPage']['btn_finish'],
         textColor: Colors.white,
         onPressed: groupValue != 0 ? _clickBtnFinish : null,
       ),

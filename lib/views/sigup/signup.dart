@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
 import '../../models/models.dart';
+import '../../modules/localizations.dart';
 
 class SignupPage extends StatefulWidget {
 
@@ -16,12 +17,13 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPage extends State<SignupPage> {
 
-  CustomHttpClient httpClient = new CustomHttpClient();
-  User user = new User();
-  GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  bool _autovalidate = false;
-  bool isDisabled = false;
   int radioValue = 1;
+  bool isDisabled = false;
+  bool _autovalidate = false;
+  User user = new User();
+  CustomHttpClient httpClient = new CustomHttpClient();
+  GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  DemoLocalizations local = new DemoLocalizations();
 
   @override
   void initState() {
@@ -31,51 +33,47 @@ class _SignupPage extends State<SignupPage> {
 
   String _validationEmail(val) {
     if (!val.contains('@')) {
-      return 'Not a valid email.';
-    }
-    final RegExp cityExp = new RegExp(r'^[a-zA-Z]');
-    if (!cityExp.hasMatch(val)) {
-      return 'Letters only';
+      return local.localizedValues[languageCode]['signupPage']['email']['email_invalid'];
     }
     return null;
   }
 
   String _validationPassword(val) {
     if (val.length < 6) {
-      return 'Password too short.';
+      return local.localizedValues[languageCode]['signupPage']['password']['password_invalid'];
     }
     return null;
   }
 
   String _validationFirstName(val) {
     if (val.length < 1) {
-      return 'You did not enter your first name.';
+      return local.localizedValues[languageCode]['signupPage']['first_name']['first_name_invalid'];
     }
     final RegExp firstNameExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
     if (!firstNameExp.hasMatch(val)) {
-      return 'Letters only';
+      return local.localizedValues[languageCode]['signupPage']['first_name']['first_name_invalid_letters'];
     }
     return null;
   }
 
   String _validationLastName(val) {
     if (val.length < 1) {
-      return 'You did not enter your last name.';
+      return local.localizedValues[languageCode]['signupPage']['last_name']['last_name_invalid'];
     }
     final RegExp lastNameExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
     if (!lastNameExp.hasMatch(val)) {
-      return 'Letters only';
+      return local.localizedValues[languageCode]['signupPage']['last_name']['last_name_invalid_letters'];
     }
     return null;
   }
 
   String _validationCity(val) {
     if (val.length < 1) {
-      return 'You did not enter your city.';
+      return local.localizedValues[languageCode]['signupPage']['city']['city_invalid'];
     }
     final RegExp cityExp = new RegExp(r'^[a-zA-Zа-яА-Я]');
     if (!cityExp.hasMatch(val)) {
-      return 'Letters only';
+      return local.localizedValues[languageCode]['signupPage']['city']['city_invalid_letters'];
     }
     return null;
   }
@@ -83,7 +81,7 @@ class _SignupPage extends State<SignupPage> {
   String _validationBirthday(String val) {
     final RegExp birthdayExp = new RegExp(r'^\d{4}-\d{2}-\d{2}$');
     if (!birthdayExp.hasMatch(val)) {
-      return 'yyyy-mm-dd - Please enter a valid date.';
+      return local.localizedValues[languageCode]['signupPage']['birthday']['birthday_format_invalid'];
     }
     var date = DateTime.parse(val);
     var start = val.indexOf('-');
@@ -92,7 +90,7 @@ class _SignupPage extends State<SignupPage> {
     var mm = int.parse(val.substring(start + 1, end));
     var dd = int.parse(val.substring(end + 1, val.length));
     if (yyyy != date.year || mm != date.month || dd != date.day) {
-      return 'Sorry there is no such date';
+      return local.localizedValues[languageCode]['signupPage']['birthday']['birthday_date_invalid'];
     }
     user.birthday = date;
     return null;
@@ -112,8 +110,7 @@ class _SignupPage extends State<SignupPage> {
             showDialog(
               context: context,
               child: new CustomAlertDialog(
-                title: new Text('This is mail already exist'),
-                content: new Text(val['message']),
+                content: new Text(local.localizedValues[languageCode]['errorMessage']['email_exist']),
                 onOk: () {
                   setState(() {
                     isDisabled = false;
@@ -129,8 +126,8 @@ class _SignupPage extends State<SignupPage> {
           showDialog(
             context: context,
             child: new CustomAlertDialog(
-              title: new Text('Error message'),
-              content: new Text('Check your network'),
+              title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+              content: new Text(local.localizedValues[languageCode]['errorMessage']['error_message']),
               onOk: () {
                 setState(() {
                   isDisabled = false;
@@ -157,7 +154,7 @@ class _SignupPage extends State<SignupPage> {
       backgroundColor: Colors.blue,
       appBar: new CustomNavigationBar(
         backgroundColor: Colors.blue[500],
-        title: new Text('Sign up', style: new TextStyle(color: Colors.white),),
+        title: new Text(local.localizedValues[languageCode]['signupPage']['title_bar'], style: new TextStyle(color: Colors.white),),
         centerTitle: true,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
@@ -185,11 +182,11 @@ class _SignupPage extends State<SignupPage> {
                           ),
                           decoration: new InputDecoration(
                             icon: const Icon(Icons.email),
-                            labelText: 'E-mail',
+                            labelText: local.localizedValues[languageCode]['signupPage']['email']['email_label'],
                             labelStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            hintText: 'Enter your e-mail',
+                            hintText: local.localizedValues[languageCode]['signupPage']['email']['email_hint'],
                             hintStyle: new TextStyle(
                               color: Colors.white
                             ),
@@ -204,11 +201,11 @@ class _SignupPage extends State<SignupPage> {
                           ),
                           decoration: new InputDecoration(
                             icon: const Icon(Icons.security),
-                            labelText: 'Password',
+                            labelText: local.localizedValues[languageCode]['signupPage']['password']['password_label'],
                             labelStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            hintText: 'Enter your password',
+                            hintText: local.localizedValues[languageCode]['signupPage']['password']['password_hint'],
                             hintStyle: new TextStyle(
                               color: Colors.white
                             ),
@@ -225,11 +222,11 @@ class _SignupPage extends State<SignupPage> {
                           ),
                           decoration: new InputDecoration(
                             icon: const Icon(Icons.people),
-                            labelText: 'First name',
+                            labelText: local.localizedValues[languageCode]['signupPage']['first_name']['first_name_label'],
                             labelStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            hintText: 'Enter your first name',
+                            hintText: local.localizedValues[languageCode]['signupPage']['first_name']['first_name_hint'],
                             hintStyle: new TextStyle(
                               color: Colors.white
                             ),
@@ -245,11 +242,11 @@ class _SignupPage extends State<SignupPage> {
                           ),
                           decoration: new InputDecoration(
                             icon: const Icon(Icons.people_outline),
-                            labelText: 'Last name',
+                            labelText: local.localizedValues[languageCode]['signupPage']['last_name']['last_name_label'],
                             labelStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            hintText: 'Enter your last name',
+                            hintText: local.localizedValues[languageCode]['signupPage']['last_name']['last_name_hint'],
                             hintStyle: new TextStyle(
                               color: Colors.white
                             ),
@@ -265,15 +262,15 @@ class _SignupPage extends State<SignupPage> {
                           ),
                           decoration: new InputDecoration(
                             icon: const Icon(Icons.date_range),
-                            labelText: 'Birthday',
+                            labelText: local.localizedValues[languageCode]['signupPage']['birthday']['birthday_label'],
                             labelStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            hintText: 'Enter your birthday',
+                            hintText: local.localizedValues[languageCode]['signupPage']['birthday']['birthday_hint'],
                             hintStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            helperText: 'Format date: yyyy-mm-dd',
+                            helperText: local.localizedValues[languageCode]['signupPage']['birthday']['birthday_helper'],
                             helperStyle: new TextStyle(
                               color: Colors.white
                             )
@@ -289,11 +286,11 @@ class _SignupPage extends State<SignupPage> {
                           ),
                           decoration: new InputDecoration(
                             icon: const Icon(Icons.location_city),
-                            labelText: 'City',
+                            labelText: local.localizedValues[languageCode]['signupPage']['city']['city_label'],
                             labelStyle: new TextStyle(
                               color: Colors.white
                             ),
-                            hintText: 'Enter your city',
+                            hintText: local.localizedValues[languageCode]['signupPage']['city']['city_hint'],
                             hintStyle: new TextStyle(
                               color: Colors.white
                             ),
@@ -325,7 +322,7 @@ class _SignupPage extends State<SignupPage> {
                                         },
                                       ),
                                       new Text(
-                                        'Мужской',
+                                        local.localizedValues[languageCode]['signupPage']['sex']['male'],
                                         style: new TextStyle(color: Colors.white)
                                       )
                                     ],
@@ -358,7 +355,7 @@ class _SignupPage extends State<SignupPage> {
                                         },
                                       ),
                                       new Text(
-                                        'Женский',
+                                        local.localizedValues[languageCode]['signupPage']['sex']['female'],
                                         style: new TextStyle(color: Colors.white)
                                       )
                                     ],
@@ -386,7 +383,7 @@ class _SignupPage extends State<SignupPage> {
               child: new CustomButton(
                 color: Colors.white,
                 textColor: Colors.blue,
-                text: 'Sign up',
+                text: local.localizedValues[languageCode]['signupPage']['sign_up'],
                 onPressed: !isDisabled ? _signUp : null,
               )
             ),

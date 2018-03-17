@@ -2,9 +2,12 @@
 import 'dart:io';
 
 // package
+import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+
+// class
+import '../modules/localizations.dart';
 
 class CustomButton extends StatelessWidget {
   CustomButton({
@@ -74,11 +77,11 @@ class CustomAlertDialog extends StatelessWidget {
       content: content,
       actions: <Widget>[
         new FlatButton(
-          child: new Text('Cancel'),
+          child: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['btn_cancel']),
           onPressed: onCancel
         ),
         new FlatButton(
-          child: new Text('OK'),
+          child: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['btn_ok']),
           onPressed: onOk
         ),
       ],
@@ -90,7 +93,7 @@ class CustomAlertDialog extends StatelessWidget {
       content: content,
       actions: <Widget>[
         new FlatButton(
-          child: new Text('OK'),
+          child: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['btn_ok']),
           onPressed: onOk
         ),
       ],
@@ -102,12 +105,12 @@ class CustomAlertDialog extends StatelessWidget {
       content: content,
       actions: <Widget>[
         new CupertinoDialogAction(
-          child: new Text('Cancel'),
+          child: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['btn_cancel']),
           isDestructiveAction: true,
           onPressed: onCancel
         ),
         new CupertinoDialogAction(
-          child: new Text('OK'),
+          child: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['btn_ok']),
           isDefaultAction: true,
           onPressed: onOk
         ),
@@ -120,7 +123,7 @@ class CustomAlertDialog extends StatelessWidget {
       content: content,
       actions: <Widget>[
         new CupertinoDialogAction(
-          child: new Text('OK'),
+          child: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['btn_ok']),
           isDefaultAction: true,
           onPressed: onOk
         ),
@@ -214,6 +217,91 @@ class SystemPadding extends StatelessWidget {
       padding: mediaQuery.viewInsets,
       duration: const Duration(milliseconds: 300),
       child: child
+    );
+  }
+}
+
+class RadioInDialog extends StatefulWidget {
+
+  @override
+  _RadioInDialog createState() => new _RadioInDialog();
+}
+
+class _RadioInDialog extends State<RadioInDialog> {
+
+  /// The currently selected value for this group of radio buttons.
+  int languageVal = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return new CustomAlertDialog(
+      title: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['title']),
+      content: new SingleChildScrollView(
+        child: new Column(
+          children: <Widget>[
+            new GestureDetector(
+              child: new Container(
+                decoration: new BoxDecoration(
+                  color: Colors.white,
+                ),
+                width: MediaQuery.of(context).size.width,
+                child: new Row(
+                  children: <Widget>[
+                    new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['en']),
+                    new Radio<int>(
+                      groupValue: languageVal,
+                      value: 1,
+                      onChanged: (val) {
+                        setState(() {
+                          languageVal = val;
+                        });
+                      },
+                    )
+                  ],
+                ),
+              ),
+              onTap: () {
+                setState(() {
+                  languageVal = 1;
+                });
+              },
+            ),
+            new GestureDetector(
+              child: new Container(
+                decoration: new BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: new Row(
+                  children: <Widget>[
+                    new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['ru']),
+                    new Radio<int>(
+                      groupValue: languageVal,
+                      value: 2,
+                      onChanged: (val) {
+                        setState(() {
+                          languageVal = val;
+                        });
+                      },
+                    )
+                  ],
+                ),
+              ),
+              onTap: () {
+                setState(() {
+                  languageVal = 2;
+                });
+              },
+            ),
+          ],
+        )
+      ), onOk: () {
+        if (languageVal == 1) {
+          languageCode = 'en';
+        } else {
+          languageCode = 'ru';
+        }
+        Navigator.of(context).pop();
+      },
     );
   }
 }

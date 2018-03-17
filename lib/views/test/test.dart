@@ -2,8 +2,9 @@
 import 'package:flutter/material.dart';
 
 // class
-import '../../models/widget.models.dart';
 import '../../modules/http.client.dart';
+import '../../models/widget.models.dart';
+import '../../modules/localizations.dart';
 
 class TestPage extends StatefulWidget {
 
@@ -15,8 +16,9 @@ class _TestPage extends State<TestPage> {
 
   String title = '';
   String description = '';
-  CustomHttpClient httpClient = new CustomHttpClient();
   bool isLoaded = false;
+  CustomHttpClient httpClient = new CustomHttpClient();
+  DemoLocalizations local = new DemoLocalizations();
 
   @override
   void initState() {
@@ -32,8 +34,8 @@ class _TestPage extends State<TestPage> {
         showDialog(
           context: context,
           child: new CustomAlertDialog(
-            title: new Text('Error message'),
-            content: new Text('Check your network'),
+            title: new Text(local.localizedValues[languageCode]['errorMessage']['error_title']),
+            content: new Text(local.localizedValues[languageCode]['errorMessage']['error_message']),
             onOk: () {
               Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
             },
@@ -50,7 +52,7 @@ class _TestPage extends State<TestPage> {
     return new Scaffold(
       appBar: new CustomNavigationBar(
         title: new Text(
-          isLoaded ? title : 'Wait...',
+          isLoaded ? title : local.localizedValues[languageCode]['testPage']['wait'],
           style: new TextStyle(
             color: Colors.white,
             fontSize: 17.0
@@ -85,7 +87,7 @@ class _TestPage extends State<TestPage> {
                 child: new CustomButton(
                   color: Colors.blue,
                   textColor: Colors.white,
-                  text: 'Start',
+                  text: local.localizedValues[languageCode]['testPage']['start'],
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/question');
                   },
