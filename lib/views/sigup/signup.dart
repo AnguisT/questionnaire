@@ -371,20 +371,20 @@ class _SignupPage extends State<SignupPage> {
                             ]
                           )
                         ),
+                        new Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0, bottom: 10.0),
+                          child: new CustomButton(
+                            color: Colors.white,
+                            textColor: Colors.blue,
+                            text: local.localizedValues[languageCode]['signupPage']['sign_up'],
+                            onPressed: !isDisabled ? _signUp : null,
+                          )
+                        ),
                       ],
                     )
                   )
                 ),
-              )
-            ),
-            new Container(
-              width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0, bottom: 10.0),
-              child: new CustomButton(
-                color: Colors.white,
-                textColor: Colors.blue,
-                text: local.localizedValues[languageCode]['signupPage']['sign_up'],
-                onPressed: !isDisabled ? _signUp : null,
               )
             ),
           ],

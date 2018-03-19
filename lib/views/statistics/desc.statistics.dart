@@ -15,12 +15,19 @@ class DescStatisticsPage extends StatefulWidget {
 
 class _DescStatisticsPage extends State<DescStatisticsPage> {
 
-  CustomHttpClient httpClient = new CustomHttpClient();
+  int minutes;
+  int seconds;
+  Duration duration;
   DemoLocalizations local = new DemoLocalizations();
+  CustomHttpClient httpClient = new CustomHttpClient();
 
   @override
   void initState() {
     super.initState();
+    duration = new Duration(seconds: descStatistics.countTime);
+    print(duration.inSeconds.toString());
+    minutes = duration.inMinutes;
+    seconds = duration.inSeconds - (minutes * 60);
   }
 
   @override
@@ -65,7 +72,7 @@ class _DescStatisticsPage extends State<DescStatisticsPage> {
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
                         child: new Text(
-                          '${local.localizedValues[languageCode]['descStatisticsPage']['time']}: ${descStatistics.countTime.toString()} ${local.localizedValues[languageCode]['descStatisticsPage']['seconds']}',
+                          '${local.localizedValues[languageCode]['descStatisticsPage']['time']}: ${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}',
                           style: new TextStyle(fontSize: 16.0),
                         ),
                       ),

@@ -48,18 +48,10 @@ class _ResultPage extends State<ResultPage> {
                       new Container(
                         padding: const EdgeInsets.only(bottom: 10.0),
                         width: MediaQuery.of(context).size.width,
-                        child: new Row(
-                          children: <Widget>[
-                            new Text(
-                              '${local.localizedValues[languageCode]['resultPage']['scored_points']}: ',
-                              style: new TextStyle(fontSize: 16.0),
-                            ),
-                            new Text(
-                              response.numberPoint.toString(),
-                              style: new TextStyle(fontSize: 16.0),
-                            ),
-                          ],
-                        )
+                        child: new Text(
+                          '${local.localizedValues[languageCode]['resultPage']['scored_points']}: ${response.numberPoint.toString()}',
+                          style: new TextStyle(fontSize: 16.0),
+                        ),
                       ),
                       new Container(
                         padding: const EdgeInsets.only(top: 5.0, bottom: 10.0),
@@ -72,18 +64,10 @@ class _ResultPage extends State<ResultPage> {
                       new Container(
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.only(top: 5.0, bottom: 13.5),
-                        child: new Row(
-                          children: <Widget>[
-                            new Text(
-                              '${local.localizedValues[languageCode]['resultPage']['result']}: ',
-                              style: new TextStyle(fontSize: 16.0),
-                            ),
-                            new Text(
-                              response.totalOptions[0].title,
-                              style: new TextStyle(fontSize: 16.0),
-                            ),
-                          ],
-                        )
+                        child: new Text(
+                          '${local.localizedValues[languageCode]['resultPage']['result']}: ${'response.totalOptions[0].title'}',
+                          style: new TextStyle(fontSize: 16.0),
+                        ),
                       ),
                       new Container(
                         width: MediaQuery.of(context).size.width,

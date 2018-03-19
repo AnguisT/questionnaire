@@ -130,6 +130,7 @@ Map<String, dynamic> homePageEN = {
   "look_statistics": "Look statistics",
   "total_options": "Total options",
   "profile": "Profile",
+  "exit": "Exit",
   "exit_from_app": "Do you really want to exit?"
 };
 
@@ -141,6 +142,7 @@ Map<String, dynamic> homePageRU = {
   "look_statistics": "Посмотреть статистику",
   "total_options": "Варианты результатов теста",
   "profile": "Профиль",
+  "exit": "Выйти",
   "exit_from_app": "Вы действительно хотите выйти?"
 };
 

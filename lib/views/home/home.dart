@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // class
 import '../../models/models.dart';
 import '../../models/widget.models.dart';
+import '../../modules/local.db.dart';
 import '../../modules/localizations.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,11 +19,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
 
+  bool isLoaded = false;
+  DBProvider dbProvider = new DBProvider();
   DemoLocalizations local = new DemoLocalizations();
 
   @override
   void initState() {
     super.initState();
+    dbProvider.open().then((val) {
+      setState(() {
+        isLoaded = true;
+      });
+    });
   }
 
   Future<bool> _onWillPop() async {
@@ -44,9 +52,15 @@ class _HomePage extends State<HomePage> {
     return res;
   }
 
+  _logoutFromLocalDB() {
+    dbProvider.logout(mail).then((val) {
+      Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return isLoaded ? new Scaffold(
       appBar: new CustomNavigationBar(
         title: new Text(
           local.localizedValues[languageCode]['homePage']['title_bar'],
@@ -130,6 +144,19 @@ class _HomePage extends State<HomePage> {
                       Navigator.of(context).pushNamed('/profile');
                     },
                   )
+                ),
+                new Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: 80.0,
+                  padding: const EdgeInsets.all(10.0),
+                  child: new CustomButton(
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    text: local.localizedValues[languageCode]['homePage']['exit'],
+                    onPressed: () {
+                      _logoutFromLocalDB();
+                    },
+                  )
                 )
               ],
             ),
@@ -137,6 +164,6 @@ class _HomePage extends State<HomePage> {
           )
         )
       )
-    );
+    ) : new Container();
   }
 }

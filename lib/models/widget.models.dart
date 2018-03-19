@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
+import '../modules/local.db.dart';
 // class
 import '../modules/localizations.dart';
+import 'models.dart';
 
 class CustomButton extends StatelessWidget {
   CustomButton({
@@ -230,77 +232,125 @@ class RadioInDialog extends StatefulWidget {
 class _RadioInDialog extends State<RadioInDialog> {
 
   /// The currently selected value for this group of radio buttons.
-  int languageVal = 1;
+  String languageVal;
+  DBProvider dbProvider = new DBProvider();
+
+  @override
+  void initState() {
+    super.initState();
+    dbProvider.open().then((onValue) {
+      dbProvider.getUserByMail(mail).then((user) {
+        languageCode = user['language_code'];
+        setState(() {
+          languageVal = user['language_code'];
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return new CustomAlertDialog(
       title: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['title']),
-      content: new SingleChildScrollView(
-        child: new Column(
+      content: new Container(
+        height: 120.0,
+        child: new ListView(
           children: <Widget>[
-            new GestureDetector(
-              child: new Container(
-                decoration: new BoxDecoration(
-                  color: Colors.white,
-                ),
-                width: MediaQuery.of(context).size.width,
-                child: new Row(
-                  children: <Widget>[
-                    new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['en']),
-                    new Radio<int>(
-                      groupValue: languageVal,
-                      value: 1,
-                      onChanged: (val) {
-                        setState(() {
-                          languageVal = val;
-                        });
-                      },
-                    )
-                  ],
-                ),
+            new ListTile(
+              title: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['en']),
+              trailing: new Radio<String>(
+                groupValue: languageVal,
+                value: 'en',
+                onChanged: (val) {
+                  setState(() {
+                    languageVal = val;
+                  });
+                },
               ),
               onTap: () {
                 setState(() {
-                  languageVal = 1;
+                  languageVal = 'en';
                 });
               },
             ),
-            new GestureDetector(
-              child: new Container(
-                decoration: new BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: new Row(
-                  children: <Widget>[
-                    new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['ru']),
-                    new Radio<int>(
-                      groupValue: languageVal,
-                      value: 2,
-                      onChanged: (val) {
-                        setState(() {
-                          languageVal = val;
-                        });
-                      },
-                    )
-                  ],
-                ),
+            new ListTile(
+              title: new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['ru']),
+              trailing: new Radio<String>(
+                groupValue: languageVal,
+                value: 'ru',
+                onChanged: (val) {
+                  setState(() {
+                    languageVal = val;
+                  });
+                },
               ),
               onTap: () {
                 setState(() {
-                  languageVal = 2;
+                  languageVal = 'ru';
                 });
               },
             ),
+            // new GestureDetector(
+            //   child: new Container(
+            //     decoration: new BoxDecoration(
+            //       color: Colors.white,
+            //     ),
+            //     width: MediaQuery.of(context).size.width,
+            //     child: new Row(
+            //       children: <Widget>[
+            //         new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['en']),
+            //         new Radio<String>(
+            //           groupValue: languageVal,
+            //           value: 'en',
+            //           onChanged: (val) {
+            //             setState(() {
+            //               languageVal = val;
+            //             });
+            //           },
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     setState(() {
+            //       languageVal = 'en';
+            //     });
+            //   },
+            // ),
+            // new GestureDetector(
+            //   child: new Container(
+            //     decoration: new BoxDecoration(
+            //       color: Colors.white,
+            //     ),
+            //     child: new Row(
+            //       children: <Widget>[
+            //         new Text(new DemoLocalizations().localizedValues[languageCode]['common']['change_language']['ru']),
+            //         new Radio<String>(
+            //           groupValue: languageVal,
+            //           value: 'ru',
+            //           onChanged: (val) {
+            //             setState(() {
+            //               languageVal = val;
+            //             });
+            //           },
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            //   onTap: () {
+            //     setState(() {
+            //       languageVal = 'ru';
+            //     });
+            //   },
+            // ),
           ],
-        )
-      ), onOk: () {
-        if (languageVal == 1) {
-          languageCode = 'en';
-        } else {
-          languageCode = 'ru';
-        }
-        Navigator.of(context).pop();
+        ),
+      ),
+      onOk: () {
+        dbProvider.updateLanguage(mail, languageVal).then((res) {
+          languageCode = languageVal;
+          Navigator.of(context).pop();
+        });
       },
     );
   }

@@ -1,10 +1,11 @@
 // package
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
 
 // class
 import '../../models/models.dart';
+import '../../modules/local.db.dart';
 import '../../modules/http.client.dart';
 import '../../models/widget.models.dart';
 import '../../modules/localizations.dart';
@@ -17,15 +18,32 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
 
+  bool isLoaded = false;
   bool isDisabled = false;
   bool _autovalidate = false;
-  CustomHttpClient httpClient = new CustomHttpClient();
+  DBProvider dbProvider = new DBProvider();
   DemoLocalizations local = new DemoLocalizations();
+  CustomHttpClient httpClient = new CustomHttpClient();
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    dbProvider.open().then((val) {
+      dbProvider.getLoginUser().then((res) {
+        print(res);
+        if (res != null) {
+          mail = res['mail'];
+          firstNameForHomePage = res['first_name'];
+          languageCode = res['language_code'];
+          Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+        } else {
+          setState(() {
+            isLoaded = true;
+          });
+        }
+      });
+    });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -58,7 +76,19 @@ class _LoginPage extends State<LoginPage> {
           } else {
             mail = res['user'][0]['mail'];
             firstNameForHomePage = res['user'][0]['first_name'];
-            Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+            dbProvider.getUserByMail(mail).then((user) {
+              if (user == null) {
+                dbProvider.insertUser(mail, res['user'][0]['first_name']).then((val) {
+                  languageCode = 'en';
+                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+                });
+              } else {
+                languageCode = user['language_code'];
+                dbProvider.login(mail).then((val) {
+                  Navigator.of(context).pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+                });
+              }
+            });
           }
         } else {
           showDialog(
@@ -102,7 +132,7 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return isLoaded ? new Scaffold(
       backgroundColor: Colors.blue,
       body: new SafeArea(
         top: true,
@@ -211,6 +241,6 @@ class _LoginPage extends State<LoginPage> {
           )
         )
       )
-    );
+    ) : new Container();
   }
 }
